@@ -20,15 +20,17 @@ const ParticleEffect = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const isMobile = window.innerWidth < 768;
+    const maxParticles = isMobile ? 25 : 60;
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", resize, { passive: true });
 
     const particles: Particle[] = [];
-    const maxParticles = 50;
 
     const createParticle = (): Particle => ({
       x: Math.random() * canvas.width,

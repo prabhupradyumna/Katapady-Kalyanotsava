@@ -17,18 +17,26 @@ const Navbar = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 50);
+      if (typeof window === 'undefined') return;
+      setScrolled(window.scrollY > 20);
 
       const sections = navLinks.map((l) => l.href.slice(1));
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);
-        if (el && el.getBoundingClientRect().top <= 120) {
-          setActive(sections[i]);
-          break;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 150) {
+            setActive(sections[i]);
+            break;
+          }
         }
       }
     };
-    window.addEventListener("scroll", onScroll);
+    
+    // Initial check
+    onScroll();
+    
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 

@@ -63,8 +63,8 @@ const DevotionalGallery = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="w-full flex flex-col items-center"
         >
-            {/* Reduced height aspect and margins */}
-            <div className="relative w-full max-w-[280px] md:max-w-[380px] aspect-[1/1.2] preserve-3d mb-8 md:mb-10">
+            {/* Optimized height and width for ultra-small mobile and large screens */}
+            <div className="relative w-full max-w-[250px] xs:max-w-[280px] md:max-w-[380px] aspect-[1/1.35] md:aspect-[1/1.2] preserve-3d mb-8 md:mb-10">
             {sheets.map((sheet, index) => {
                 const isFlipped = currentSheet > index;
                 const zIndex = isFlipped ? index : sheets.length - index;

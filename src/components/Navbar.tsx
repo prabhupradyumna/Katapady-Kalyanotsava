@@ -52,7 +52,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between h-20 md:h-24">
-        <a href="#home" className="-ml-2 md:-ml-8 lg:-ml-12 font-heading text-2xl md:text-3xl text-gradient-gold font-bold tracking-tight inline-flex items-center">
+        <a href="#home" className="font-heading text-2xl md:text-3xl text-gradient-gold font-bold tracking-tight inline-flex items-center">
           <img src="/tilak-logo.png" alt="Tilak Logo" className="h-10 md:h-14 w-auto mr-3 drop-shadow-glow" /> Srinivasa Kalyanotsava
         </a>
 

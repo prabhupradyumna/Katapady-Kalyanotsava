@@ -37,30 +37,30 @@ const EventTimeline = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory gap-3 md:gap-8 pb-6 md:pb-0 px-4 md:px-0 scrollbar-hide">
           {eventItems.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-card/10 backdrop-blur-xl border border-primary/10 p-6 rounded-3xl hover:border-primary/30 transition-all group overflow-hidden relative"
+              className="min-w-[170px] md:min-w-0 snap-center bg-card/20 backdrop-blur-xl border border-primary/20 p-4 md:p-10 rounded-2xl md:rounded-[40px] hover:border-primary/40 transition-all group overflow-hidden relative flex-shrink-0"
             >
-              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-12 -mt-12 blur-2xl group-hover:bg-primary/10 transition-colors" />
+              <div className="absolute top-0 right-0 w-16 h-16 md:w-32 md:h-32 bg-primary/5 rounded-full -mr-8 -mt-8 md:-mr-12 md:-mt-12 blur-xl md:blur-3xl group-hover:bg-primary/10 transition-colors" />
               
-              <div className="flex flex-col items-center text-center space-y-4">
-                <div className="p-3 bg-primary/10 rounded-2xl text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                  <item.icon className="w-6 h-6" />
+              <div className="flex flex-col items-center text-center space-y-3 md:space-y-8">
+                <div className="p-2 md:p-6 bg-primary/10 rounded-lg md:rounded-3xl text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                  <item.icon className="w-5 h-5 md:w-10 md:h-10" />
                 </div>
                 <div>
-                  <h4 className="font-heading text-xl font-black text-primary mb-1 uppercase tracking-widest">
+                  <h4 className="font-heading text-xs md:text-2xl font-black text-primary mb-0.5 md:mb-2 uppercase tracking-tighter md:tracking-widest">
                     {item.time}
                   </h4>
-                  <h3 className="font-heading text-2xl font-bold text-foreground mb-3 leading-tight">
+                  <h3 className="font-heading text-sm md:text-3xl font-bold text-foreground mb-2 md:mb-4 leading-tight">
                     {item.title}
                   </h3>
-                  <p className="font-body text-lg text-foreground/60 leading-relaxed italic">
+                  <p className="font-body text-[10px] md:text-lg text-foreground/60 leading-tight md:leading-relaxed italic line-clamp-2 md:line-clamp-none">
                     {item.description}
                   </p>
                 </div>

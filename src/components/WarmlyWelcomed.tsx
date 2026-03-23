@@ -18,33 +18,61 @@ const WarmlyWelcomed = () => {
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
-              { name: "Katapadi Pai Family", role: "Devotional Patronage" },
-              { name: "GSB Community Udupi", role: "Community Coordination" },
-              { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" }
-            ].map((org, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="bg-card/30 backdrop-blur-xl border border-primary/10 rounded-3xl p-8 text-center group hover:border-primary/40 transition-all duration-500 shadow-glow hover:bg-card/50"
-                style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/parchment.png')" }}
-              >
-                <div className="w-12 h-12 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
-                  <span className="text-xl font-heading font-black">ॐ</span>
+          <div className="relative overflow-hidden w-full flex">
+            {/* Bulletproof Seamless Marquee */}
+            <motion.div
+              animate={{ x: ["0%", "-25%"] }}
+              transition={{ 
+                duration: 30, 
+                repeat: Infinity, 
+                ease: "linear",
+                repeatType: "loop"
+              }}
+              className="flex shrink-0 py-4"
+            >
+              {[
+                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
+                { name: "Katapadi Pai Family", role: "Devotional Patronage" },
+                { name: "GSB Community Udupi", role: "Community Coordination" },
+                { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" }
+              ].concat(
+                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
+                { name: "Katapadi Pai Family", role: "Devotional Patronage" },
+                { name: "GSB Community Udupi", role: "Community Coordination" },
+                { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" },
+                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
+                { name: "Katapadi Pai Family", role: "Devotional Patronage" },
+                { name: "GSB Community Udupi", role: "Community Coordination" },
+                { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" },
+                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
+                { name: "Katapadi Pai Family", role: "Devotional Patronage" },
+                { name: "GSB Community Udupi", role: "Community Coordination" },
+                { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" }
+              ).map((org, index) => (
+                <div key={index} className="pr-6 md:pr-10 shrink-0">
+                  <motion.div
+                    whileHover={{ 
+                      y: -15, 
+                      scale: 1.05,
+                      boxShadow: "0 20px 40px -10px rgba(198,167,94,0.3)"
+                    }}
+                    className="bg-card/40 backdrop-blur-xl border border-primary/10 rounded-2xl md:rounded-3xl p-6 md:p-8 text-center group hover:border-primary/40 transition-all duration-300 shadow-glow hover:bg-card/50 relative overflow-hidden flex flex-col justify-center min-w-[240px] md:min-w-[320px]"
+                  >
+                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    
+                    <div className="w-10 h-10 md:w-14 md:h-14 mx-auto mb-4 md:mb-6 rounded-xl md:rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 relative z-10">
+                      <span className="text-base md:text-2xl font-heading font-black">ॐ</span>
+                    </div>
+                    <h4 className="font-heading text-sm md:text-2xl font-bold text-foreground mb-1 md:mb-3 leading-tight md:leading-normal relative z-10 whitespace-normal">
+                      {org.name}
+                    </h4>
+                    <p className="font-body text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.2em] text-primary/60 font-black relative z-10 whitespace-normal">
+                      {org.role}
+                    </p>
+                  </motion.div>
                 </div>
-                <h4 className="font-heading text-xl font-bold text-foreground mb-2 leading-tight">
-                  {org.name}
-                </h4>
-                <p className="font-body text-[10px] uppercase tracking-[0.2em] text-primary/60 font-black">
-                  {org.role}
-                </p>
-              </motion.div>
-            ))}
+              ))}
+            </motion.div>
           </div>
         </div>
       </div>

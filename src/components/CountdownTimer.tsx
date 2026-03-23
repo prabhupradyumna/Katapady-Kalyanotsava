@@ -50,14 +50,14 @@ const CountdownTimer = () => {
             The Divine Union Begins In
           </h2>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+          <div className="grid grid-cols-4 gap-2 md:gap-8">
             {units.map((unit) => (
               <motion.div
                 key={unit.label}
-                whileHover={{ y: -10, scale: 1.05 }}
-                className="bg-card/40 backdrop-blur-xl border border-primary/20 p-8 rounded-2xl shadow-divine transition-all duration-300"
+                whileHover={{ y: -5, scale: 1.05 }}
+                className="bg-card/40 backdrop-blur-xl border border-primary/20 p-3 md:p-8 rounded-xl md:rounded-2xl shadow-divine transition-all duration-300"
               >
-                <div className="overflow-hidden h-[60px] md:h-[80px]">
+                <div className="overflow-hidden h-[40px] md:h-[80px]">
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={unit.value}
@@ -65,13 +65,13 @@ const CountdownTimer = () => {
                       animate={{ y: 0 }}
                       exit={{ y: "-100%" }}
                       transition={{ duration: 0.5, ease: "easeOut" }}
-                      className="block font-heading text-5xl md:text-7xl font-bold text-primary"
+                      className="block font-heading text-2xl md:text-7xl font-bold text-primary"
                     >
                       {String(Math.max(0, unit.value)).padStart(2, "0")}
                     </motion.span>
                   </AnimatePresence>
                 </div>
-                <p className="font-body text-foreground/50 uppercase tracking-[0.2em] mt-4 text-sm md:text-base">
+                <p className="font-body text-foreground/50 uppercase tracking-[0.1em] md:tracking-[0.2em] mt-2 md:mt-4 text-[8px] md:text-base">
                   {unit.label}
                 </p>
               </motion.div>

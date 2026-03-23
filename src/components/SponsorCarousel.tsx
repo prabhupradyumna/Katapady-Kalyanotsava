@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 
 const sponsors = [
-  "Invenger Technologies",
-  "Vijaya Industries",
-  "Iratha Auto",
-  "Katapady Pai Family",
-  "SVS Vidyavardhaka Sangha",
-  "Adyar Petrol Pump",
-  "Sun Matrix Audio Lab"
+  { name: "Katapadi Pai Family", logo: "/sponsors/katpadi-family.jpg" },
+  { name: "SVS Vidyavardhaka Sangha", logo: "/sponsors/svs.jpg" },
+  { name: "Adyar Petrol Pump", logo: "/sponsors/hp.png" },
+  { name: "Sun Matrix Audio Lab", logo: "/sponsors/sun-matrix.jpg" },
+  { name: "Invenger Technologies", logo: "/sponsors/invenger.png" },
+  { name: "Vijaya Industries", logo: "/sponsors/vijaya.jpg" },
+  { name: "Iratha Auto", logo: "/sponsors/iratha.png" }
 ];
 
 const SponsorCarousel = () => {
@@ -29,7 +29,7 @@ const SponsorCarousel = () => {
         </h2>
       </div>
 
-      <div className="flex relative items-center">
+      <div className="flex relative items-center mt-8">
         {/* Double carousel for seamless loop */}
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
@@ -39,10 +39,15 @@ const SponsorCarousel = () => {
           {[...sponsors, ...sponsors].map((sponsor, i) => (
             <div
               key={i}
-              className="px-12 py-8 bg-card/60 backdrop-blur-md border border-primary/20 rounded-2xl flex items-center justify-center min-w-[300px] shadow-divine group hover:border-primary transition-all duration-300 transform hover:-translate-y-2"
+              className="px-10 py-6 min-h-[180px] bg-card/60 backdrop-blur-md border border-primary/30 rounded-2xl flex flex-col items-center justify-center min-w-[320px] shadow-divine group hover:border-primary transition-all duration-300 transform hover:-translate-y-2 gap-4"
             >
-              <p className="font-heading text-2xl font-bold text-foreground/70 group-hover:text-primary transition-colors italic">
-                {sponsor}
+              {sponsor.logo && (
+                <div className="h-28 w-full flex items-center justify-center bg-white rounded-xl p-4 shadow-inner">
+                  <img src={sponsor.logo} alt={sponsor.name} className="max-h-full max-w-full object-contain mix-blend-multiply" />
+                </div>
+              )}
+              <p className="font-heading text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors text-center drop-shadow-md tracking-wide">
+                {sponsor.name}
               </p>
             </div>
           ))}

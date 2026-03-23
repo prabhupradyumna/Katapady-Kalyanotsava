@@ -44,11 +44,10 @@ const SocialSection = () => {
   ];
 
   const instagramReels = [
-    'https://www.instagram.com/reel/DUYpivvDLRV/',
-    'https://www.instagram.com/reel/DUyEhcOCYdv/',
-    'https://www.instagram.com/reel/DUtFdqRjGkT/',
-    'https://www.instagram.com/reel/DUbI2FMDMRx/',
-    'https://www.instagram.com/reel/DUslyR6jJkP/'
+    'https://www.instagram.com/reel/DWL3tYME1HC/',
+    'https://www.instagram.com/p/DWNtMoCkjQI/',
+    'https://www.instagram.com/p/DWNs-9OknsL/',
+    'https://www.instagram.com/p/DWJUMXzE7fn/'
   ];
 
   const youtubeContent = [
@@ -123,7 +122,7 @@ const SocialSection = () => {
                     ))}
                   </div>
                   <a 
-                    href="https://www.instagram.com/srinivasa_kalyanotsava_2026?igsh=MWF5bjZneHpuanY3Zg==" 
+                    href="https://www.instagram.com/srinivasakalyanotsava_katapady?igsh=MXhpb2E0d3N1OTB0bw==" 
                     target="_blank" rel="noreferrer"
                     className="mt-6 inline-flex items-center gap-2 text-primary font-heading font-black text-xs uppercase tracking-[0.2em] group border-b border-primary/10 hover:border-primary transition-all pb-1"
                   >

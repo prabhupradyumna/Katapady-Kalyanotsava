@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { MapPin, Navigation, MapIcon } from "lucide-react";
 
 const LocationSection = () => {
-  const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15538.987791845137!2d74.7431633!3d13.2756181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbca9e2b10f5e1b%3A0xe5a3e1eb3086eb02!2sS.V.S.%20Ground%2C%20Katapadi!5e0!3m2!1sen!2sin!4v1700000000000";
+  const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15538.987791845137!2d74.7431633!3d13.2756181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcbb7ac1112d6d%3A0xdd756834e429ad22!2sSVS%20Ground!5e0!3m2!1sen!2sin!4v1700000000000";
 
   return (
     <section id="location" className="py-10 bg-temple-black relative overflow-hidden">
@@ -63,7 +63,7 @@ const LocationSection = () => {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="https://maps.app.goo.gl/o1vP6Zk4hP9D2L1i8"
+                href="https://maps.app.goo.gl/v99qmt3BUPPKjTGSA?g_st=aw"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-8 inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-heading font-bold text-lg rounded-xl shadow-glow group"

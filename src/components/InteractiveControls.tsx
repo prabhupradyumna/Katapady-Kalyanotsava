@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Share2, Link as LinkIcon, MessageCircle, Music, VolumeX, Bell } from "lucide-react";
+import { Share2, Link as LinkIcon, MessageCircle, Music, VolumeX } from "lucide-react";
 import { toast } from "sonner";
+import govindaMusic from "@/assets/govinda-namavali.mp3";
 
 const SocialShare = () => {
   const shareUrl = window.location.href;
@@ -57,7 +58,7 @@ const SocialShare = () => {
 
 const AudioToggle = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audio] = useState(new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")); // Placeholder for temple music
+  const [audio] = useState(new Audio(govindaMusic)); // Local devotional music
 
   useEffect(() => {
     audio.loop = true;
@@ -73,10 +74,6 @@ const AudioToggle = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const playBell = () => {
-    const bellColor = new Audio("https://actions.google.com/sounds/v1/alarms/temple_bell.ogg");
-    bellColor.play().catch(e => console.log("User interaction required for audio"));
-  };
 
   return (
     <div className="fixed bottom-10 left-10 z-50 flex gap-4">
@@ -87,15 +84,6 @@ const AudioToggle = () => {
         className="w-14 h-14 bg-temple-dark/80 backdrop-blur-md border border-primary text-primary rounded-full flex items-center justify-center shadow-lg"
       >
         {isPlaying ? <Music className="w-6 h-6 animate-pulse" /> : <VolumeX className="w-6 h-6" />}
-      </motion.button>
-      
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={playBell}
-        className="w-14 h-14 bg-temple-dark/80 backdrop-blur-md border border-primary text-primary rounded-full flex items-center justify-center shadow-lg"
-      >
-        <Bell className="w-6 h-6" />
       </motion.button>
     </div>
   );

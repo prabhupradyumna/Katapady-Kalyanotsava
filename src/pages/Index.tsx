@@ -1,0 +1,71 @@
+import TickerBanner from "@/components/TickerBanner";
+import Navbar from "@/components/Navbar";
+import KalyanotsavaHero from "@/components/KalyanotsavaHero";
+import CountdownTimer from "@/components/CountdownTimer";
+import SevasGuidelines from "@/components/SevasGuidelines";
+import EventTimeline from "@/components/EventTimeline";
+import WarmlyWelcomed from "@/components/WarmlyWelcomed";
+import DevotionalGallery from "@/components/DevotionalGallery";
+import LocationSection from "@/components/LocationSection";
+import SponsorCarousel from "@/components/SponsorCarousel";
+import SocialSection from "@/components/SocialSection";
+import DevotionalQuotes from "@/components/DevotionalQuotes";
+import SiteFooter from "@/components/SiteFooter";
+import ParticleEffect from "@/components/ParticleEffect";
+import { SocialShare, AudioToggle } from "@/components/InteractiveControls";
+import { Toaster } from "sonner";
+
+/* 
+  Initial Template Components (Commented out for future reference):
+  import HeroSection from "@/components/HeroSection";
+  import AboutSection from "@/components/AboutSection";
+  import TempleExperience from "@/components/TempleExperience";
+  import SevasSection from "@/components/SevasSection";
+  import GallerySection from "@/components/GallerySection";
+  import QuotesSection from "@/components/QuotesSection";
+  import DonationSection from "@/components/DonationSection";
+*/
+
+const Index = () => {
+  return (
+    <div className="relative overflow-x-hidden bg-temple-black selection:bg-primary selection:text-primary-foreground">
+      <Toaster position="top-center" richColors />
+      <ParticleEffect />
+      
+      {/* Disclaimer Ticker */}
+      <TickerBanner />
+      
+      {/* Interactive Floating Controls */}
+      <AudioToggle />
+      <SocialShare />
+      
+      <Navbar />
+      
+      <main className="relative z-10 bg-temple-deep overflow-hidden">
+        <KalyanotsavaHero />
+        
+        <div className="section-blend-top" />
+        
+        <CountdownTimer />
+        <DevotionalQuotes />
+        <WarmlyWelcomed />
+        <EventTimeline />
+        <DevotionalGallery />
+        <SevasGuidelines />
+        <SponsorCarousel />
+        <SocialSection />
+        <LocationSection />
+      </main>
+
+      <SiteFooter />
+      
+      {/* Background radial gradient decoration */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 blur-[120px] rounded-full" />
+      </div>
+    </div>
+  );
+};
+
+export default Index;

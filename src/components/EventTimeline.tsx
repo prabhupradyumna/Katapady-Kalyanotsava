@@ -1,0 +1,76 @@
+import { motion } from "framer-motion";
+import { Sparkles, Heart, CheckCircle } from "lucide-react";
+
+const eventItems = [
+  {
+    time: "5:00 AM",
+    title: "Vishwa Shanti Pooja",
+    description: "Invoking peace and prosperity with sacred vedic chants.",
+    icon: Sparkles
+  },
+  {
+    time: "5:50 AM",
+    title: "Srinivasa Kalyanotsava",
+    description: "The grand celestial wedding of the Divine Couple.",
+    icon: Heart
+  },
+  {
+    time: "8:30 AM",
+    title: "Mahaprasada",
+    description: "Sacred distribution of blissful prasada to all devotees.",
+    icon: CheckCircle
+  }
+];
+
+const EventTimeline = () => {
+  return (
+    <section id="schedule" className="py-10 bg-temple-black relative overflow-hidden">
+      <div className="absolute inset-0 bg-depth-grid opacity-[0.03] pointer-events-none" />
+      
+      <div className="container mx-auto px-4 relative z-20">
+        <div className="text-center mb-12">
+          <p className="font-body text-primary text-lg uppercase tracking-[0.3em] mb-2 font-semibold">
+            ✦ Sacred Journey ✦
+          </p>
+          <h2 className="font-heading text-3xl md:text-5xl font-black text-gradient-gold">
+            Event Schedule
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {eventItems.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-card/10 backdrop-blur-xl border border-primary/10 p-6 rounded-3xl hover:border-primary/30 transition-all group overflow-hidden relative"
+            >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-12 -mt-12 blur-2xl group-hover:bg-primary/10 transition-colors" />
+              
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="p-3 bg-primary/10 rounded-2xl text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                  <item.icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="font-heading text-xl font-black text-primary mb-1 uppercase tracking-widest">
+                    {item.time}
+                  </h4>
+                  <h3 className="font-heading text-2xl font-bold text-foreground mb-3 leading-tight">
+                    {item.title}
+                  </h3>
+                  <p className="font-body text-lg text-foreground/60 leading-relaxed italic">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default EventTimeline;

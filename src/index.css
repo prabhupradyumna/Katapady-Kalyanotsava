@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 15% 6%;
+    --foreground: 40 60% 92%;
+
+    --card: 30 12% 10%;
+    --card-foreground: 40 60% 92%;
+
+    --popover: 30 12% 10%;
+    --popover-foreground: 40 60% 92%;
+
+    --primary: 43 80% 48%;
+    --primary-foreground: 30 15% 6%;
+
+    --secondary: 0 55% 30%;
+    --secondary-foreground: 40 60% 92%;
+
+    --muted: 30 10% 15%;
+    --muted-foreground: 35 20% 55%;
+
+    --accent: 43 70% 40%;
+    --accent-foreground: 30 15% 6%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 43 30% 20%;
+    --input: 30 10% 18%;
+    --ring: 43 80% 48%;
+
+    --radius: 0.5rem;
+
+    --cream: 40 100% 95%;
+    --temple-maroon: 0 55% 30%;
+    --deep-gold: 43 80% 48%;
+    --sacred-gold-light: 43 90% 65%;
+    --sacred-gold-dark: 38 75% 30%;
+    --temple-black: 24 25% 4%;
+    --temple-dark: 24 20% 7%;
+    --temple-brown: 24 25% 10%;
+    --temple-deep: 24 30% 2%;
+
+    --gradient-divine: linear-gradient(135deg, hsl(43 80% 48%), hsl(38 75% 30%));
+    --gradient-sacred: linear-gradient(180deg, hsl(24 25% 4%) 0%, hsl(24 20% 10%) 50%, hsl(24 25% 4%) 100%);
+    --gradient-depth: radial-gradient(circle at 50% 50%, hsl(43 80% 48% / 0.05) 0%, transparent 80%);
+    --gradient-blend-top: linear-gradient(to bottom, hsl(var(--temple-black)) 0%, transparent 100%);
+    --gradient-blend-bottom: linear-gradient(to top, hsl(var(--temple-black)) 0%, transparent 100%);
+    
+    --shadow-divine: 0 10px 40px -10px hsl(43 80% 48% / 0.3);
+    --shadow-glow: 0 0 80px -10px hsl(43 80% 48% / 0.2);
+    --shadow-intense: 0 20px 60px -15px rgba(0, 0, 0, 0.8);
+
+    --sidebar-background: 30 12% 10%;
+    --sidebar-foreground: 40 60% 92%;
+    --sidebar-primary: 43 80% 48%;
+    --sidebar-primary-foreground: 30 15% 6%;
+    --sidebar-accent: 30 10% 15%;
+    --sidebar-accent-foreground: 40 60% 92%;
+    --sidebar-border: 43 30% 20%;
+    --sidebar-ring: 43 80% 48%;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Marcellus', serif;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: 'Marcellus', serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(43 90% 65%), hsl(43 80% 48%), hsl(38 75% 30%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-divine-gradient {
+    background: var(--gradient-divine);
+  }
+
+  .bg-sacred-gradient {
+    background: var(--gradient-sacred);
+  }
+
+  .bg-temple-gradient {
+    background: radial-gradient(circle at center, hsl(var(--temple-brown)), hsl(var(--temple-black)));
+  }
+
+  .glow-gold {
+    box-shadow: var(--shadow-divine);
+  }
+
+  .glow-gold-intense {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .border-gold {
+    border-color: hsl(var(--primary));
+  }
+
+  .bg-depth-grid {
+    background-image: 
+      radial-gradient(circle at 2px 2px, hsl(var(--primary) / 0.05) 1px, transparent 0);
+    background-size: 40px 40px;
+  }
+
+  .section-blend-top {
+    @apply absolute top-0 left-0 right-0 h-32 z-10 pointer-events-none;
+    background: var(--gradient-blend-top);
+  }
+
+  .section-blend-bottom {
+    @apply absolute bottom-0 left-0 right-0 h-32 z-10 pointer-events-none;
+    background: var(--gradient-blend-bottom);
+  }
+
+  .depth-layer {
+    @apply transition-transform duration-700 ease-out;
+  }
+
+  .glow-soft {
+    filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.3));
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.6);
+}
+
+/* Particle canvas */
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-rotate-slow {
+  animation: rotate-slow 60s linear infinite;
+}

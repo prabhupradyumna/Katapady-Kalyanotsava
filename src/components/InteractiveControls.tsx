@@ -6,7 +6,7 @@ import govindaMusic from "@/assets/govinda-namavali.mp3";
 
 const SocialShare = () => {
   const shareUrl = window.location.href;
-  const shareText = "Witness the Divine Sri Srinivasa Kalyanotsava at Katapadi on 11 April 2026. Join the celestial union!";
+  const shareText = "Witness the Divine Sri Srinivasa Kalyanotsava at Katapady on 11 April 2026. Join the celestial union!";
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shareUrl);

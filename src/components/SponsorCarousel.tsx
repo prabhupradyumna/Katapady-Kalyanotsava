@@ -4,7 +4,7 @@ const sponsors = [
   "Invenger Technologies",
   "Vijaya Industries",
   "Iratha Auto",
-  "Katapadi Pai Family",
+  "Katapady Pai Family",
   "SVS Vidyavardhaka Sangha",
   "Adyar Petrol Pump",
   "Sun Matrix Audio Lab"

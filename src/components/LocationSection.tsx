@@ -30,7 +30,7 @@ const LocationSection = () => {
                     <div>
                       <p className="font-heading text-lg font-bold text-foreground">Venue Destination</p>
                       <p className="font-body text-base text-foreground/60 leading-snug">
-                        S.V.S. Ground, Katapadi,<br/>Udupi, Karnataka - 574 105
+                        S.V.S. Ground, Katapady,<br/>Udupi, Karnataka - 574 105
                       </p>
                     </div>
                   </div>
@@ -42,7 +42,7 @@ const LocationSection = () => {
                     <div>
                       <p className="font-heading text-lg font-bold text-foreground">Landmarks</p>
                       <p className="font-body text-base text-foreground/60 italic leading-snug">
-                        Near Sri Vishwanatha Kshetra, Katapadi Main Road.
+                        Near Sri Vishwanatha Kshetra, Katapady Main Road.
                       </p>
                     </div>
                   </div>

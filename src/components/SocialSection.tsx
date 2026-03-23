@@ -1,12 +1,159 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Instagram, Youtube, Facebook, ChevronRight, PlayCircle } from "lucide-react";
+import clippingImg from "@/assets/youtube-cover.png";
+
+// --- Sub-components for better modularity ---
+
+/**
+ * Client-only Instagram Embed Component
+ * Loads the external script once on mount.
+ */
+const InstagramFeed = ({ reels }: { reels: string[] }) => {
+  return (
+    <div className="w-full flex flex-col items-center">
+      <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide px-2 w-full max-w-6xl mx-auto">
+        {reels.map((url, idx) => (
+          <div 
+            key={idx} 
+            className="flex-shrink-0 w-[280px] md:w-[320px] h-[450px] bg-white rounded-3xl border border-primary/10 overflow-hidden shadow-intense snap-center relative"
+          >
+            <blockquote 
+                className="instagram-media w-full h-full m-0 p-0" 
+                data-instgrm-permalink={url} 
+                data-instgrm-version="14"
+            ></blockquote>
+          </div>
+        ))}
+      </div>
+      <a 
+        href="https://www.instagram.com/srinivasakalyanotsava_katapady?igsh=MXhpb2E0d3N1OTB0bw==" 
+        target="_blank" rel="noreferrer"
+        className="mt-6 inline-flex items-center gap-2 text-primary font-heading font-black text-xs uppercase tracking-[0.2em] group border-b border-primary/10 hover:border-primary transition-all pb-1"
+      >
+        View on Instagram <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+      </a>
+    </div>
+  );
+};
+
+/**
+ * Client-only YouTube Feed Component
+ */
+const YoutubeFeed = ({ content }: { content: any[] }) => {
+  return (
+    <div className="w-full flex flex-col items-center">
+      <div className={`flex gap-6 pb-6 px-2 w-full max-w-6xl mx-auto ${content.length <= 1 ? "justify-center" : "overflow-x-auto snap-x snap-mandatory scrollbar-hide"}`}>
+        {content.map((item: any) => (
+          <motion.div
+            key={item.id}
+            whileHover={{ y: -8 }}
+            className="flex-shrink-0 w-[300px] md:w-[400px] aspect-video bg-black/60 rounded-3xl border border-primary/10 overflow-hidden shadow-intense snap-center relative group"
+          >
+            <a 
+              href={item.type === "video" ? `https://www.youtube.com/watch?v=${item.videoId}` : item.url} 
+              target="_blank" 
+              rel="noreferrer"
+              className="w-full h-full block"
+            >
+              <div className="w-full h-full bg-sacred-gold/5 flex items-center justify-center relative overflow-hidden">
+                {item.type === "video" ? (
+                  <>
+                    <img 
+                      src={`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`} 
+                      className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-all duration-700" 
+                      alt={item.title} 
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <PlayCircle className="w-12 h-12 text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                  </>
+                ) : (
+                  <div className="w-full h-full relative">
+                    <img 
+                      src={item.image} 
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700" 
+                      alt={item.title} 
+                    />
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center border border-primary/20 backdrop-blur-sm">
+                        <ChevronRight className="w-8 h-8 text-primary group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                <p className="font-heading text-lg font-bold text-foreground mb-0.5 line-clamp-1">{item.title}</p>
+                <p className="text-[10px] text-primary/60 tracking-widest uppercase font-bold">{item.subtitle || item.views}</p>
+              </div>
+            </a>
+          </motion.div>
+        ))}
+      </div>
+      <a 
+        href="https://www.youtube.com/@SunMatrixMusic/posts" 
+        target="_blank" rel="noreferrer"
+        className="mt-6 inline-flex items-center gap-2 text-primary font-heading font-black text-xs uppercase tracking-[0.2em] group border-b border-primary/10 hover:border-primary transition-all pb-1"
+      >
+        View on YouTube <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+      </a>
+    </div>
+  );
+};
+
+/**
+ * Client-only Facebook Feed Component
+ */
+const FacebookFeed = () => {
+  return (
+    <div className="w-full flex flex-col items-center">
+      <div className="mb-6">
+        <a 
+          href="https://www.facebook.com/profile.php?id=61579551701761"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-3 px-6 py-3 bg-[#1877F2]/10 border border-[#1877F2]/30 text-[#1877F2] font-heading font-black text-sm rounded-xl hover:bg-[#1877F2] hover:text-white transition-all group"
+        >
+          <Facebook className="w-4 h-4" />
+          View Official Profile
+          <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        </a>
+      </div>
+
+      <motion.div
+        className="w-full max-w-[500px] h-[550px] bg-card/20 backdrop-blur-xl rounded-[30px] border border-primary/20 shadow-divine relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-primary/5 animate-pulse flex flex-col items-center justify-center -z-10 text-center p-8">
+          <Facebook className="w-12 h-12 text-primary/10" />
+        </div>
+        <iframe 
+          src={`https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61579551701761&tabs=timeline&width=500&height=550&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId`} 
+          width="100%" 
+          height="550" 
+          style={{ border: "none", overflow: "hidden" }} 
+          scrolling="no" 
+          frameBorder="0" 
+          allowFullScreen={true} 
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          className="rounded-[30px]"
+          title="Facebook Page Feed"
+        ></iframe>
+      </motion.div>
+    </div>
+  );
+};
+
+// --- Main SocialSection Component ---
 
 const SocialSection = () => {
   const [activeTab, setActiveTab] = useState("instagram");
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Load Instagram and Facebook SDKs
+  // Load External Scripts ONLY on Client Side
   useEffect(() => {
+    setIsMounted(true);
+
     // Instagram Script
     const igScript = document.createElement("script");
     igScript.src = "https://www.instagram.com/embed.js";
@@ -22,20 +169,22 @@ const SocialSection = () => {
     document.body.appendChild(fbScript);
 
     return () => {
-      document.body.removeChild(igScript);
-      document.body.removeChild(fbScript);
+      if (document.body.contains(igScript)) document.body.removeChild(igScript);
+      if (document.body.contains(fbScript)) document.body.removeChild(fbScript);
     };
   }, []);
 
-  // Process embeds when tab changes
+  // Process embeds when tab changes (Client Side Only)
   useEffect(() => {
-    if (activeTab === "instagram" && (window as any).instgrm) {
+    if (!isMounted) return;
+
+    if (activeTab === "instagram" && typeof window !== 'undefined' && (window as any).instgrm) {
         (window as any).instgrm.Embeds.process();
     }
-    if (activeTab === "facebook" && (window as any).FB) {
+    if (activeTab === "facebook" && typeof window !== 'undefined' && (window as any).FB) {
         (window as any).FB.XFBML.parse();
     }
-  }, [activeTab]);
+  }, [activeTab, isMounted]);
 
   const tabs = [
     { id: "instagram", label: "Instagram", icon: Instagram, color: "text-[#E1306C]" },
@@ -51,9 +200,15 @@ const SocialSection = () => {
   ];
 
   const youtubeContent = [
-    { id: 1, videoId: "dQw4w9WgXcQ", title: "Sri Venkateswara Hymns", views: "1.2M views" },
-    { id: 2, videoId: "jNQXAC9IVRw", title: "Tirumala Morning Prayer", views: "850K views" },
-    { id: 3, videoId: "L_jWHffIx5E", title: "Kalyanotsava Rituals", views: "2.5M views" },
+    { 
+      id: "post1", 
+      type: "post",
+      url: "https://www.youtube.com/post/UgkxRqRziV4vgH1WFNZWowlp_dwOLGA96OSB",
+      image: clippingImg,
+      title: "ಕಟಪಾಡಿಯಲ್ಲಿ ಶ್ರೀನಿವಾಸ ಕಲ್ಯಾಣ: ಪೂರ್ವಭಾವಿ ಸಭೆ", 
+      subtitle: "Sun Matrix Music Update",
+      views: "Community Post" 
+    }
   ];
 
   return (
@@ -76,7 +231,7 @@ const SocialSection = () => {
           </h2>
         </div>
 
-        {/* Tab Controls - More compact */}
+        {/* Tab Controls */}
         <div className="flex justify-center gap-4 md:gap-6 mb-8 overflow-x-auto pb-2 scrollbar-hide">
           {tabs.map((tab) => (
             <button
@@ -94,107 +249,28 @@ const SocialSection = () => {
           ))}
         </div>
 
-        {/* Content Area - Optimized for one-page visibility */}
+        {/* Content Area - Client Side Guarded */}
         <div className="relative min-h-[400px]">
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="flex flex-col items-center"
-            >
-              {activeTab === "instagram" && (
-                <div className="w-full flex flex-col items-center">
-                  <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide px-2 w-full max-w-6xl mx-auto">
-                    {instagramReels.map((url, idx) => (
-                      <div 
-                        key={idx} 
-                        className="flex-shrink-0 w-[280px] md:w-[320px] h-[450px] bg-white rounded-3xl border border-primary/10 overflow-hidden shadow-intense snap-center relative"
-                      >
-                        <blockquote 
-                            className="instagram-media w-full h-full m-0 p-0" 
-                            data-instgrm-permalink={url} 
-                            data-instgrm-version="14"
-                        ></blockquote>
-                      </div>
-                    ))}
-                  </div>
-                  <a 
-                    href="https://www.instagram.com/srinivasakalyanotsava_katapady?igsh=MXhpb2E0d3N1OTB0bw==" 
-                    target="_blank" rel="noreferrer"
-                    className="mt-6 inline-flex items-center gap-2 text-primary font-heading font-black text-xs uppercase tracking-[0.2em] group border-b border-primary/10 hover:border-primary transition-all pb-1"
-                  >
-                    View on Instagram <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </a>
+            {!isMounted ? (
+                // Skeleton/Placeholder during SSR/Mounting
+                <div key="loading" className="w-full flex justify-center py-20">
+                    <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
                 </div>
-              )}
-
-              {activeTab === "youtube" && (
-                <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide px-2 w-full max-w-6xl mx-auto">
-                  {youtubeContent.map((item) => (
-                    <motion.div
-                      key={item.id}
-                      whileHover={{ y: -8 }}
-                      className="flex-shrink-0 w-[300px] md:w-[400px] aspect-video bg-black/60 rounded-3xl border border-primary/10 overflow-hidden shadow-intense snap-center relative group"
-                    >
-                      <div className="w-full h-full bg-sacred-gold/5 flex items-center justify-center relative overflow-hidden">
-                        <img 
-                          src={`https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg`} 
-                          className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-all duration-700" 
-                          alt={item.title} 
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <PlayCircle className="w-12 h-12 text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                      </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                        <p className="font-heading text-lg font-bold text-foreground mb-0.5">{item.title}</p>
-                        <p className="text-[10px] text-primary/60 tracking-widest uppercase font-bold">{item.views}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-
-              {activeTab === "facebook" && (
-                <div className="w-full flex flex-col items-center">
-                  <div className="mb-6">
-                    <a 
-                      href="https://www.facebook.com/profile.php?id=61579551701761"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 px-6 py-3 bg-[#1877F2]/10 border border-[#1877F2]/30 text-[#1877F2] font-heading font-black text-sm rounded-xl hover:bg-[#1877F2] hover:text-white transition-all group"
-                    >
-                      <Facebook className="w-4 h-4" />
-                      View Official Profile
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </a>
-                  </div>
-
-                  <motion.div
-                    className="w-full max-w-[500px] h-[550px] bg-card/20 backdrop-blur-xl rounded-[30px] border border-primary/20 shadow-divine relative overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-primary/5 animate-pulse flex flex-col items-center justify-center -z-10 text-center p-8">
-                      <Facebook className="w-12 h-12 text-primary/10" />
-                    </div>
-                    <iframe 
-                      src={`https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61579551701761&tabs=timeline&width=500&height=550&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId`} 
-                      width="100%" 
-                      height="550" 
-                      style={{ border: "none", overflow: "hidden" }} 
-                      scrolling="no" 
-                      frameBorder="0" 
-                      allowFullScreen={true} 
-                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                      className="rounded-[30px]"
-                      title="Facebook Page Feed"
-                    ></iframe>
-                  </motion.div>
-                </div>
-              )}
-            </motion.div>
+            ) : (
+                <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col items-center"
+                >
+                {activeTab === "instagram" && <InstagramFeed reels={instagramReels} />}
+                {activeTab === "youtube" && <YoutubeFeed content={youtubeContent} />}
+                {activeTab === "facebook" && <FacebookFeed />}
+                </motion.div>
+            )}
           </AnimatePresence>
 
           {/* Scrolling Hints */}

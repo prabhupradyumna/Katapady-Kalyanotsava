@@ -144,7 +144,7 @@ const KalyanotsavaHero = () => {
             
             {/* Location Selection */}
             <div className="md:pl-14 text-center md:text-left mt-4 md:mt-0">
-              <p className="font-heading text-base md:text-lg text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Katapadi, Udupi</p>
+              <p className="font-heading text-base md:text-lg text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Katapady, Udupi</p>
               <p className="font-heading text-2xl md:text-4xl text-foreground font-black tracking-tight drop-shadow-2xl">S.V.S. Ground</p>
               <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">✦ Sacred Venue ✦</p>
             </div>

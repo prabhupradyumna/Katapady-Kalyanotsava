@@ -32,20 +32,20 @@ const WarmlyWelcomed = () => {
             >
               {[
                 { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
-                { name: "Katapadi Pai Family", role: "Devotional Patronage" },
+                { name: "Katapady Pai Family", role: "Devotional Patronage" },
                 { name: "GSB Community Udupi", role: "Community Coordination" },
                 { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" }
               ].concat(
                 { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
-                { name: "Katapadi Pai Family", role: "Devotional Patronage" },
+                { name: "Katapady Pai Family", role: "Devotional Patronage" },
                 { name: "GSB Community Udupi", role: "Community Coordination" },
                 { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" },
                 { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
-                { name: "Katapadi Pai Family", role: "Devotional Patronage" },
+                { name: "Katapady Family", role: "Devotional Patronage" },
                 { name: "GSB Community Udupi", role: "Community Coordination" },
                 { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" },
                 { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
-                { name: "Katapadi Pai Family", role: "Devotional Patronage" },
+                { name: "Katapady Pai Family", role: "Devotional Patronage" },
                 { name: "GSB Community Udupi", role: "Community Coordination" },
                 { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" }
               ).map((org, index) => (

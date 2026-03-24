@@ -152,15 +152,6 @@ const KalyanotsavaHero = () => {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div 
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center opacity-40 hover:opacity-100 transition-opacity"
-      >
-        <span className="text-[9px] uppercase tracking-[1em] text-primary font-black mb-3 ml-[1em]">Scroll</span>
-        <div className="w-[1px] h-12 md:h-20 bg-gradient-to-b from-primary via-primary/20 to-transparent" />
-      </motion.div>
     </section>
   );
 };

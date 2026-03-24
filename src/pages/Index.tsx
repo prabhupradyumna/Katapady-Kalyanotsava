@@ -12,7 +12,7 @@ import SocialSection from "@/components/SocialSection";
 import DevotionalQuotes from "@/components/DevotionalQuotes";
 import SiteFooter from "@/components/SiteFooter";
 import ParticleEffect from "@/components/ParticleEffect";
-import { SocialShare, AudioToggle } from "@/components/InteractiveControls";
+import { AudioToggle } from "@/components/InteractiveControls";
 import { Toaster } from "sonner";
 
 /* 
@@ -37,7 +37,6 @@ const Index = () => {
       
       {/* Interactive Floating Controls */}
       <AudioToggle />
-      <SocialShare />
       
       <Navbar />
       

@@ -67,68 +67,76 @@ const SevasGuidelines = () => {
             <span className="font-heading font-bold text-sm uppercase tracking-widest">Rules</span>
           </button>
         </div>
+      </div>
 
-        <div className="relative">
-          {/* Sevas Offered - Bulletproof Seamless Marquee */}
-          <div
-            className={`relative overflow-hidden w-full flex mb-8 md:mb-16 ${activeTab !== "sevas" ? "hidden md:flex" : "flex"}`}
+      <div className="relative w-full px-6 md:px-12">
+        {/* Sevas Offered - Full Width Bulletproof Seamless Marquee */}
+        <div
+          className={`relative overflow-hidden w-full flex mb-8 md:mb-16 ${activeTab !== "sevas" ? "hidden md:flex" : "flex"}`}
+        >
+          {/* Elegant Gradient Fades - Uniform with other sections */}
+          <div className="absolute inset-y-0 left-0 w-24 md:w-80 bg-gradient-to-r from-temple-deep via-temple-deep/90 to-transparent z-40 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 md:w-80 bg-gradient-to-l from-temple-deep via-temple-deep/90 to-transparent z-40 pointer-events-none" />
+
+          <motion.div
+            animate={{ x: ["0%", "-25%"] }}
+            transition={{ 
+              duration: 25, 
+              repeat: Infinity, 
+              ease: "linear",
+              repeatType: "loop"
+            }}
+            className="flex shrink-0 py-12"
           >
-            <motion.div
-              animate={{ x: ["0%", "-25%"] }}
-              transition={{ 
-                duration: 25, 
-                repeat: Infinity, 
-                ease: "linear",
-                repeatType: "loop"
-              }}
-              className="flex shrink-0 py-4"
-            >
-              {[...sevas, ...sevas, ...sevas, ...sevas].map((seva, index) => (
-                <div key={index} className="pr-6 md:pr-14 shrink-0">
-                  <motion.div
-                    whileHover={{ 
-                      y: -15, 
-                      scale: 1.05,
-                      boxShadow: "0 20px 40px -10px rgba(198,167,94,0.3)"
-                    }}
-                    className="w-[240px] md:w-[320px] bg-card/40 backdrop-blur-xl border border-primary/20 rounded-[32px] md:rounded-[40px] p-6 md:p-8 text-center group hover:border-primary/40 transition-all duration-300 shadow-glow relative overflow-hidden flex flex-col items-center min-h-[300px] md:min-h-[400px]"
-                    style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/parchment.png')" }}
-                  >
-                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    
-                    <div className="flex-1 flex flex-col items-center">
-                      <div className="w-10 h-10 md:w-14 md:h-14 mx-auto mb-4 md:mb-6 rounded-xl md:rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 relative z-10">
-                        <span className="text-base md:text-2xl font-heading font-black">ॐ</span>
-                      </div>
-                      
-                      <h3 className="font-heading text-sm md:text-2xl font-bold text-foreground mb-1 md:mb-3 leading-tight md:leading-normal relative z-10 whitespace-normal text-center line-clamp-2 uppercase">
-                        {seva.title}
-                      </h3>
-                      
-                      <p className="font-body text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.2em] text-primary/60 font-black relative z-10 whitespace-normal text-center line-clamp-4">
-                        {seva.description}
-                      </p>
+            {[...sevas, ...sevas, ...sevas, ...sevas].map((seva, index) => (
+              <div key={index} className="pr-6 md:pr-14 shrink-0">
+                <motion.div
+                  whileHover={{ 
+                    y: -15, 
+                    scale: 1.05,
+                    boxShadow: "0 20px 40px -10px rgba(198,167,94,0.3)"
+                  }}
+                  className="w-[240px] md:w-[320px] bg-card/40 backdrop-blur-xl border border-primary/20 rounded-[32px] md:rounded-[40px] p-6 md:p-8 text-center group hover:border-primary/40 transition-all duration-300 shadow-glow relative overflow-hidden flex flex-col items-center min-h-[300px] md:min-h-[400px]"
+                  style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/parchment.png')" }}
+                >
+                  <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  
+                  <div className="flex-1 flex flex-col items-center">
+                    <div className="w-10 h-10 md:w-14 md:h-14 mx-auto mb-4 md:mb-6 rounded-xl md:rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 relative z-10">
+                      <span className="text-base md:text-2xl font-heading font-black">ॐ</span>
                     </div>
+                    
+                    <h3 className="font-heading text-sm md:text-2xl font-bold text-foreground mb-1 md:mb-3 leading-tight md:leading-normal relative z-10 whitespace-normal text-center line-clamp-2 uppercase">
+                      {seva.title}
+                    </h3>
+                    
+                    <p className="font-body text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.2em] text-primary/60 font-black relative z-10 whitespace-normal text-center line-clamp-4">
+                      {seva.description}
+                    </p>
+                  </div>
 
-                    {seva.contact && (
-                      <div className="relative z-10 w-full pt-4 mt-auto">
-                        <a 
-                          href={`tel:${seva.contact.split(' / ')[0].replace(/\s/g, '')}`}
-                          className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl md:rounded-2xl bg-primary/10 border border-primary/20 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-sm"
-                        >
-                          <Phone className="w-4 h-4" />
-                          <span className="font-heading font-black tracking-widest uppercase text-[10px] md:text-sm">
-                            {seva.contact}
-                          </span>
-                        </a>
-                      </div>
-                    )}
-                  </motion.div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
+                  {seva.contact && (
+                    <div className="relative z-10 w-full pt-4 mt-auto">
+                      <a 
+                        href={`tel:${seva.contact.split(' / ')[0].replace(/\s/g, '')}`}
+                        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl md:rounded-2xl bg-primary/10 border border-primary/20 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-sm"
+                      >
+                        <Phone className="w-4 h-4" />
+                        <span className="font-heading font-black tracking-widest uppercase text-[10px] md:text-sm">
+                          {seva.contact}
+                        </span>
+                      </a>
+                    </div>
+                  )}
+                </motion.div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
 
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div className="relative">
           {/* Important Guidelines - Block on desktop, Tabbed on mobile */}
           <div
             className={`max-w-4xl mx-auto relative group ${activeTab !== "guidelines" ? "hidden md:block" : "block"}`}

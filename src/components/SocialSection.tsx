@@ -16,7 +16,7 @@ const InstagramFeed = ({ reels }: { reels: string[] }) => {
         {reels.map((url, idx) => (
           <div 
             key={idx} 
-            className="flex-shrink-0 w-[280px] md:w-[320px] h-[450px] bg-white rounded-3xl border border-primary/10 overflow-hidden shadow-intense snap-center relative"
+            className="flex-shrink-0 w-[220px] md:w-[320px] h-[350px] md:h-[450px] bg-white rounded-3xl border border-primary/10 overflow-hidden shadow-intense snap-center relative"
           >
             <blockquote 
                 className="instagram-media w-full h-full m-0 p-0" 
@@ -128,15 +128,15 @@ const FacebookFeed = () => {
           <Facebook className="w-12 h-12 text-primary/10" />
         </div>
         <iframe 
-          src={`https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61579551701761&tabs=timeline&width=500&height=550&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId`} 
+          src={`https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61579551701761&tabs=timeline&width=500&height=450&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId`} 
           width="100%" 
-          height="550" 
+          height="450" 
           style={{ border: "none", overflow: "hidden" }} 
           scrolling="no" 
           frameBorder="0" 
           allowFullScreen={true} 
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          className="rounded-[30px]"
+          className="rounded-[30px] h-[450px] md:h-[550px]"
           title="Facebook Page Feed"
         ></iframe>
       </motion.div>
@@ -212,7 +212,7 @@ const SocialSection = () => {
   ];
 
   return (
-    <section id="social" className="py-6 md:py-16 bg-temple-deep relative overflow-hidden">
+    <section id="social" className="py-4 md:py-16 bg-temple-deep relative overflow-hidden">
       <div id="fb-root"></div>
       <div className="absolute inset-0 bg-depth-grid opacity-5 pointer-events-none" />
       
@@ -237,14 +237,14 @@ const SocialSection = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-2xl border-2 transition-all duration-300 whitespace-nowrap
+              className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-2xl border-2 transition-all duration-300 whitespace-nowrap
                 ${activeTab === tab.id 
                   ? "bg-primary/10 border-primary text-primary shadow-glow-primary scale-105" 
                   : "bg-black/40 border-primary/10 text-primary/40 hover:border-primary/30 hover:text-primary/60"}
               `}
             >
-              <tab.icon className={`w-4 h-4 ${activeTab === tab.id ? tab.color : ""}`} />
-              <span className="font-heading font-black text-base">{tab.label}</span>
+              <tab.icon className={`w-3 h-3 md:w-4 md:h-4 ${activeTab === tab.id ? tab.color : ""}`} />
+              <span className="font-heading font-black text-sm md:text-base">{tab.label}</span>
             </button>
           ))}
         </div>

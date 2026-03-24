@@ -8,7 +8,7 @@ const LocationSection = () => {
     <section id="location" className="py-6 md:py-10 bg-temple-black relative overflow-hidden">
       <div className="absolute inset-0 bg-temple-gradient opacity-30" />
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-stretch gap-8 md:gap-10 backdrop-blur-xl bg-card/80 border border-primary/20 rounded-[30px] p-6 md:p-10 shadow-glow overflow-hidden">
+        <div className="flex flex-col lg:flex-row items-stretch gap-4 md:gap-10 backdrop-blur-xl bg-card/80 border border-primary/20 rounded-[20px] md:rounded-[30px] p-3 md:p-10 shadow-glow overflow-hidden">
           
           <div className="lg:w-5/12 space-y-6 flex flex-col justify-center">
             <motion.div
@@ -19,39 +19,39 @@ const LocationSection = () => {
               <p className="font-body text-primary text-lg uppercase tracking-widest mb-1 font-semibold">
                 ✦ Getting Here ✦
               </p>
-              <h2 className="font-heading text-3xl md:text-5xl font-black text-gradient-gold leading-tight mb-6">
+              <h2 className="font-heading text-2xl md:text-5xl font-black text-gradient-gold leading-tight mb-4">
                 Directions to<br/>the Sacred Ground
               </h2>
               
-              <div className="space-y-4">
-                <div className="bg-temple-dark/40 p-4 rounded-xl border border-primary/10 hover:border-primary/30 transition-all duration-300">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-8 h-8 text-primary mt-0.5" />
+              <div className="space-y-2 md:space-y-4">
+                <div className="bg-temple-dark/40 p-2 md:p-4 rounded-xl border border-primary/10 hover:border-primary/30 transition-all duration-300">
+                  <div className="flex items-start gap-2 md:gap-3">
+                    <MapPin className="w-5 h-5 md:w-8 md:h-8 text-primary mt-0.5" />
                     <div>
-                      <p className="font-heading text-lg font-bold text-foreground">Venue Destination</p>
-                      <p className="font-body text-base text-foreground/60 leading-snug">
+                      <p className="font-heading text-sm md:text-lg font-bold text-foreground">Venue Destination</p>
+                      <p className="font-body text-[11px] md:text-base text-foreground/60 leading-snug">
                         S.V.S. Ground, Katapady,<br/>Udupi, Karnataka - 574 105
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-temple-dark/40 p-4 rounded-xl border border-primary/10 hover:border-primary/30 transition-all duration-300">
-                  <div className="flex items-start gap-3">
-                    <Navigation className="w-8 h-8 text-primary mt-0.5" />
+                <div className="bg-temple-dark/40 p-2 md:p-4 rounded-xl border border-primary/10 hover:border-primary/30 transition-all duration-300">
+                  <div className="flex items-start gap-2 md:gap-3">
+                    <Navigation className="w-5 h-5 md:w-8 md:h-8 text-primary mt-0.5" />
                     <div>
-                      <p className="font-heading text-lg font-bold text-foreground">Landmarks</p>
-                      <p className="font-body text-base text-foreground/60 italic leading-snug">
+                      <p className="font-heading text-sm md:text-lg font-bold text-foreground">Landmarks</p>
+                      <p className="font-body text-[11px] md:text-base text-foreground/60 italic leading-snug">
                         Near Sri Vishwanatha Kshetra, Katapady Main Road.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-primary/5 p-4 rounded-xl border border-primary/20 hover:border-primary/40 transition-all duration-300">
-                  <div className="flex flex-col gap-2">
-                    <p className="font-heading text-lg font-bold text-primary uppercase tracking-widest text-sm">Need help with directions?</p>
-                    <div className="flex flex-wrap gap-4 text-foreground/80 font-body font-bold">
+                <div className="bg-primary/5 p-2 md:p-4 rounded-xl border border-primary/20 hover:border-primary/40 transition-all duration-300">
+                  <div className="flex flex-col gap-1 md:gap-2">
+                    <p className="font-heading text-[10px] md:text-sm font-bold text-primary uppercase tracking-widest">Need help with directions?</p>
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 text-foreground/80 font-body font-bold text-[11px] md:text-base">
                       <a href="tel:9845242167" className="hover:text-primary transition-colors">9845242167</a>
                       <a href="tel:9964578732" className="hover:text-primary transition-colors">9964578732</a>
                       <a href="tel:9892012060" className="hover:text-primary transition-colors">9892012060</a>
@@ -66,15 +66,15 @@ const LocationSection = () => {
                 href="https://maps.app.goo.gl/v99qmt3BUPPKjTGSA?g_st=aw"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-8 inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-heading font-bold text-lg rounded-xl shadow-glow group"
+                className="mt-2 md:mt-8 inline-flex items-center gap-2 px-4 md:px-8 py-2 md:py-4 bg-primary text-primary-foreground font-heading font-bold text-sm md:text-lg rounded-xl shadow-glow group"
               >
-                <MapIcon className="w-5 h-5" />
+                <MapIcon className="w-3 h-3 md:w-5 md:h-5" />
                 Open in Google Maps
               </motion.a>
             </motion.div>
           </div>
 
-          <div className="lg:w-7/12 w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden border-2 border-primary/20 shadow-divine relative bg-gray-900 self-center">
+          <div className="lg:w-7/12 w-full h-[180px] md:h-[400px] rounded-2xl overflow-hidden border-2 border-primary/20 shadow-divine relative bg-gray-900 self-center">
             <iframe
               src={mapUrl}
               className="w-full h-full grayscale-[0.2] contrast-[1.1]"

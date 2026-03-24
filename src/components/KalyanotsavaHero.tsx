@@ -135,17 +135,18 @@ const KalyanotsavaHero = () => {
             />
           </div>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0 pt-8 md:pt-12">
+          <div className="flex flex-col md:flex-row items-start justify-center gap-6 md:gap-0 pt-8 md:pt-12">
             {/* Date Selection */}
-            <div className="md:pr-14 md:border-r border-primary/20 text-center md:text-right">
+            <div className="w-full md:w-auto md:pr-14 md:border-r border-primary/20 text-center md:text-right">
               <p className="font-heading text-base md:text-lg text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Saturday</p>
-              <p className="font-heading text-3xl md:text-5xl text-foreground font-black tracking-tighter drop-shadow-2xl">11 April 2026</p>
+              <h3 className="font-heading text-3xl md:text-5xl text-foreground font-black tracking-tighter drop-shadow-2xl">11 April 2026</h3>
+              <p className="text-primary/0 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1 select-none pointer-events-none">✦ Divine Timing ✦</p> {/* Invisible spacer for alignment */}
             </div>
             
             {/* Location Selection */}
-            <div className="md:pl-14 text-center md:text-left mt-4 md:mt-0">
+            <div className="w-full md:w-auto md:pl-14 text-center md:text-left mt-4 md:mt-0">
               <p className="font-heading text-base md:text-lg text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Katapady, Udupi</p>
-              <p className="font-heading text-2xl md:text-4xl text-foreground font-black tracking-tight drop-shadow-2xl">S.V.S. Ground</p>
+              <h3 className="font-heading text-3xl md:text-5xl text-foreground font-black tracking-tight drop-shadow-2xl">S.V.S. Ground</h3>
               <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">✦ Sacred Venue ✦</p>
             </div>
           </div>

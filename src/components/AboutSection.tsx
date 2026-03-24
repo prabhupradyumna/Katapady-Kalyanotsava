@@ -37,10 +37,10 @@ const AboutSection = () => {
   const { ref, isInView } = useScrollReveal();
 
   return (
-    <section id="about" className="py-12 md:py-32 relative" ref={ref}>
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="about" className="py-12 md:py-32 relative overflow-hidden" ref={ref}>
+      <div className="container mx-auto px-4 md:px-8 mb-16">
         <motion.div
-          className="text-center mb-16"
+          className="text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
@@ -57,26 +57,33 @@ const AboutSection = () => {
             drawing millions of devotees each year seeking His divine grace.
           </p>
         </motion.div>
+      </div>
 
-      <div className="relative overflow-hidden py-10">
-        {/* Gradient Fades for Carousel Edges */}
-        <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-temple-black to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-temple-black to-transparent z-10 pointer-events-none" />
-        
-        <div className="flex">
-          <motion.div
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            className="flex gap-4 md:gap-8 whitespace-nowrap"
-          >
+      <div className="relative w-full px-6 md:px-12 py-10">
+        <div className="relative">
+          {/* Elegant Gradient Fades for Carousel Edges - Using correct background color */}
+          <div className="absolute inset-y-0 left-0 w-24 md:w-80 bg-gradient-to-r from-temple-deep via-temple-deep/90 to-transparent z-40 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 md:w-80 bg-gradient-to-l from-temple-deep via-temple-deep/90 to-transparent z-40 pointer-events-none" />
+          
+          <div className="relative overflow-hidden w-full flex">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              className="flex gap-4 md:gap-12 whitespace-nowrap px-4"
+            >
             {[...cards, ...cards].map((card, i) => (
               <div
                 key={i}
-                className="w-[280px] md:w-[300px] inline-flex"
+                className="w-[300px] md:w-[350px] inline-flex py-8"
               >
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  whileHover={{ 
+                    y: -15, 
+                    scale: 1.05,
+                    boxShadow: "0 20px 40px -10px rgba(198,167,94,0.3)"
+                  }}
                   animate={{ y: [0, -8, 0] }}
                   transition={{ 
                     y: {
@@ -84,19 +91,20 @@ const AboutSection = () => {
                       duration: 4,
                       ease: "easeInOut",
                       delay: i * 0.5
-                    }
+                    },
+                    scale: { duration: 0.3 }
                   }}
-                  className="group bg-card/10 backdrop-blur-xl border border-primary/10 hover:border-primary/40 rounded-[2.5rem] p-6 md:p-8 text-center transition-all duration-500 shadow-divine relative overflow-hidden flex flex-col w-full h-full min-h-[300px] md:min-h-[350px] whitespace-normal"
+                  className="group bg-card/10 backdrop-blur-xl border border-primary/10 hover:border-primary/40 rounded-[2.5rem] p-8 md:p-10 text-center transition-all duration-500 shadow-divine relative overflow-hidden flex flex-col w-full h-full min-h-[350px] md:min-h-[420px] whitespace-normal"
                 >
                   <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   
-                  <div className="w-14 h-14 md:w-16 md:h-16 mx-auto mb-6 md:mb-8 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 relative z-10">
-                    <card.icon className="w-7 h-7 md:w-8 md:h-8" />
+                  <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-8 md:mb-10 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 relative z-10">
+                    <card.icon className="w-8 h-8 md:w-10 md:h-10" />
                   </div>
                   
                   <div className="relative z-10 flex-grow">
-                    <h3 className="font-heading text-xl md:text-2xl font-black text-primary mb-4 uppercase tracking-tighter md:tracking-widest drop-shadow-sm">{card.title}</h3>
-                    <p className="font-body text-xs md:text-base text-foreground/70 leading-relaxed italic md:not-italic font-medium">
+                    <h3 className="font-heading text-xl md:text-3xl font-black text-primary mb-5 uppercase tracking-tighter md:tracking-widest drop-shadow-sm">{card.title}</h3>
+                    <p className="font-body text-sm md:text-lg text-foreground/70 leading-relaxed italic md:not-italic font-medium">
                       {card.description}
                     </p>
                   </div>
@@ -104,8 +112,8 @@ const AboutSection = () => {
               </div>
             ))}
           </motion.div>
+          </div>
         </div>
-      </div>
       </div>
     </section>
   );

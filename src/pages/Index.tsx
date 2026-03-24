@@ -18,13 +18,13 @@ import { Toaster } from "sonner";
 /* 
   Initial Template Components (Commented out for future reference):
   import HeroSection from "@/components/HeroSection";
-  import AboutSection from "@/components/AboutSection";
   import TempleExperience from "@/components/TempleExperience";
   import SevasSection from "@/components/SevasSection";
   import GallerySection from "@/components/GallerySection";
   import QuotesSection from "@/components/QuotesSection";
   import DonationSection from "@/components/DonationSection";
 */
+import AboutSection from "@/components/AboutSection";
 
 const Index = () => {
   return (
@@ -47,8 +47,9 @@ const Index = () => {
         
         <CountdownTimer />
         <DevotionalQuotes />
-        <WarmlyWelcomed />
         <EventTimeline />
+        <WarmlyWelcomed />
+        <AboutSection />
         <DevotionalGallery />
         <SevasGuidelines />
         <SponsorCarousel />

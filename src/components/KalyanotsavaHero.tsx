@@ -3,7 +3,7 @@ import heroImage from "@/assets/hero-kalyanotsava.png";
 
 const KalyanotsavaHero = () => {
   return (
-    <section id="home" className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-temple-deep">
+    <section id="home" className="relative h-screen min-h-[550px] md:min-h-[700px] flex items-center justify-center overflow-hidden bg-temple-deep">
       
       {/* Background Layers for Depth */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -103,7 +103,7 @@ const KalyanotsavaHero = () => {
       </div>
 
       {/* Hero Content (Floating on top) */}
-      <div className="relative z-50 text-center px-6 max-w-6xl mx-auto flex flex-col justify-center h-full pt-20">
+      <div className="relative z-50 text-center px-6 max-w-6xl mx-auto flex flex-col justify-center h-full pt-10 md:pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

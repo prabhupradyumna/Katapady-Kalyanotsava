@@ -212,12 +212,12 @@ const SocialSection = () => {
   ];
 
   return (
-    <section id="social" className="py-12 md:py-16 bg-temple-deep relative overflow-hidden">
+    <section id="social" className="py-6 md:py-16 bg-temple-deep relative overflow-hidden">
       <div id="fb-root"></div>
       <div className="absolute inset-0 bg-depth-grid opacity-5 pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-10">
+        <div className="text-center mb-6 md:mb-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}

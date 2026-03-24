@@ -24,11 +24,11 @@ const eventItems = [
 
 const EventTimeline = () => {
   return (
-    <section id="schedule" className="py-10 bg-temple-black relative overflow-hidden">
+    <section id="schedule" className="py-6 md:py-10 bg-temple-black relative overflow-hidden">
       <div className="absolute inset-0 bg-depth-grid opacity-[0.03] pointer-events-none" />
       
       <div className="container mx-auto px-4 relative z-20">
-        <div className="text-center mb-12">
+        <div className="text-center mb-6 md:mb-12">
           <p className="font-body text-primary text-lg uppercase tracking-[0.3em] mb-2 font-semibold">
             ✦ Sacred Journey ✦
           </p>

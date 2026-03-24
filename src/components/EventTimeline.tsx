@@ -3,19 +3,19 @@ import { Sparkles, Heart, CheckCircle } from "lucide-react";
 
 const eventItems = [
   {
-    time: "5:00 AM",
-    title: "Vishwa Shanti Pooja",
+    time: "5:00 PM",
+    title: "Swarnamani Bandhana",
     description: "Invoking peace and prosperity with sacred vedic chants.",
     icon: Sparkles
   },
   {
-    time: "5:50 AM",
+    time: "5:50 PM",
     title: "Srinivasa Kalyanotsava",
     description: "The grand celestial wedding of the Divine Couple.",
     icon: Heart
   },
   {
-    time: "8:30 AM",
+    time: "8:30 PM",
     title: "Mahaprasada",
     description: "Sacred distribution of blissful prasada to all devotees.",
     icon: CheckCircle

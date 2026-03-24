@@ -5,9 +5,10 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "Schedule", href: "#schedule" },
-  { label: "Gallery", href: "#gallery" },
   { label: "Sevas", href: "#sevas" },
   { label: "Location", href: "#location" },
+  { label: "Parking", href: "#parking" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const Navbar = () => {
@@ -20,12 +21,20 @@ const Navbar = () => {
       if (typeof window === 'undefined') return;
       setScrolled(window.scrollY > 20);
 
+      const navHeight = 150;
       const sections = navLinks.map((l) => l.href.slice(1));
+      
+      // Special case: Bottom of page
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+        setActive(sections[sections.length - 1]);
+        return;
+      }
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 150) {
+          if (rect.top <= navHeight) {
             setActive(sections[i]);
             break;
           }

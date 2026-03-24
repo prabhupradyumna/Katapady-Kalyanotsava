@@ -39,7 +39,7 @@ const SponsorCarousel = () => {
           {[...sponsors, ...sponsors].map((sponsor, i) => (
             <div
               key={i}
-              className="px-10 py-6 min-h-[180px] bg-card/60 backdrop-blur-md border border-primary/30 rounded-2xl flex flex-col items-center justify-center min-w-[320px] shadow-divine group hover:border-primary transition-all duration-300 transform hover:-translate-y-2 gap-4"
+              className="px-10 py-6 min-h-[180px] bg-card border border-primary/30 rounded-2xl flex flex-col items-center justify-center min-w-[320px] shadow-divine group hover:border-primary transition-all duration-300 transform hover:-translate-y-2 gap-4 will-change-transform"
             >
               {sponsor.logo && (
                 <div className="h-28 w-full flex items-center justify-center bg-white rounded-xl p-4 shadow-inner">

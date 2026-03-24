@@ -14,7 +14,7 @@ const KalyanotsavaHero = () => {
         <motion.div 
           animate={{ rotate: 360 }}
           transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vw] opacity-[0.05] pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vw] opacity-[0.05] pointer-events-none will-change-transform"
         >
           <div className="w-full h-full border-[1px] border-primary rounded-full" />
           <div className="absolute inset-[10%] border-[1px] border-primary/40 rounded-full" />
@@ -43,7 +43,7 @@ const KalyanotsavaHero = () => {
               opacity: [0.2, 0.4, 0.2],
             }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="w-[80vw] h-[80vw] rounded-full bg-primary/10 blur-[200px]"
+            className="w-[80vw] h-[80vw] rounded-full bg-primary/10 blur-[200px] will-change-transform"
           />
         </div>
 

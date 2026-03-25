@@ -1,32 +1,51 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import heroImage from "@/assets/hero-kalyanotsava.png";
+import mandalaPattern from "@/assets/mandala-pattern.png";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const KalyanotsavaHero = () => {
+  const isMobile = useIsMobile();
+  const { scrollY } = useScroll();
+  
+  // Parallax transforms
+  const mandalaY = useTransform(scrollY, [0, 500], [0, 150]);
+  const deityY = useTransform(scrollY, [0, 500], [0, 100]);
+  const contentY = useTransform(scrollY, [0, 500], [0, -50]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+  // Adaptive counts for performance optimization
+  const rayCount = isMobile ? 6 : 12;
+  const sparkleCount = isMobile ? 12 : 30;
+
   return (
-    <section id="home" className="relative h-screen min-h-[550px] md:min-h-[700px] flex items-center justify-center overflow-hidden bg-temple-deep">
+    <section id="home" className="relative h-screen min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden bg-temple-deep optimize-gpu">
       
       {/* Background Layers for Depth */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {/* Layer 1: Base Dark Gradient */}
         <div className="absolute inset-0 bg-temple-deep" />
         
-        {/* Layer 2: Subtle Animated Mandala Background */}
+        {/* Layer 2: Rotating Mandala Background with Parallax */}
         <motion.div 
+          style={{ y: mandalaY }}
           animate={{ rotate: 360 }}
-          transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vw] opacity-[0.05] pointer-events-none will-change-transform"
+          transition={{ duration: 180, repeat: Infinity, ease: "linear" }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140vw] h-[140vw] md:w-[100vw] md:h-[100vw] opacity-[0.07] pointer-events-none will-change-transform"
         >
-          <div className="w-full h-full border-[1px] border-primary rounded-full" />
-          <div className="absolute inset-[10%] border-[1px] border-primary/40 rounded-full" />
-          <div className="absolute inset-[20%] border-[2px] border-primary/20 rounded-full border-dashed" />
+          <img 
+            src={mandalaPattern} 
+            alt="" 
+            className="w-full h-full object-contain mix-blend-screen"
+          />
         </motion.div>
 
-        {/* Layer 3: Main Deity Cinematic Image */}
+        {/* Layer 3: Main Deity Cinematic Image with Parallax */}
         <motion.div
+          style={{ y: deityY }}
           initial={{ scale: 1.15, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.9 }}
           transition={{ duration: 3, ease: "easeOut" }}
-          className="absolute inset-0 z-10"
+          className="absolute inset-0 z-10 will-change-transform"
         >
           <img
             src={heroImage}
@@ -35,7 +54,7 @@ const KalyanotsavaHero = () => {
           />
         </motion.div>
 
-        {/* Ambient Glow behind Deity */}
+        {/* Ambient Glow behind Deity - Optimized blur for performance */}
         <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
           <motion.div
             animate={{
@@ -43,7 +62,7 @@ const KalyanotsavaHero = () => {
               opacity: [0.2, 0.4, 0.2],
             }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="w-[80vw] h-[80vw] rounded-full bg-primary/10 blur-[200px] will-change-transform"
+            className="w-[80vw] h-[80vw] rounded-full bg-primary/10 blur-[120px] will-change-transform translate-z-0"
           />
         </div>
 
@@ -55,15 +74,15 @@ const KalyanotsavaHero = () => {
         </div>
       </div>
 
-      {/* Cinematic Focused Light Rays */}
+      {/* Cinematic Focused Light Rays - Adaptive count */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-20 opacity-30">
-        {[...Array(12)].map((_, i) => (
+        {[...Array(rayCount)].map((_, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, x: (i * 10) + "%" }}
+            initial={{ opacity: 0, x: (i * (100/rayCount)) + "%" }}
             animate={{ 
               opacity: [0, 0.3, 0],
-              x: (i * 10 + 5) + "%",
+              x: (i * (100/rayCount) + 5) + "%",
               height: ["400px", "600px", "500px"]
             }}
             transition={{ 
@@ -72,14 +91,14 @@ const KalyanotsavaHero = () => {
               ease: "easeInOut",
               delay: i * 2 
             }}
-            className="absolute top-[-100px] w-[1px] bg-gradient-to-b from-primary/40 via-primary/5 to-transparent rotate-[25deg] blur-[3px]"
+            className="absolute top-[-100px] w-[1px] bg-gradient-to-b from-primary/40 via-primary/5 to-transparent rotate-[25deg] blur-[3px] will-change-transform translate-z-0"
           />
         ))}
       </div>
 
-      {/* Floating Sparkles (Foreground Layer) */}
+      {/* Floating Sparkles (Foreground Layer) - Adaptive count */}
       <div className="absolute inset-0 z-40 pointer-events-none overflow-hidden">
-        {[...Array(30)].map((_, i) => (
+        {[...Array(sparkleCount)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ 
@@ -97,34 +116,37 @@ const KalyanotsavaHero = () => {
               repeat: Infinity, 
               delay: Math.random() * 5 
             }}
-            className="absolute w-1 h-1 bg-primary rounded-full blur-[1px]"
+            className="absolute w-1 h-1 bg-primary rounded-full blur-[1px] will-change-transform translate-z-0"
           />
         ))}
       </div>
 
       {/* Hero Content (Floating on top) */}
-      <div className="relative z-50 text-center px-6 max-w-6xl mx-auto flex flex-col justify-center h-full pt-10 md:pt-20">
+      <motion.div 
+        style={{ y: contentY, opacity }}
+        className="relative z-50 text-center px-6 max-w-6xl mx-auto flex flex-col justify-center h-full pt-6 md:pt-12"
+      >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 2, ease: "circOut" }}
-          className="space-y-6 md:space-y-8"
+          className="space-y-4 md:space-y-6"
         >
           <motion.p 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="font-body text-primary text-xs md:text-lg uppercase tracking-[0.4em] md:tracking-[0.6em] font-semibold glow-soft"
+            className="font-body text-primary text-xs md:text-base uppercase tracking-[0.4em] md:tracking-[0.6em] font-semibold glow-soft"
           >
-            ✦ Loakakalyanartha ✦
+            ✦ Lokakalyanartha ✦
           </motion.p>
           
-          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-black text-gradient-gold leading-tight md:leading-tight text-shadow-premium drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-4">
+          <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-gradient-gold leading-tight md:leading-tight text-shadow-premium drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-4">
             Sri Srinivasa<br className="hidden md:block"/> Kalyanotsava
           </h1>
           
           <div className="relative inline-block py-1 px-4">
-            <p className="font-body text-base md:text-xl text-foreground/80 max-w-4xl mx-auto italic tracking-wide text-shadow-premium">
+            <p className="font-body text-sm md:text-lg text-foreground/80 max-w-4xl mx-auto italic tracking-wide text-shadow-premium">
               Step into the sacred union of divinity and grace
             </p>
             <motion.div 
@@ -135,23 +157,23 @@ const KalyanotsavaHero = () => {
             />
           </div>
 
-          <div className="flex flex-col md:flex-row items-start justify-center gap-6 md:gap-0 pt-8 md:pt-12">
+          <div className="flex flex-col md:flex-row items-start justify-center gap-4 md:gap-0 pt-4 md:pt-8">
             {/* Date Selection */}
-            <div className="w-full md:w-auto md:pr-14 md:border-r border-primary/20 text-center md:text-right">
-              <p className="font-heading text-base md:text-lg text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Saturday</p>
-              <h3 className="font-heading text-3xl md:text-5xl text-foreground font-black tracking-tighter drop-shadow-2xl">11 April 2026</h3>
-              <p className="text-primary/0 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1 select-none pointer-events-none">✦ Divine Timing ✦</p> {/* Invisible spacer for alignment */}
+            <div className="w-full md:w-auto md:pr-10 md:border-r border-primary/20 text-center md:text-right">
+              <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Saturday</p>
+              <h3 className="font-heading text-2xl md:text-4xl text-foreground font-black tracking-tighter drop-shadow-2xl">11 April 2026</h3>
+              <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">✦ 6:25 PM Godhuli Lagnam ✦</p>
             </div>
             
             {/* Location Selection */}
-            <div className="w-full md:w-auto md:pl-14 text-center md:text-left mt-4 md:mt-0">
-              <p className="font-heading text-base md:text-lg text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Katapady, Udupi</p>
-              <h3 className="font-heading text-3xl md:text-5xl text-foreground font-black tracking-tight drop-shadow-2xl">S.V.S. Ground</h3>
+            <div className="w-full md:w-auto md:pl-10 text-center md:text-left mt-2 md:mt-0">
+              <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Katapady, Udupi</p>
+              <h3 className="font-heading text-2xl md:text-4xl text-foreground font-black tracking-tight drop-shadow-2xl">S.V.S. Ground</h3>
               <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">✦ Sacred Venue ✦</p>
             </div>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
 
     </section>
   );

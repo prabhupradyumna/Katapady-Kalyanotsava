@@ -17,28 +17,35 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
     const onScroll = () => {
-      if (typeof window === 'undefined') return;
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (typeof window === 'undefined') return;
+          setScrolled(window.scrollY > 20);
 
-      const navHeight = 150;
-      const sections = navLinks.map((l) => l.href.slice(1));
-      
-      // Special case: Bottom of page
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
-        setActive(sections[sections.length - 1]);
-        return;
-      }
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= navHeight) {
-            setActive(sections[i]);
-            break;
+          const navHeight = 150;
+          const sections = navLinks.map((l) => l.href.slice(1));
+          
+          // Special case: Bottom of page
+          if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+            setActive(sections[sections.length - 1]);
+          } else {
+            for (let i = sections.length - 1; i >= 0; i--) {
+              const el = document.getElementById(sections[i]);
+              if (el) {
+                const rect = el.getBoundingClientRect();
+                if (rect.top <= navHeight) {
+                  setActive(sections[i]);
+                  break;
+                }
+              }
+            }
           }
-        }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     
@@ -60,18 +67,18 @@ const Navbar = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="w-full px-6 md:px-12 flex items-center justify-between h-20 md:h-24">
-        <a href="#home" className="font-heading text-2xl md:text-3xl text-gradient-gold font-bold tracking-tight inline-flex items-center">
-          <img src="/tilak-logo.png" alt="Tilak Logo" className="h-10 md:h-14 w-auto mr-3 drop-shadow-glow" /> Srinivasa Kalyanotsava
+      <div className="w-full px-3 md:px-12 flex items-center justify-between h-16 md:h-20">
+        <a href="#home" className="font-heading text-xl md:text-2xl lg:text-3xl font-bold text-gradient-gold leading-relaxed md:leading-loose drop-shadow-glow pl-1 pr-4 inline-flex items-center">
+          <img src="/tilak-logo.png" alt="Tilak Logo" className="h-8 md:h-12 w-auto mr-2 drop-shadow-glow" /> Srinivasa Kalyanotsava
         </a>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className={`font-body text-xl transition-all duration-300 relative pb-1 ${
+              className={`font-body text-lg transition-all duration-300 relative pb-0.5 ${
                 active === link.href.slice(1)
                   ? "text-primary scale-110 font-bold"
                   : "text-foreground/70 hover:text-primary"

@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 
-import coverImg from "@/assets/hero-kalyanotsava.png";
-import img1 from "@/assets/invitation/media__1773996372498.jpg";
-import img2 from "@/assets/invitation/media__1773996372579.jpg";
-import img3 from "@/assets/invitation/media__1773996372672.jpg";
-import imgKannada from "@/assets/invitation/invitation-kannada.jpg";
+import invImg1 from "@/assets/invitation/invitation-1.png";
+import invImg2 from "@/assets/invitation/invitation-2.png";
+import invImg3 from "@/assets/invitation/invitation-3.png";
+import invImg4 from "@/assets/invitation/invitation-4.png";
+import invImg5 from "@/assets/invitation/invitation-5.png";
 
 // Exactly 5 unique pages (5 sheets)
 const sheets = [
-  { front: { type: "cover", src: coverImg, title: "Sri Srinivasa Kalyanotsava", subtitle: "Divine Invitation" }, back: { type: "empty" } },
-  { front: { type: "content", src: imgKannada, title: "Kannada Invitation" }, back: { type: "empty" } },
-  { front: { type: "content", src: img1, title: "Sacred Invocation" }, back: { type: "empty" } },
-  { front: { type: "content", src: img2, title: "Grand Ceremonies" }, back: { type: "empty" } },
-  { front: { type: "content", src: img3, title: "Final Invitation" }, back: { type: "empty" } }
+  { front: { type: "content", src: invImg1, title: "Invitation Cover" }, back: { type: "empty" } },
+  { front: { type: "content", src: invImg2, title: "Family Invitation" }, back: { type: "empty" } },
+  { front: { type: "content", src: invImg5, title: "Event Schedule" }, back: { type: "empty" } },
+  { front: { type: "content", src: invImg3, title: "Sacred Invitation Details" }, back: { type: "empty" } },
+  { front: { type: "content", src: invImg4, title: "Location Map & Sponsors" }, back: { type: "empty" } }
 ];
 
 const DevotionalGallery = () => {
@@ -31,12 +31,12 @@ const DevotionalGallery = () => {
   return (
     <section 
       id="gallery" 
-      className="relative w-full py-6 md:py-8 flex flex-col items-center justify-center bg-temple-deep overflow-hidden"
+      className="relative w-full py-4 md:py-6 flex flex-col items-center justify-center bg-temple-deep overflow-hidden"
     >
       <div className="absolute inset-0 bg-depth-grid opacity-5 pointer-events-none" />
       
       <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
-        <div className="text-center mb-4 md:mb-6">
+        <div className="text-center mb-2 md:mb-4">
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -64,7 +64,7 @@ const DevotionalGallery = () => {
             className="w-full flex flex-col items-center"
         >
             {/* Optimized height and width for ultra-small mobile and large screens */}
-            <div className="relative w-full max-w-[250px] xs:max-w-[280px] md:max-w-[380px] aspect-[1/1.35] md:aspect-[1/1.2] preserve-3d mb-8 md:mb-10">
+            <div className="relative w-full max-w-[220px] xs:max-w-[250px] md:max-w-[340px] aspect-[1/1.35] md:aspect-[1/1.2] preserve-3d mb-4 md:mb-6">
             {sheets.map((sheet, index) => {
                 const isFlipped = currentSheet > index;
                 const zIndex = isFlipped ? index : sheets.length - index;
@@ -89,9 +89,7 @@ const DevotionalGallery = () => {
                 >
                     {/* FRONT SIDE */}
                     <div 
-                        className={`absolute inset-0 w-full h-full backface-hidden rounded-[8px] md:rounded-[12px] shadow-2xl border-[4px] md:border-[8px] border-primary/20 bg-[#fbf5e4] p-3 overflow-hidden
-                            ${sheet.front.type === "cover" ? "bg-gradient-to-br from-sacred-gold-dark via-temple-dark to-sacred-gold-dark" : ""}
-                        `}
+                        className="absolute inset-0 w-full h-full backface-hidden rounded-[8px] md:rounded-[12px] shadow-2xl border-[4px] md:border-[8px] border-primary/20 bg-[#fbf5e4] p-3 overflow-hidden"
                         style={{ 
                             backgroundImage: "url('https://www.transparenttextures.com/patterns/parchment.png')",
                             boxShadow: "inset 0 0 40px rgba(0,0,0,0.1), 5px 5px 20px rgba(0,0,0,0.4)",
@@ -100,30 +98,14 @@ const DevotionalGallery = () => {
                     >
                     <div className="absolute inset-1.5 border border-primary/10 rounded-[4px] pointer-events-none" />
 
-                    {sheet.front.type === "cover" ? (
-                        <div className="h-full w-full flex flex-col items-center justify-center text-center p-2 space-y-4">
-                        <div className="w-20 h-20 md:w-32 md:h-32 rounded-full border-2 border-primary/40 overflow-hidden shadow-glow bg-black/20">
-                            <img src={sheet.front.src} className="w-full h-full object-cover block" alt="Cover" />
-                        </div>
-                        <div>
-                            <h3 className="font-heading text-lg md:text-2xl font-black text-gradient-gold leading-tight uppercase">
-                            {sheet.front.title}
-                            </h3>
-                            <p className="font-body text-primary/80 text-[8px] md:text-xs tracking-[0.2em] uppercase mt-1">
-                            {sheet.front.subtitle}
-                            </p>
-                        </div>
-                        </div>
-                    ) : (
-                        <div className="h-full w-full flex items-center justify-center p-1 relative bg-white/20 rounded-lg">
-                            <img 
-                                src={sheet.front.src} 
-                                className="max-h-full max-w-full object-contain block relative z-10" 
-                                alt={sheet.front.title || "Page"} 
-                                style={{ transform: "translateZ(2px)" }}
-                            />
-                        </div>
-                    )}
+                    <div className="h-full w-full flex items-center justify-center p-1 relative bg-white/20 rounded-lg">
+                        <img 
+                            src={sheet.front.src} 
+                            className="max-h-full max-w-full object-contain block relative z-10" 
+                            alt={sheet.front.title || "Page"} 
+                            style={{ transform: "translateZ(2px)" }}
+                        />
+                    </div>
                     <div className="absolute top-0 left-0 bottom-0 w-[4px] bg-black/5" />
                     </div>
 

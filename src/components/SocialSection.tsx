@@ -212,12 +212,12 @@ const SocialSection = () => {
   ];
 
   return (
-    <section id="social" className="py-4 md:py-16 bg-temple-deep relative overflow-hidden">
+    <section id="social" className="py-4 md:py-6 bg-temple-deep relative overflow-hidden optimize-gpu">
       <div id="fb-root"></div>
       <div className="absolute inset-0 bg-depth-grid opacity-5 pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-6 md:mb-10">
+        <div className="text-center mb-4 md:mb-6">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -226,18 +226,18 @@ const SocialSection = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             <span className="text-primary text-[10px] font-bold uppercase tracking-widest">Live Updates</span>
           </motion.div>
-          <h2 className="font-heading text-3xl md:text-5xl font-black text-gradient-gold uppercase leading-tight">
+          <h2 className="font-heading text-2xl md:text-4xl font-black text-gradient-gold uppercase leading-tight">
             Divine Community
           </h2>
         </div>
 
         {/* Tab Controls */}
-        <div className="flex justify-center gap-4 md:gap-6 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex justify-center gap-3 md:gap-4 mb-4 md:mb-6 overflow-x-auto pb-2 scrollbar-hide">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-2xl border-2 transition-all duration-300 whitespace-nowrap
+              className={`flex items-center gap-2 px-3 md:px-5 py-1.5 md:py-2 rounded-xl border-2 transition-all duration-300 whitespace-nowrap
                 ${activeTab === tab.id 
                   ? "bg-primary/10 border-primary text-primary shadow-glow-primary scale-105" 
                   : "bg-black/40 border-primary/10 text-primary/40 hover:border-primary/30 hover:text-primary/60"}
@@ -250,7 +250,7 @@ const SocialSection = () => {
         </div>
 
         {/* Content Area - Client Side Guarded */}
-        <div className="relative min-h-[400px]">
+        <div className="relative min-h-[300px]">
           <AnimatePresence mode="wait">
             {!isMounted ? (
                 // Skeleton/Placeholder during SSR/Mounting

@@ -5,12 +5,12 @@ const LocationSection = () => {
   const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15538.987791845137!2d74.7431633!3d13.2756181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcbb7ac1112d6d%3A0xdd756834e429ad22!2sSVS%20Ground!5e0!3m2!1sen!2sin!4v1700000000000";
 
   return (
-    <section id="location" className="py-6 md:py-10 bg-temple-black relative overflow-hidden">
+    <section id="location" className="py-4 md:py-8 bg-temple-black relative overflow-hidden">
       <div className="absolute inset-0 bg-temple-gradient opacity-30" />
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-stretch gap-4 md:gap-10 backdrop-blur-xl bg-card/80 border border-primary/20 rounded-[20px] md:rounded-[30px] p-3 md:p-10 shadow-glow overflow-hidden">
+        <div className="flex flex-col lg:flex-row items-stretch gap-4 md:gap-8 backdrop-blur-xl bg-card/80 border border-primary/20 rounded-[20px] md:rounded-[24px] p-3 md:p-6 shadow-glow overflow-hidden">
           
-          <div className="lg:w-5/12 space-y-6 flex flex-col justify-center">
+          <div className="lg:w-5/12 space-y-4 flex flex-col justify-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -19,7 +19,7 @@ const LocationSection = () => {
               <p className="font-body text-primary text-lg uppercase tracking-widest mb-1 font-semibold">
                 ✦ Getting Here ✦
               </p>
-              <h2 className="font-heading text-2xl md:text-5xl font-black text-gradient-gold leading-tight mb-4">
+              <h2 className="font-heading text-xl md:text-3xl lg:text-4xl font-black text-gradient-gold leading-tight mb-3">
                 Directions to<br/>the Sacred Ground
               </h2>
               
@@ -30,7 +30,7 @@ const LocationSection = () => {
                     <div>
                       <p className="font-heading text-sm md:text-lg font-bold text-foreground">Venue Destination</p>
                       <p className="font-body text-[11px] md:text-base text-foreground/60 leading-snug">
-                        S.V.S. Ground, Katapady,<br/>Udupi, Karnataka - 574 105
+                        S.V.S. Ground, Katpadi Pete,<br/>Katapady, Udupi, Karnataka - 574 105
                       </p>
                     </div>
                   </div>
@@ -66,7 +66,7 @@ const LocationSection = () => {
                 href="https://maps.app.goo.gl/v99qmt3BUPPKjTGSA?g_st=aw"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-2 md:mt-8 inline-flex items-center gap-2 px-4 md:px-8 py-2 md:py-4 bg-primary text-primary-foreground font-heading font-bold text-sm md:text-lg rounded-xl shadow-glow group"
+                className="mt-2 md:mt-4 inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-primary text-primary-foreground font-heading font-bold text-sm md:text-base rounded-xl shadow-glow group"
               >
                 <MapIcon className="w-3 h-3 md:w-5 md:h-5" />
                 Open in Google Maps
@@ -74,7 +74,7 @@ const LocationSection = () => {
             </motion.div>
           </div>
 
-          <div className="lg:w-7/12 w-full h-[180px] md:h-[400px] rounded-2xl overflow-hidden border-2 border-primary/20 shadow-divine relative bg-gray-900 self-center">
+          <div className="lg:w-7/12 w-full h-[180px] md:h-[300px] rounded-2xl overflow-hidden border-2 border-primary/20 shadow-divine relative bg-gray-900 self-center">
             <iframe
               src={mapUrl}
               className="w-full h-full grayscale-[0.2] contrast-[1.1]"

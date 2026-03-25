@@ -10,8 +10,11 @@ import LocationSection from "@/components/LocationSection";
 import SponsorCarousel from "@/components/SponsorCarousel";
 import SocialSection from "@/components/SocialSection";
 import DevotionalQuotes from "@/components/DevotionalQuotes";
+import ParkingSection from "@/components/ParkingSection";
+import DivineResolve from "@/components/DivineResolve";
 import SiteFooter from "@/components/SiteFooter";
 import ParticleEffect from "@/components/ParticleEffect";
+import DivineAura from "@/components/DivineAura";
 import { AudioToggle } from "@/components/InteractiveControls";
 import { Toaster } from "sonner";
 
@@ -31,6 +34,7 @@ const Index = () => {
     <div className="relative overflow-x-hidden bg-temple-black selection:bg-primary selection:text-primary-foreground">
       <Toaster position="top-center" richColors />
       <ParticleEffect />
+      <DivineAura />
       
       {/* Disclaimer Ticker */}
       <TickerBanner />
@@ -43,18 +47,21 @@ const Index = () => {
       <main className="relative z-10 bg-temple-deep overflow-hidden">
         <KalyanotsavaHero />
         
+        <DivineResolve />
+
         <div className="section-blend-top" />
         
         <CountdownTimer />
         <DevotionalQuotes />
         <EventTimeline />
         <WarmlyWelcomed />
-        <AboutSection />
+        {/* <AboutSection /> */}
         <DevotionalGallery />
         <SevasGuidelines />
         <SponsorCarousel />
         <SocialSection />
         <LocationSection />
+        <ParkingSection />
       </main>
 
       <SiteFooter />

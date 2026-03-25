@@ -98,10 +98,12 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
   }
 
   .bg-divine-gradient {
     background: var(--gradient-divine);
+    @apply transform-gpu;
   }
 
   .bg-sacred-gradient {
@@ -131,12 +133,12 @@
   }
 
   .section-blend-top {
-    @apply absolute top-0 left-0 right-0 h-32 z-10 pointer-events-none;
+    @apply absolute top-0 left-0 right-0 h-16 z-10 pointer-events-none;
     background: var(--gradient-blend-top);
   }
 
   .section-blend-bottom {
-    @apply absolute bottom-0 left-0 right-0 h-32 z-10 pointer-events-none;
+    @apply absolute bottom-0 left-0 right-0 h-16 z-10 pointer-events-none;
     background: var(--gradient-blend-bottom);
   }
 
@@ -144,8 +146,19 @@
     @apply transition-transform duration-700 ease-out;
   }
 
+  .optimize-gpu {
+    @apply transform-gpu backface-hidden;
+    will-change: transform, opacity;
+  }
+
   .glow-soft {
     filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.3));
+    @apply transform-gpu;
+  }
+
+  .glow-soft {
+    filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.3));
+    @apply transform-gpu;
   }
 
   .preserve-3d {
@@ -227,4 +240,31 @@ html {
 
 .animate-rotate-slow {
   animation: rotate-slow 60s linear infinite;
+}
+
+/* --- Divine Reveal Animations --- */
+@keyframes bloom-in {
+  0% {
+    opacity: 0;
+    filter: blur(20px) brightness(0.5) saturate(0);
+    transform: scale(0.95) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0) brightness(1) saturate(1);
+    transform: scale(1) translateY(0);
+  }
+}
+
+.reveal-bloom {
+  animation: bloom-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes pulse-divine {
+  0%, 100% { opacity: 0.5; transform: scale(1) blur(10px); }
+  50% { opacity: 0.8; transform: scale(1.1) blur(15px); }
+}
+
+.animate-pulse-divine {
+  animation: pulse-divine 4s ease-in-out infinite;
 }

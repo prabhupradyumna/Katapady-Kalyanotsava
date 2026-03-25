@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Car, Info, MapPin } from "lucide-react";
-import parkingMap from "@/assets/parking-map-new.jpg";
+import parkingMap from "@/assets/parking-map-final.jpg";
 
 const ParkingSection = () => {
   return (

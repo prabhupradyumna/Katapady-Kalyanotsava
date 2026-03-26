@@ -19,22 +19,41 @@ const SponsorCarousel = () => {
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [oneSetWidth, setOneSetWidth] = useState(0);
+
+  // Update measurements on mount and resize
+  useEffect(() => {
+    const updateWidth = () => {
+      if (contentRef.current) {
+        // Gap is md:gap-8 (32px), gap-3 (12px)
+        const gap = window.innerWidth >= 768 ? 32 : 12;
+        // Total width of 3 sets. One set distance = (TotalWidth + gap) / 3
+        setOneSetWidth((contentRef.current.scrollWidth + gap) / 3);
+      }
+    };
+    
+    // Small delay to ensure children are rendered
+    const timer = setTimeout(updateWidth, 100);
+    window.addEventListener("resize", updateWidth);
+    return () => {
+      window.removeEventListener("resize", updateWidth);
+      clearTimeout(timer);
+    };
+  }, []);
 
   // Animation speed (lower is slower)
   const speed = 0.5;
 
   useAnimationFrame((_, delta) => {
-    if (isDragging || !contentRef.current) return;
+    if (isDragging || !contentRef.current || oneSetWidth === 0) return;
 
     // Move x
     const currentX = x.get();
-    const halfWidth = contentRef.current.offsetWidth / 3;
-    
     let nextX = currentX - speed * (delta / 16); // Normalize by ~60fps
     
     // Seamless wrapping
-    if (nextX <= -halfWidth) {
-      nextX += halfWidth;
+    if (nextX <= -oneSetWidth) {
+      nextX += oneSetWidth;
     }
     
     x.set(nextX);
@@ -71,9 +90,8 @@ const SponsorCarousel = () => {
             onDragEnd={() => {
               setIsDragging(false);
               const currentX = x.get();
-              if (contentRef.current) {
-                const halfWidth = contentRef.current.offsetWidth / 3;
-                x.set(currentX % halfWidth);
+              if (oneSetWidth > 0) {
+                x.set(currentX % oneSetWidth);
               }
             }}
             className="flex whitespace-nowrap gap-3 md:gap-8 text-center items-center cursor-grab active:cursor-grabbing will-change-transform"

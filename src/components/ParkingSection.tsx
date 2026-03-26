@@ -26,7 +26,7 @@ const ParkingSection = () => {
               <div className="h-px w-6 md:w-12 bg-gradient-to-l from-transparent to-primary" />
             </div>
             <p className="font-body text-foreground/60 text-[10px] md:text-sm italic max-w-xl mx-auto">
-              Scan the QR code or refer to the map below for designated parking areas.
+              Kindly follow the map below for designated parking arrangements.
             </p>
           </motion.div>
 

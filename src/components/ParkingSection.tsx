@@ -48,11 +48,15 @@ const parkingLocations = [
 const ParkingSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextParking = () => {
+  const nextParking = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    e?.preventDefault();
     setCurrentIndex((prev) => (prev + 1) % parkingLocations.length);
   };
 
-  const prevParking = () => {
+  const prevParking = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    e?.preventDefault();
     setCurrentIndex((prev) => (prev - 1 + parkingLocations.length) % parkingLocations.length);
   };
 
@@ -109,25 +113,54 @@ const ParkingSection = () => {
                   </motion.div>
                 </AnimatePresence>
 
-                {/* Navigation Arrows */}
-                <button 
-                  onClick={prevParking}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/60 border border-primary/30 rounded-full text-primary hover:bg-primary hover:text-white transition-all z-20 md:opacity-0 group-hover:opacity-100"
-                >
-                  <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-                </button>
-                <button 
-                  onClick={nextParking}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/60 border border-primary/30 rounded-full text-primary hover:bg-primary hover:text-white transition-all z-20 md:opacity-0 group-hover:opacity-100"
-                >
-                  <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-                </button>
-
-                {/* Counter Badge */}
-                <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-primary/20 text-[10px] md:text-xs text-primary font-heading font-bold z-20">
-                  {currentIndex + 1} / {parkingLocations.length}
+                {/* Navigation Arrows Container - Desktop Only */}
+                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-30 pointer-events-none hidden md:flex justify-between px-4">
+                  <button 
+                    type="button"
+                    onClick={prevParking}
+                    className="p-2 bg-black/60 border border-primary/30 rounded-full text-primary hover:bg-primary hover:text-white transition-all pointer-events-auto opacity-0 group-hover:opacity-100"
+                    aria-label="Previous parking spot"
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={nextParking}
+                    className="p-2 bg-black/60 border border-primary/30 rounded-full text-primary hover:bg-primary hover:text-white transition-all pointer-events-auto opacity-0 group-hover:opacity-100"
+                    aria-label="Next parking spot"
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
                 </div>
               </motion.div>
+            </div>
+
+            {/* Mobile Navigation Controls - Outside of Map to prevent iframe issues */}
+            <div className="lg:hidden flex items-center justify-between px-4 py-2 bg-card/10 rounded-2xl border border-primary/10">
+              <button 
+                type="button"
+                onClick={prevParking}
+                className="p-4 bg-primary text-primary-foreground rounded-full shadow-glow active:scale-90 transition-transform"
+                aria-label="Previous parking spot"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              
+              <div className="flex flex-col items-center">
+                <span className="font-heading text-[10px] text-primary/60 uppercase tracking-widest font-bold">Location</span>
+                <span className="font-heading text-lg text-primary font-black">
+                  {currentIndex + 1} / {parkingLocations.length}
+                </span>
+              </div>
+
+              <button 
+                type="button"
+                onClick={nextParking}
+                className="p-4 bg-primary text-primary-foreground rounded-full shadow-glow active:scale-90 transition-transform"
+                aria-label="Next parking spot"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
             </div>
 
             {/* Right Side: Location Details */}

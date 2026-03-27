@@ -155,22 +155,25 @@ const SocialSection = () => {
     setIsMounted(true);
 
     // Instagram Script
-    const igScript = document.createElement("script");
-    igScript.src = "https://www.instagram.com/embed.js";
-    igScript.async = true;
-    document.body.appendChild(igScript);
+    if (!document.querySelector('script[src*="instagram.com/embed.js"]')) {
+      const igScript = document.createElement("script");
+      igScript.src = "https://www.instagram.com/embed.js";
+      igScript.async = true;
+      document.body.appendChild(igScript);
+    }
 
     // Facebook SDK
-    const fbScript = document.createElement("script");
-    fbScript.src = "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v19.0";
-    fbScript.async = true;
-    fbScript.defer = true;
-    fbScript.crossOrigin = "anonymous";
-    document.body.appendChild(fbScript);
+    if (!document.querySelector('script[src*="connect.facebook.net"]')) {
+      const fbScript = document.createElement("script");
+      fbScript.src = "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v19.0";
+      fbScript.async = true;
+      fbScript.defer = true;
+      fbScript.crossOrigin = "anonymous";
+      document.body.appendChild(fbScript);
+    }
 
     return () => {
-      if (document.body.contains(igScript)) document.body.removeChild(igScript);
-      if (document.body.contains(fbScript)) document.body.removeChild(fbScript);
+      // Intentionally keep scripts across re-mounts for social embeds to persist
     };
   }, []);
 
@@ -178,9 +181,15 @@ const SocialSection = () => {
   useEffect(() => {
     if (!isMounted) return;
 
-    if (activeTab === "instagram" && typeof window !== 'undefined' && (window as any).instgrm) {
-        (window as any).instgrm.Embeds.process();
+    if (activeTab === "instagram") {
+      const timer = setTimeout(() => {
+        if (typeof window !== 'undefined' && (window as any).instgrm) {
+          (window as any).instgrm.Embeds.process();
+        }
+      }, 500); // Small delay to ensure blockquotes are rendered
+      return () => clearTimeout(timer);
     }
+    
     if (activeTab === "facebook" && typeof window !== 'undefined' && (window as any).FB) {
         (window as any).FB.XFBML.parse();
     }

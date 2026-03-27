@@ -50,7 +50,7 @@ const KalyanotsavaHero = () => {
           <img
             src={heroImage}
             alt="Lord Srinivasa with Consorts"
-            className="w-full h-full object-cover object-top contrast-[1.15] brightness-[0.75] opacity-80"
+            className="w-full h-full object-cover object-top contrast-[1.1] brightness-[1.0] opacity-100"
           />
         </motion.div>
 
@@ -128,8 +128,8 @@ const KalyanotsavaHero = () => {
       >
         {/* Added radial shadow for better text contrast */}
         <div 
-          className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[60%] -z-10 pointer-events-none blur-3xl scale-150 opacity-60"
-          style={{ background: 'radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)' }}
+          className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[70%] -z-10 pointer-events-none blur-3xl scale-150 opacity-80"
+          style={{ background: 'radial-gradient(circle, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 100%)' }}
         />
         <motion.div
           initial={{ opacity: 0, y: 30 }}

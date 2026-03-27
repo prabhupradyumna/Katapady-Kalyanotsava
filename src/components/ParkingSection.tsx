@@ -1,20 +1,72 @@
-import { motion } from "framer-motion";
-import { Car, Info, MapPin } from "lucide-react";
-import parkingMap from "@/assets/parking-map-final.jpg";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Car, Info, MapPin, ChevronLeft, ChevronRight, Navigation } from "lucide-react";
+
+const parkingLocations = [
+  {
+    id: 1,
+    title: "Parking Spot 1",
+    subtitle: "SVS School Ground (Primary Entrance)",
+    description: "Main parking area for all devotees and guests. Please enter through the main arch.",
+    mapUrl: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d970.7511182535065!2d74.74472019355284!3d13.287660913923098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTPCsDE3JzE2LjMiTiA3NMKwNDQnNDIuOSJF!5e0!3m2!1sen!2sin!4v1774603604677!5m2!1sen!2sin",
+    navUrl: "https://www.google.com/maps/search/?api=1&query=13.2876609,74.7447202"
+  },
+  {
+    id: 2,
+    title: "Parking Spot 2",
+    subtitle: "SVS School Ground (Overflow)",
+    description: "Designated overflow parking area with volunteer assistance.",
+    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d968.3081649980795!2d74.74613341041184!3d13.284288326445768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcbb631dafe4a3%3A0xb39c8408ae6b024d!2sSVS%20School%20Ground!5e1!3m2!1sen!2sin!4v1774604632728!5m2!1sen!2sin",
+    navUrl: "https://www.google.com/maps/search/?api=1&query=13.284288,74.746133"
+  },
+  {
+    id: 3,
+    title: "Parking Spot 3",
+    subtitle: "SVS Pre University College",
+    description: "Designated parking zone at the PU College ground. Ideal for those coming from the west entrance.",
+    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1151.5261270213093!2d74.74284415034195!3d13.282777696129813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcba8d687a5e95%3A0x33fd5d50a541b930!2sSVS%20Pre%20University%20college!5e1!3m2!1sen!2sin!4v1774605178637!5m2!1sen!2sin",
+    navUrl: "https://www.google.com/maps/search/?api=1&query=13.282777,74.742844"
+  },
+  {
+    id: 4,
+    title: "Parking Spot 4",
+    subtitle: "Venkataramana Devastana",
+    description: "Ample parking area near the Venkataramana Temple for devotees arriving from the South.",
+    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1369.4303418908291!2d74.74750465280043!3d13.277942164346097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcba9190ea6d7f%3A0xa6c3794dec4bae45!2sVenkataramana%20Devastana!5e1!3m2!1sen!2sin!4v1774605910444!5m2!1sen!2sin",
+    navUrl: "https://www.google.com/maps/search/?api=1&query=13.277942164346097,74.74750465280043"
+  },
+  {
+    id: 5,
+    title: "Parking Spot 5",
+    subtitle: "Shri Vishwanatha Kshetra",
+    description: "Designated parking zone near the main Katapadi Shri Vishwanatha Temple entrance.",
+    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2303.10578903109!2d74.74579216640248!3d13.277134806828867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcba91b68a2f97%3A0x2eeb2960f4672594!2sKatapadi%20Shri%20Vishwanatha%20Kshetra!5e1!3m2!1sen!2sin!4v1774605954602!5m2!1sen!2sin",
+    navUrl: "https://www.google.com/maps/search/?api=1&query=13.277134806828867,74.74579216640248"
+  }
+];
 
 const ParkingSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextParking = () => {
+    setCurrentIndex((prev) => (prev + 1) % parkingLocations.length);
+  };
+
+  const prevParking = () => {
+    setCurrentIndex((prev) => (prev - 1 + parkingLocations.length) % parkingLocations.length);
+  };
+
   return (
     <section id="parking" className="py-4 md:py-8 bg-temple-black relative overflow-hidden">
-      {/* Background patterns */}
       <div className="absolute inset-0 bg-depth-grid opacity-[0.03] pointer-events-none" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-2xl mx-auto flex flex-col items-center">
+        <div className="max-w-4xl mx-auto flex flex-col items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-4 md:mb-6"
+            className="text-center mb-6 md:mb-8"
           >
             <div className="flex items-center justify-center gap-2 mb-2">
               <div className="h-px w-6 md:w-12 bg-gradient-to-r from-transparent to-primary" />
@@ -26,60 +78,116 @@ const ParkingSection = () => {
               <div className="h-px w-6 md:w-12 bg-gradient-to-l from-transparent to-primary" />
             </div>
             <p className="font-body text-foreground/60 text-[10px] md:text-sm italic max-w-xl mx-auto">
-              Kindly follow the map below for designated parking arrangements.
+              Swipe or use arrows to view designated parking locations.
             </p>
           </motion.div>
 
-          {/* Premium Square Card - More compact */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative group w-full bg-card/30 backdrop-blur-2xl border border-primary/20 rounded-[20px] md:rounded-[32px] p-2 md:p-4 shadow-xl overflow-hidden"
-          >
-            {/* Glow effect */}
-            <div className="absolute -top-16 -left-16 w-32 h-32 bg-primary/10 blur-[60px] rounded-full group-hover:bg-primary/20 transition-all duration-700" />
-            
-            <div className="relative aspect-square w-full max-w-[450px] mx-auto rounded-[16px] md:rounded-[24px] overflow-hidden border border-primary/10 shadow-inner bg-black/40">
-              <img 
-                src={parkingMap} 
-                alt="Parking Map with QR Code" 
-                className="w-full h-full object-contain scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
-              />
-            </div>
-            
-            <div className="mt-3 md:mt-4 grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 px-1 md:px-0">
-              <motion.div 
-                whileHover={{ y: -3 }}
-                className="flex items-start gap-2 bg-primary/5 p-3 md:p-4 rounded-xl border border-primary/10 hover:border-primary/20 transition-all"
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full items-start">
+            {/* Left Side: Map Carousel */}
+            <div className="lg:col-span-8 relative group">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                className="relative bg-card/30 backdrop-blur-2xl border border-primary/20 rounded-[20px] md:rounded-[32px] p-2 md:p-3 shadow-2xl overflow-hidden aspect-video md:aspect-auto md:h-[400px]"
               >
-                <div className="bg-primary/20 p-1.5 rounded-lg">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentIndex}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="w-full h-full rounded-[16px] md:rounded-[24px] overflow-hidden border border-primary/10 bg-black/40"
+                  >
+                    <iframe
+                      src={parkingLocations[currentIndex].mapUrl}
+                      className="w-full h-full grayscale-[0.2] contrast-[1.1]"
+                      style={{ border: 0 }}
+                      allowFullScreen={true}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Navigation Arrows */}
+                <button 
+                  onClick={prevParking}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/60 border border-primary/30 rounded-full text-primary hover:bg-primary hover:text-white transition-all z-20 md:opacity-0 group-hover:opacity-100"
+                >
+                  <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+                </button>
+                <button 
+                  onClick={nextParking}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/60 border border-primary/30 rounded-full text-primary hover:bg-primary hover:text-white transition-all z-20 md:opacity-0 group-hover:opacity-100"
+                >
+                  <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+                </button>
+
+                {/* Counter Badge */}
+                <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-primary/20 text-[10px] md:text-xs text-primary font-heading font-bold z-20">
+                  {currentIndex + 1} / {parkingLocations.length}
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Side: Location Details */}
+            <div className="lg:col-span-4 space-y-4">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="bg-card/20 backdrop-blur-xl border border-primary/20 rounded-[24px] p-5 md:p-6 h-full flex flex-col justify-between"
+                >
+                  <div>
+                    <h3 className="font-heading text-lg md:text-2xl font-black text-gradient-gold mb-1">
+                      {parkingLocations[currentIndex].title}
+                    </h3>
+                    <p className="font-heading text-primary/80 font-bold text-xs md:text-sm uppercase tracking-wider mb-3">
+                      {parkingLocations[currentIndex].subtitle}
+                    </p>
+                    <p className="font-body text-foreground/70 text-sm md:text-base leading-relaxed mb-6">
+                      {parkingLocations[currentIndex].description}
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <motion.a
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      href={parkingLocations[currentIndex].navUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-3 bg-primary text-primary-foreground font-heading font-bold rounded-xl shadow-glow hover:bg-primary/90 transition-all text-sm md:text-base"
+                    >
+                      <Navigation className="w-4 h-4" />
+                      Navigate Now
+                    </motion.a>
+                    
+                    <div className="flex justify-center gap-2">
+                      {parkingLocations.map((_, i) => (
+                        <div 
+                          key={i} 
+                          className={`h-1 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-8 bg-primary' : 'w-2 bg-primary/20'}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* General Tip Card */}
+              <div className="bg-primary/5 p-4 rounded-[20px] border border-primary/10 flex items-start gap-3">
+                <div className="bg-primary/20 p-2 rounded-lg shrink-0">
                   <Info className="w-4 h-4 text-primary" />
                 </div>
-                <div>
-                  <p className="font-heading text-primary font-bold text-[10px] md:text-xs uppercase">Venue Parking</p>
-                  <p className="font-body text-[9px] md:text-[11px] text-foreground/70 leading-tight">
-                    Ample parking space at S.V.S. School Ground and nearby designated zones. 
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div 
-                whileHover={{ y: -3 }}
-                className="flex items-start gap-2 bg-primary/5 p-3 md:p-4 rounded-xl border border-primary/10 hover:border-primary/20 transition-all"
-              >
-                <div className="bg-primary/20 p-1.5 rounded-lg">
-                  <Car className="w-4 h-4 text-primary" />
-                </div>
-                <div>
-                  <p className="font-heading text-primary font-bold text-[10px] md:text-xs uppercase">Traffic Flow</p>
-                  <p className="font-body text-[9px] md:text-[11px] text-foreground/70 leading-tight">
-                    Please follow markers and volunteer instructions for smooth entry.
-                  </p>
-                </div>
-              </motion.div>
+                <p className="font-body text-[11px] md:text-xs text-foreground/60">
+                  Volunteers will be present at all gates to guide you to the nearest available spot.
+                </p>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

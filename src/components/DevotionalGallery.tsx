@@ -64,7 +64,7 @@ const DevotionalGallery = () => {
             className="w-full flex flex-col items-center"
         >
             {/* Optimized height and width for ultra-small mobile and large screens */}
-            <div className="relative w-full max-w-[220px] xs:max-w-[250px] md:max-w-[340px] aspect-[1/1.35] md:aspect-[1/1.2] preserve-3d mb-4 md:mb-6">
+            <div className="relative w-full max-w-[280px] xs:max-w-[320px] md:max-w-[340px] aspect-[1/1.35] md:aspect-[1/1.2] preserve-3d mb-4 md:mb-6">
             {sheets.map((sheet, index) => {
                 const isFlipped = currentSheet > index;
                 const zIndex = isFlipped ? index : sheets.length - index;
@@ -89,19 +89,19 @@ const DevotionalGallery = () => {
                 >
                     {/* FRONT SIDE */}
                     <div 
-                        className="absolute inset-0 w-full h-full backface-hidden rounded-[8px] md:rounded-[12px] shadow-2xl border-[4px] md:border-[8px] border-primary/20 bg-[#fbf5e4] p-3 overflow-hidden"
+                        className="absolute inset-0 w-full h-full backface-hidden rounded-[8px] md:rounded-[12px] shadow-2xl border-2 md:border-[8px] border-primary/20 bg-[#fbf5e4] p-1.5 md:p-3 overflow-hidden"
                         style={{ 
                             backgroundImage: "url('https://www.transparenttextures.com/patterns/parchment.png')",
                             boxShadow: "inset 0 0 40px rgba(0,0,0,0.1), 5px 5px 20px rgba(0,0,0,0.4)",
                             transform: "translateZ(1px)"
                         }}
                     >
-                    <div className="absolute inset-1.5 border border-primary/10 rounded-[4px] pointer-events-none" />
+                    <div className="absolute inset-1 border border-primary/10 rounded-[4px] pointer-events-none" />
 
-                    <div className="h-full w-full flex items-center justify-center p-1 relative bg-white/20 rounded-lg">
+                    <div className="h-full w-full flex items-center justify-center relative rounded-lg">
                         <img 
                             src={sheet.front.src} 
-                            className="max-h-full max-w-full object-contain block relative z-10" 
+                            className="w-full h-full object-contain block relative z-10 p-0.5" 
                             alt={sheet.front.title || "Page"} 
                             style={{ transform: "translateZ(2px)" }}
                         />

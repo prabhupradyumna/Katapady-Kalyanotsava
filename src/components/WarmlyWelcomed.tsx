@@ -45,13 +45,14 @@ const WarmlyWelcomed = () => {
               {[
                 { name: "K. Sathyendra Pai & K. Krishna Mohan Pai USA", role: "Primary Patrons" },
                 { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
-                { name: "GSB Community Udupi", role: "Community Coordination" },
-                { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" }
+                { name: "GSB Community Udupi", role: "Community Coordination" }
               ].concat(
                 { name: "K. Sathyendra Pai & K. Krishna Mohan Pai USA", role: "Primary Patrons" },
+                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
                 { name: "GSB Community Udupi", role: "Community Coordination" },
-                { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" },
-                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" }
+                { name: "K. Sathyendra Pai & K. Krishna Mohan Pai USA", role: "Primary Patrons" },
+                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
+                { name: "GSB Community Udupi", role: "Community Coordination" }
               ).map((org, index) => (
                 <div key={index} className="pr-6 md:pr-8 shrink-0">
                   <motion.div

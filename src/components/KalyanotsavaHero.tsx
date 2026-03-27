@@ -175,7 +175,10 @@ const KalyanotsavaHero = () => {
             {/* Date Selection */}
             <div className="w-full md:w-auto md:pr-10 md:border-r border-primary/20 text-center md:text-right">
               <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Saturday</p>
-              <h3 className="font-heading text-2xl md:text-4xl text-foreground font-black tracking-tighter drop-shadow-2xl">11 April 2026</h3>
+              <h3 className="text-2xl md:text-4xl text-foreground font-black drop-shadow-2xl tracking-tight">
+                <span className="font-heading">April </span>
+                <span className="font-body tabular-nums">11, 2026</span>
+              </h3>
               <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">✦ 6:25 PM Godhuli Lagnam ✦</p>
             </div>
             

@@ -42,7 +42,7 @@ const LocationSection = () => {
                     <div>
                       <p className="font-heading text-sm md:text-lg font-bold text-foreground">Landmarks</p>
                       <p className="font-body text-[11px] md:text-base text-foreground/60 italic leading-snug">
-                        Near SVS Pre University college, Katapady.
+                        Near S.V.S English Medium High School, Katapady
                       </p>
                     </div>
                   </div>

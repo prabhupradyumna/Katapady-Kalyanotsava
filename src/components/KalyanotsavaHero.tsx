@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import heroImage from "@/assets/hero-kalyanotsava.png";
+import heroImage from "@/assets/hero-kalyanotsava-new.jpg";
 import mandalaPattern from "@/assets/mandala-pattern.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -50,7 +50,7 @@ const KalyanotsavaHero = () => {
           <img
             src={heroImage}
             alt="Lord Srinivasa with Consorts"
-            className="w-full h-full object-cover object-top contrast-[1.05] brightness-[0.85] opacity-80"
+            className="w-full h-full object-cover object-top contrast-[1.15] brightness-[0.75] opacity-80"
           />
         </motion.div>
 
@@ -66,11 +66,11 @@ const KalyanotsavaHero = () => {
           />
         </div>
 
-        {/* Dynamic Atmospheric Overlays */}
+        {/* Dynamic Atmospheric Overlays - Enhanced darkness for text legibility */}
         <div className="absolute inset-0 z-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-temple-black/80 via-transparent to-temple-black" />
-          <div className="absolute inset-0 bg-gradient-to-r from-temple-black/40 via-transparent to-temple-black/40" />
-          <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-temple-deep via-temple-deep/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-temple-black via-temple-black/40 to-temple-black" />
+          <div className="absolute inset-0 bg-gradient-to-r from-temple-black/60 via-transparent to-temple-black/60" />
+          <div className="absolute inset-x-0 bottom-0 h-[40vh] bg-gradient-to-t from-temple-deep via-temple-deep/90 to-transparent" />
         </div>
       </div>
 
@@ -126,6 +126,11 @@ const KalyanotsavaHero = () => {
         style={{ y: contentY, opacity }}
         className="relative z-50 text-center px-6 max-w-6xl mx-auto flex flex-col justify-center h-full pt-6 md:pt-12"
       >
+        {/* Added radial shadow for better text contrast */}
+        <div 
+          className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[60%] -z-10 pointer-events-none blur-3xl scale-150 opacity-60"
+          style={{ background: 'radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)' }}
+        />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

@@ -31,11 +31,36 @@ const HeroSection = () => {
           }}
         />
 
+        <motion.div
+          className="mb-8 md:mb-12 relative z-10"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+        >
+          <div className="bg-card/40 backdrop-blur-md border border-primary/30 p-4 md:p-8 rounded-2xl shadow-divine max-w-4xl mx-auto relative overflow-hidden group hover:border-primary/50 transition-all duration-500">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 pointer-events-none" />
+            <p className="font-body text-xs md:text-sm uppercase tracking-[0.3em] mb-2 text-primary font-bold animate-pulse-glow">
+              ✦ Patron of Divine Service ✦
+            </p>
+            <h2 className="font-heading text-xl md:text-4xl lg:text-5xl font-black text-gradient-gold mb-2 leading-tight drop-shadow-glow">
+              Mrs. Vijaya Pai & Mr. Purushotham Pai and Family
+            </h2>
+            <p className="font-heading italic text-lg md:text-2xl text-white/90 mb-4 tracking-wide">
+              with a Pious Resolve
+            </p>
+            <div className="h-px w-32 md:w-48 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto mb-4 opacity-50" />
+            <p className="font-body text-xs md:text-lg text-foreground/80 font-medium tracking-widest uppercase">
+              Tirumala Tirupati Devasthanams, Tirupati <br className="md:hidden" />
+              <span className="text-primary mt-1 inline-block">“Loka Kalyanartha”</span>
+            </p>
+          </div>
+        </motion.div>
+
         {/* Deity image */}
         <motion.img
           src={heroDeity}
           alt="Lord Sri Venkateswara"
-          className="w-48 h-auto md:w-72 lg:w-80 object-contain drop-shadow-2xl animate-float relative z-10"
+          className="w-40 h-auto md:w-64 lg:w-72 object-contain drop-shadow-2xl animate-float relative z-10"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}

@@ -44,13 +44,11 @@ const WarmlyWelcomed = () => {
               >
               {[
                 { name: "K. Sathyendra Pai & K. Krishna Mohan Pai USA", role: "Primary Patrons" },
-                { name: "Katapadi Subbaiah Pai Family", role: "Core Devotional Patronage" },
                 { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
                 { name: "GSB Community Udupi", role: "Community Coordination" },
                 { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" }
               ].concat(
                 { name: "K. Sathyendra Pai & K. Krishna Mohan Pai USA", role: "Primary Patrons" },
-                { name: "Katapadi Subbaiah Pai Family Members", role: "Devotional Patronage" },
                 { name: "GSB Community Udupi", role: "Community Coordination" },
                 { name: "Adyar Bhajan Mandir", role: "Spiritual Presence" },
                 { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" }

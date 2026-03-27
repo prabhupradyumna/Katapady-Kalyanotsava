@@ -11,7 +11,6 @@ import SponsorCarousel from "@/components/SponsorCarousel";
 import SocialSection from "@/components/SocialSection";
 import DevotionalQuotes from "@/components/DevotionalQuotes";
 import ParkingSection from "@/components/ParkingSection";
-import DivineResolve from "@/components/DivineResolve";
 import SiteFooter from "@/components/SiteFooter";
 import ParticleEffect from "@/components/ParticleEffect";
 import DivineAura from "@/components/DivineAura";
@@ -47,8 +46,6 @@ const Index = () => {
       <main className="relative z-10 bg-temple-deep overflow-hidden">
         <KalyanotsavaHero />
         
-        <DivineResolve />
-
         <div className="section-blend-top" />
         
         <CountdownTimer />

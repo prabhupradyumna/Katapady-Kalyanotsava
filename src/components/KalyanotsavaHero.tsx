@@ -140,6 +140,20 @@ const KalyanotsavaHero = () => {
           >
             ✦ Lokakalyanartha ✦
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, delay: 0.8 }}
+            className="mb-2 md:mb-4"
+          >
+            <span className="font-heading text-[10px] md:text-xs text-primary/80 uppercase tracking-[0.3em] font-bold">
+              Pious Resolve By
+            </span>
+            <h2 className="font-heading text-base md:text-2xl text-gradient-gold font-bold mt-1 drop-shadow-glow">
+              Mrs. Vijaya Pai & Mr. Purushotham Pai and Family
+            </h2>
+          </motion.div>
           
           <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-gradient-gold leading-tight md:leading-tight text-shadow-premium drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-4">
             Sri Srinivasa<br className="hidden md:block"/> Kalyanotsava

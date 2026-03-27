@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 const sponsors = [
   { name: "Katapadi Pai Family", logo: "/sponsors/katpadi-family.jpg" },
   { name: "SVS Vidyavardhaka Sangha", logo: "/sponsors/svs.jpg" },
-  { name: "Adyar Petrol Pump", logo: "/sponsors/hp.png" },
+  { name: "Adyar Petrol Pump", logo: "/sponsors/adyar-petrol-pump.jpg" },
   { name: "Sun Matrix Audio Lab", logo: "/sponsors/sun-matrix.jpg" },
   { name: "Invenger Technologies", logo: "/sponsors/invenger.png" },
   { name: "Invenger Foundation", logo: "/sponsors/invenger-foundation.png" },

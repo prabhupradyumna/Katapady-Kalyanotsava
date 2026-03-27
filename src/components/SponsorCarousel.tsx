@@ -60,7 +60,7 @@ const SponsorCarousel = () => {
   });
 
   return (
-    <section id="location" className="py-4 md:py-8 bg-temple-black overflow-hidden relative optimize-gpu">
+    <section id="patronage" className="py-4 md:py-8 bg-temple-black overflow-hidden relative optimize-gpu">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,183,0,0.05)_0%,transparent_70%)] opacity-50" />
       
       {/* Premium Gradient Fades - Uniform width with other sections */}

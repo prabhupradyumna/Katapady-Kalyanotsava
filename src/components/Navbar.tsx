@@ -72,7 +72,17 @@ const Navbar = () => {
     >
       <div className="w-full px-3 md:px-12 flex items-center justify-between h-16 md:h-20">
         <a href="#home" className="font-heading text-[13px] md:text-2xl lg:text-3xl font-bold text-gradient-gold leading-relaxed md:leading-loose drop-shadow-glow pl-1 pr-6 inline-flex items-center whitespace-nowrap">
-          <img src="/tilak-logo.png" alt="Tilak Logo" className="h-8 md:h-12 w-auto mr-2 drop-shadow-glow" /> Katapady Srinivasa Kalyanotsava
+          <motion.img 
+            src="/tilak-logo.png" 
+            alt="Tilak Logo" 
+            className="h-8 md:h-12 w-auto mr-2 drop-shadow-glow" 
+            animate={{ y: [0, -5, 0] }}
+            transition={{ 
+              duration: 3, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+          /> Katapady Srinivasa Kalyanotsava
         </a>
 
         {/* Desktop nav */}

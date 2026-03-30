@@ -189,9 +189,9 @@ const KalyanotsavaHero = () => {
             {/* Date Selection */}
             <div className="w-full md:w-auto md:pr-10 md:border-r border-primary/20 text-center md:text-right">
               <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">{t('hero.day')}</p>
-              <h3 className="text-2xl md:text-4xl text-foreground font-black drop-shadow-2xl tracking-tight">
-                <span className="font-heading">{t('hero.month')} </span>
-                <span className="font-body tabular-nums">{t('hero.date')}</span>
+              <h3 className="text-2xl md:text-4xl text-foreground drop-shadow-2xl tracking-tight">
+                <span className="font-body font-black">{t('hero.month')} </span>
+                <span className="font-body font-black tabular-nums">{t('hero.date')}</span>
               </h3>
               <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">{t('hero.lagnam')}</p>
             </div>
@@ -199,7 +199,7 @@ const KalyanotsavaHero = () => {
             {/* Location Selection */}
             <div className="w-full md:w-auto md:pl-10 text-center md:text-left mt-2 md:mt-0">
               <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">{t('hero.city')}</p>
-              <h3 className="font-heading text-2xl md:text-4xl text-foreground font-black tracking-tight drop-shadow-2xl">{t('hero.venue')}</h3>
+              <h3 className="font-body text-2xl md:text-4xl text-foreground font-black tracking-tight drop-shadow-2xl">{t('hero.venue')}</h3>
               <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">{t('hero.sacredVenue')}</p>
             </div>
           </div>

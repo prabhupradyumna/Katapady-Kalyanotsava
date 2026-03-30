@@ -52,7 +52,9 @@ const EventTimeline = () => {
           <h2 className="font-heading text-2xl md:text-5xl font-black text-gradient-gold">
             {t('timeline.title')}
           </h2>
-          <p className="font-body text-foreground/60 text-sm md:text-base mt-2">{t('timeline.date')}</p>
+          <p className="font-body text-foreground/80 text-base md:text-xl mt-3 font-medium tracking-wide">
+            {t('timeline.date')}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-20">

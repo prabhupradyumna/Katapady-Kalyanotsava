@@ -47,7 +47,7 @@ const resources = {
         title: "Event Schedule",
         date: "Saturday, 11th April 2026",
         time1: "3:30 PM",
-        title1: "Procession (Shobha Yatra)",
+        title1: "Shobha Yatra",
         desc1: "Sri Srinivasa Deva arrives at Katapady Pete followed by a grand celestial procession to the Kalyana Mantapa.",
         time2: "5:00 PM",
         title2: "Arrival of Devi",

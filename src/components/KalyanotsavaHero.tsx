@@ -20,10 +20,10 @@ const KalyanotsavaHero = () => {
   const sparkleCount = isMobile ? 12 : 30;
 
   return (
-    <section id="home" className="relative h-screen min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden bg-temple-deep optimize-gpu">
+    <section id="home" className="relative h-auto md:h-screen min-h-[500px] md:min-h-[600px] flex flex-col md:items-center md:justify-center overflow-hidden bg-temple-deep optimize-gpu">
       
       {/* Background Layers for Depth */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="relative md:absolute md:inset-0 z-0 overflow-hidden w-full aspect-[16/11] md:aspect-auto">
         {/* Layer 1: Base Dark Gradient */}
         <div className="absolute inset-0 bg-temple-deep" />
         
@@ -43,7 +43,7 @@ const KalyanotsavaHero = () => {
 
         {/* Layer 3: Main Deity Cinematic Image with Parallax */}
         <motion.div
-          style={{ y: deityY }}
+          style={{ y: isMobile ? 0 : deityY }}
           initial={{ scale: 1.15, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.9 }}
           transition={{ duration: 3, ease: "easeOut" }}
@@ -52,7 +52,7 @@ const KalyanotsavaHero = () => {
           <img
             src={heroImage}
             alt="Lord Srinivasa with Consorts"
-            className="w-full h-full object-cover object-top contrast-[1.1] brightness-[1.0] opacity-100"
+            className="w-full h-full object-cover object-center md:object-top contrast-[1.1] brightness-[1.1] md:brightness-[1.0] opacity-100"
           />
         </motion.div>
 
@@ -70,9 +70,16 @@ const KalyanotsavaHero = () => {
 
         {/* Dynamic Atmospheric Overlays - Enhanced darkness for text legibility */}
         <div className="absolute inset-0 z-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-temple-black via-temple-black/40 to-temple-black" />
-          <div className="absolute inset-0 bg-gradient-to-r from-temple-black/60 via-transparent to-temple-black/60" />
-          <div className="absolute inset-x-0 bottom-0 h-[40vh] bg-gradient-to-t from-temple-deep via-temple-deep/90 to-transparent" />
+          {/* Mobile Overlay */}
+          <div className="md:hidden absolute inset-0 bg-gradient-to-b from-temple-black/40 via-transparent to-temple-black/80" />
+          <div className="md:hidden absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-temple-black via-temple-black/60 to-transparent" />
+          
+          {/* Desktop Overlay (Restored) */}
+          <div className="hidden md:block absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-temple-black via-temple-black/40 to-temple-black" />
+            <div className="absolute inset-0 bg-gradient-to-r from-temple-black/60 via-transparent to-temple-black/60" />
+            <div className="absolute inset-x-0 bottom-0 h-[40vh] bg-gradient-to-t from-temple-deep via-temple-deep/90 to-transparent" />
+          </div>
         </div>
       </div>
 
@@ -125,8 +132,8 @@ const KalyanotsavaHero = () => {
 
       {/* Hero Content (Floating on top) */}
       <motion.div 
-        style={{ y: contentY, opacity }}
-        className="relative z-50 text-center px-6 max-w-6xl mx-auto flex flex-col justify-center h-full pt-6 md:pt-12"
+        style={{ y: isMobile ? 0 : contentY, opacity: isMobile ? 1 : opacity }}
+        className="relative md:absolute md:inset-0 z-50 text-center px-6 max-w-6xl mx-auto flex flex-col justify-center py-10 md:py-0 md:pt-12"
       >
         {/* Added radial shadow for better text contrast */}
         <div 

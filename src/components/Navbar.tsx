@@ -28,7 +28,7 @@ const Navbar = () => {
           setScrolled(window.scrollY > 20);
 
           const navHeight = 150;
-          const sections = navLinks.map((l) => l.href.slice(1));
+          const sections = ["home", ...navLinks.map((l) => l.href.slice(1))];
           
           // Special case: Bottom of page
           if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {

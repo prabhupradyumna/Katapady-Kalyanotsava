@@ -2,8 +2,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import heroImage from "@/assets/hero-kalyanotsava-new.jpg";
 import mandalaPattern from "@/assets/mandala-pattern.png";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTranslation } from "react-i18next";
 
 const KalyanotsavaHero = () => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
   const { scrollY } = useScroll();
   
@@ -143,7 +145,7 @@ const KalyanotsavaHero = () => {
             transition={{ duration: 1.5, delay: 0.5 }}
             className="font-body text-primary text-xs md:text-base uppercase tracking-[0.4em] md:tracking-[0.6em] font-semibold glow-soft"
           >
-            ✦ Lokakalyanartha ✦
+            {t('hero.lokakalyanartha')}
           </motion.p>
 
           <motion.div
@@ -153,20 +155,20 @@ const KalyanotsavaHero = () => {
             className="mb-2 md:mb-4"
           >
             <span className="font-heading text-[10px] md:text-xs text-primary/80 uppercase tracking-[0.3em] font-bold">
-              Pious Resolve By
+              {t('hero.piousResolve')}
             </span>
-            <h2 className="font-heading text-base md:text-2xl text-gradient-gold font-bold mt-1 drop-shadow-glow">
-              Mrs. Vijaya Pai & Mr. Purushotham Pai and Family
+            <h2 className="font-heading text-base md:text-2xl text-gradient-gold font-bold mt-1 py-1 leading-normal drop-shadow-glow">
+              {t('hero.family')}
             </h2>
           </motion.div>
           
-          <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-black text-gradient-gold leading-tight md:leading-tight text-shadow-premium drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-4">
-            Sri Srinivasa<br className="hidden md:block"/> Kalyanotsava
+          <h1 className="font-heading text-3xl md:text-5xl lg:text-7xl font-black text-gradient-gold leading-[1.3] md:leading-[1.4] py-2 md:py-4 text-shadow-premium drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-4">
+            {t('hero.title1')}<br className="hidden md:block"/> {t('hero.title2')}
           </h1>
           
           <div className="relative inline-block py-1 px-4">
             <p className="font-body text-sm md:text-lg text-foreground/80 max-w-4xl mx-auto italic tracking-wide text-shadow-premium">
-              Step into the sacred union of divinity and grace
+              {t('hero.subtitle')}
             </p>
             <motion.div 
               initial={{ scaleX: 0 }}
@@ -179,19 +181,19 @@ const KalyanotsavaHero = () => {
           <div className="flex flex-col md:flex-row items-start justify-center gap-4 md:gap-0 pt-4 md:pt-8">
             {/* Date Selection */}
             <div className="w-full md:w-auto md:pr-10 md:border-r border-primary/20 text-center md:text-right">
-              <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Saturday</p>
+              <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">{t('hero.day')}</p>
               <h3 className="text-2xl md:text-4xl text-foreground font-black drop-shadow-2xl tracking-tight">
-                <span className="font-heading">April </span>
-                <span className="font-body tabular-nums">11, 2026</span>
+                <span className="font-heading">{t('hero.month')} </span>
+                <span className="font-body tabular-nums">{t('hero.date')}</span>
               </h3>
-              <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">✦ 6:25 PM Godhuli Lagnam ✦</p>
+              <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">{t('hero.lagnam')}</p>
             </div>
             
             {/* Location Selection */}
             <div className="w-full md:w-auto md:pl-10 text-center md:text-left mt-2 md:mt-0">
-              <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">Katapady, Udupi</p>
-              <h3 className="font-heading text-2xl md:text-4xl text-foreground font-black tracking-tight drop-shadow-2xl">S.V.S. Ground</h3>
-              <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">✦ Sacred Venue ✦</p>
+              <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">{t('hero.city')}</p>
+              <h3 className="font-heading text-2xl md:text-4xl text-foreground font-black tracking-tight drop-shadow-2xl">{t('hero.venue')}</h3>
+              <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">{t('hero.sacredVenue')}</p>
             </div>
           </div>
         </motion.div>

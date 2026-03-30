@@ -1,29 +1,7 @@
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Heart, Sun, Sparkles, Shield } from "lucide-react";
-
-const cards = [
-  {
-    icon: Sun,
-    title: "The Preserver",
-    description: "Lord Venkateswara is an incarnation of Lord Vishnu, the supreme preserver of the universe.",
-  },
-  {
-    icon: Heart,
-    title: "Boundless Grace",
-    description: "He bestows unconditional love and grace upon all devotees who seek His divine blessings.",
-  },
-  {
-    icon: Sparkles,
-    title: "Kaliyuga Varada",
-    description: "The Lord who grants boons in the age of Kali, guiding humanity through darkness to light.",
-  },
-  {
-    icon: Shield,
-    title: "Eternal Dharma",
-    description: "His presence at Tirumala upholds the eternal principles of righteousness and devotion.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 // Using a custom lotus-like icon since lucide doesn't have Lotus
 const LotusIcon = ({ className }: { className?: string }) => (
@@ -35,6 +13,30 @@ const LotusIcon = ({ className }: { className?: string }) => (
 
 const AboutSection = () => {
   const { ref, isInView, divineVariant } = useScrollReveal();
+  const { t } = useTranslation();
+
+  const cards = [
+    {
+      icon: Sun,
+      title: t('about.card1_title'),
+      description: t('about.card1_desc'),
+    },
+    {
+      icon: Heart,
+      title: t('about.card2_title'),
+      description: t('about.card2_desc'),
+    },
+    {
+      icon: Sparkles,
+      title: t('about.card3_title'),
+      description: t('about.card3_desc'),
+    },
+    {
+      icon: Shield,
+      title: t('about.card4_title'),
+      description: t('about.card4_desc'),
+    },
+  ];
 
   return (
     <section id="about" className="py-6 md:py-10 relative overflow-hidden optimize-gpu" ref={ref}>
@@ -46,15 +48,13 @@ const AboutSection = () => {
           variants={divineVariant}
         >
           <p className="font-body text-primary text-sm md:text-lg tracking-widest uppercase mb-2">
-            ✦ The Divine Lord ✦
+            {t('about.tagline')}
           </p>
           <h2 className="font-heading text-xl md:text-3xl font-bold text-gradient-gold">
-            About Sri Venkateswara
+            {t('about.title')}
           </h2>
           <p className="font-body text-sm md:text-base text-foreground/60 mt-2 max-w-3xl mx-auto leading-relaxed">
-            Lord Sri Venkateswara, also known as Balaji, Govinda, and Srinivasa, resides atop the
-            sacred seven hills of Tirumala. He is the most worshipped deity in the Hindu pantheon,
-            drawing millions of devotees each year seeking His divine grace.
+            {t('about.desc')}
           </p>
         </motion.div>
       </div>

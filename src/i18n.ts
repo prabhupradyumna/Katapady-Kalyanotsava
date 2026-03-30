@@ -1,0 +1,420 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+const resources = {
+  en: {
+    translation: {
+      nav: {
+        home: "Home",
+        schedule: "Schedule",
+        sevas: "Sevas",
+        location: "Location",
+        parking: "Parking",
+        contact: "Contact",
+        lostFound: "Lost & Found",
+        about: "About"
+      },
+      hero: {
+        lokakalyanartha: "✦ Lokakalyanartha ✦",
+        piousResolve: "Pious Resolve By",
+        family: "Mrs. Vijaya Pai & Mr. Purushotham Pai and Family",
+        title1: "Sri Srinivasa",
+        title2: "Kalyanotsava",
+        subtitle: "Step into the sacred union of divinity and grace",
+        day: "Saturday",
+        month: "April",
+        date: "11, 2026",
+        lagnam: "✦ 6:25 PM Godhuli Lagnam ✦",
+        city: "Katapady, Udupi",
+        venue: "S.V.S. Ground",
+        sacredVenue: "✦ Sacred Venue ✦"
+      },
+      about: {
+        tagline: "✦ The Divine Lord ✦",
+        title: "About Sri Venkateswara",
+        desc: "Lord Sri Venkateswara, also known as Balaji, Govinda, and Srinivasa, resides atop the sacred seven hills of Tirumala. He is the most worshipped deity in the Hindu pantheon, drawing millions of devotees each year seeking His divine grace.",
+        card1_title: "The Preserver",
+        card1_desc: "Lord Venkateswara is an incarnation of Lord Vishnu, the supreme preserver of the universe.",
+        card2_title: "Boundless Grace",
+        card2_desc: "He bestows unconditional love and grace upon all devotees who seek His divine blessings.",
+        card3_title: "Kaliyuga Varada",
+        card3_desc: "The Lord who grants boons in the age of Kali, guiding humanity through darkness to light.",
+        card4_title: "Eternal Dharma",
+        card4_desc: "His presence at Tirumala upholds the eternal principles of righteousness and devotion."
+      },
+      timeline: {
+        tagline: "✦ Sacred Journey ✦",
+        title: "Event Schedule",
+        date: "Saturday, 11th April 2026",
+        time1: "3:30 PM",
+        title1: "Procession (Shobha Yatra)",
+        desc1: "Sri Srinivasa Deva arrives at Katapady Pete followed by a grand celestial procession to the Kalyana Mantapa.",
+        time2: "5:00 PM",
+        title2: "Arrival of Devi",
+        desc2: "Arrival of Sri Padmavati Devi & sacred Swarnamani Bandhana in preparation for the divine union.",
+        time3: "6:25 PM",
+        title3: "Srinivasa Kalyanotsava",
+        desc3: "The grand celestial wedding rituals including Kanya Danam during the auspicious Godhuli Lagna.",
+        time4: "8:00 PM",
+        title4: "Maha Annaprasadam",
+        desc4: "Partake in the blessed Maha Annaprasadam offered to all devotees after the celestial wedding.",
+        specialNotesTitle: "✦ Special Notes ✦",
+        note1: "No financial assistance of any kind will be accepted for the Sri Srinivasa Kalyanotsavam.",
+        note2: "Devotees wishing to offer flowers or Tulsi garlands can do so at the Kalyana Mantapa before 3:00 PM.",
+        note3: "Ample parking provided with shuttle vehicles connected from the parking lot to the venue.",
+        note4: "Special arrangements and assistance will be provided for differently abled and disabled citizens.",
+        note5: "Hundi facility has been provided for those who wish to donate directly to Tirupati Temple."
+      },
+      sevas: {
+        tagline: "✦ Daily Worship ✦",
+        title: "Sevas & Rituals",
+        name1: "Suprabhatam",
+        time1: "3:00 AM",
+        desc1: "The divine awakening of the Lord with sacred Vedic hymns.",
+        name2: "Thomala Seva",
+        time2: "5:00 AM",
+        desc2: "Adorning the deity with fragrant flower garlands.",
+        name3: "Archana",
+        time3: "6:30 AM",
+        desc3: "Offering sacred prayers with the chanting of 108 divine names.",
+        name4: "Sahasra Deepalankarana",
+        time4: "7:00 PM",
+        desc4: "Illumination of the sanctum with a thousand lamps.",
+        name5: "Kalyanotsavam",
+        time5: "9:00 AM",
+        desc5: "The celestial wedding ceremony of the divine couple.",
+        name6: "Ekanta Seva",
+        time6: "10:00 PM",
+        desc6: "The final nighttime offering before the Lord retires."
+      },
+      location: {
+        tagline: "✦ Getting Here ✦",
+        title1: "Directions to",
+        title2: "the Sacred Ground",
+        venueLabel: "Venue Destination",
+        venueDesc: "S.V.S. Ground, Katpadi Pete,<br/>Katapady, Udupi, Karnataka - 574 105",
+        landmarksLabel: "Landmarks",
+        landmarksDesc: "Near S.V.S English Medium High School, Katapady",
+        help: "Need help with directions?",
+        button: "Open in Google Maps"
+      },
+      parking: {
+        header: "Parking Arrangements",
+        tip: "Swipe or use arrows to view designated parking locations.",
+        locationNav: "Location",
+        available: "Available",
+        full: "Full",
+        navigate: "Navigate Now",
+        infoTip: "Volunteers will be present at all gates to guide you to the nearest available spot.",
+        title1: "Parking Spot 1",
+        sub1: "SVS School Ground (Primary Entrance)",
+        desc1: "Main parking area for all devotees and guests. Please enter through the main arch.",
+        title2: "Parking Spot 2",
+        sub2: "SVS School Ground (Overflow)",
+        desc2: "Designated overflow parking area with volunteer assistance.",
+        title3: "Parking Spot 3",
+        sub3: "SVS Pre University College",
+        desc3: "Designated parking zone at the PU College ground. Ideal for those coming from the west entrance.",
+        title4: "Parking Spot 4",
+        sub4: "Venkataramana Devastana",
+        desc4: "Ample parking area near the Venkataramana Temple for devotees arriving from the South.",
+        title5: "Parking Spot 5",
+        sub5: "Shri Vishwanatha Kshetra",
+        desc5: "Designated parking zone near the main Katapadi Shri Vishwanatha Temple entrance."
+      },
+      divine: {
+        name: "Mrs. Vijaya Pai & Mr. Purushotham Pai and Family",
+        resolve: "with a Pious Resolve",
+        devasthanam: "Tirumala Tirupati Devasthanams, Tirupati",
+        quote: "“Loka Kalyanartha”"
+      },
+      sponsors: {
+        tagline: "✦ Patronage ✦",
+        title: "Grace Supported By",
+        sp1: "Katapadi Pai Family",
+        sp2: "SVS Vidyavardhaka Sangha",
+        sp3: "Adyar Petrol Pump",
+        sp4: "Sun Matrix Audio Lab",
+        sp5: "Invenger Technologies",
+        sp6: "Invenger Foundation",
+        sp7: "Inexo ERP & CRM Software",
+        sp8: "School Leader Cinema",
+        sp9: "Vijaya Industries",
+        sp10: "Iratha Auto"
+      },
+      lostAndFound: {
+        header: "Lost & Found",
+        subtext: "Report lost items or claim found ones",
+        tabFound: "Found Items",
+        tabReport: "Report Lost Item",
+        claimInst: "How to claim:",
+        claimText: "If you see your lost item in this list, please proceed to the <strong class=\"text-foreground\">Information Counter</strong> near the main temple entrance. You will need to provide specific details or proof of ownership to claim your property.",
+        foundAt: "Found:",
+        claimCounter: "Claim at Counter",
+        empty: "No found items reported at this time.",
+        nameLabel: "Your Name",
+        namePlace: "Enter your full name",
+        phoneLabel: "Phone Number",
+        phonePlace: "Enter mobile number",
+        itemLabel: "Item Name / Brief Description",
+        itemPlace: "e.g., Black Leather Wallet, Gold Ring",
+        descLabel: "Last Seen Location / Additional Details",
+        descPlace: "Where did you last have it? Any specific markings?",
+        imgLabel: "Reference Photo (Optional)",
+        imgPlace: "Click to upload an image of the lost item",
+        submit: "Submit Report"
+      },
+      quotes: {
+        q1: "✦ Loka Kalyanartha ✦",
+        q2: "“Vina Venkatesam Na Natho Na Nathah,<br/>Sada Venkatesam Smarami Smarami”",
+        q3: "“In the Divine Presence of the Supreme Lord, every soul finds its peaceful path to Dharma.”",
+        q4: "“Witnessing the Celestial Wedding of Srinivasa and Padmavathi brings endless blessings and prosperity.”",
+        q5: "✦ Sri Srinivasa Kalyanotsavam ✦"
+      },
+      warmlyWelcomed: {
+        tagline: "✦ Coordination ✦",
+        title: "Warmly Welcomed By",
+        org1Name: "K. Sathyendra Pai & K. Krishna Mohan Pai USA",
+        org1Role: "Primary Patrons",
+        org2Name: "SVS Vidyavardhaka Sangha",
+        org2Role: "Educational Trust",
+        org3Name: "GSB Community Udupi",
+        org3Role: "Community Coordination"
+      },
+      sevasGuidelines: {
+        tagline: "✦ Devotional Services ✦",
+        title: "Sevas & Services",
+        card1Title: "Tirupati Hundi",
+        card1Desc: "Contribute through the Tirupati Hundi. Offerings directed to TTD without diversion.",
+        card2Title: "Darshan Assistance",
+        card2Desc: "Special assistance for physically challenged devotees. Contact our helpline.",
+        card3Title: "Volunteer Roles",
+        card3Desc: "Join us in this divine service. Volunteers warmly welcomed for event support."
+      },
+      interactive: {
+        emergencyHeader: "Emergency Contacts",
+        medical: "Medical Emergency",
+        police: "Police / Security",
+        helpdesk: "General Helpdesk"
+      },
+      footer: {
+        parking: "Ample Parking Available at Venue",
+        designedBy: "Designed & Developed By"
+      }
+    }
+  },
+  kn: {
+    translation: {
+      nav: {
+        home: "ಮುಖಪುಟ",
+        schedule: "ವೇಳಾಪಟ್ಟಿ",
+        sevas: "ಸೇವೆಗಳು",
+        location: "ಸ್ಥಳ",
+        parking: "ಪಾರ್ಕಿಂಗ್",
+        contact: "ಸಂಪರ್ಕಿಸಿ",
+        lostFound: "ಕಳೆದುಹೋದ ವಸ್ತುಗಳು",
+        about: "ಕುರಿತು"
+      },
+      hero: {
+        lokakalyanartha: "✦ ಲೋಕಕಲ್ಯಾಣಾರ್ಥ ✦",
+        piousResolve: "ಭಕ್ತಿಪೂರ್ವಕ ಸಂಕಲ್ಪ",
+        family: "ಶ್ರೀಮತಿ ವಿಜಯಾ ಪೈ & ಶ್ರೀ ಪುರುಷೋತ್ತಮ್ ಪೈ ಮತ್ತು ಕುಟುಂಬ",
+        title1: "ಶ್ರೀ ಶ್ರೀನಿವಾಸ",
+        title2: "ಕಲ್ಯಾಣೋತ್ಸವ",
+        subtitle: "ದೈವಿಕತೆ ಮತ್ತು ಕೃಪೆಯ ಪವಿತ್ರ ಮಿಲನದಲ್ಲಿ ಪಾಲ್ಗೊಳ್ಳಿ",
+        day: "ಶನಿವಾರ",
+        month: "ಏಪ್ರಿಲ್",
+        date: "11, 2026",
+        lagnam: "✦ ಸಂಜೆ 6:25 ಗೋದೂಳಿ ಲಗ್ನ ✦",
+        city: "ಕಾಟಪಾಡಿ, ಉಡುಪಿ",
+        venue: "ಎಸ್. ವಿ. ಎಸ್. ಮೈದಾನ",
+        sacredVenue: "✦ ಪವಿತ್ರ ಸ್ಥಳ ✦"
+      },
+      about: {
+        tagline: "✦ ದಿವ್ಯ ಪ್ರಭು ✦",
+        title: "ಶ್ರೀ ವೆಂಕಟೇಶ್ವರ ಸ್ವಾಮಿಯ ಕುರಿತು",
+        desc: "ಶ್ರೀ ವೆಂಕಟೇಶ್ವರ ಸ್ವಾಮಿ, ಬಾಲಾಜಿ, ಗೋವಿಂದ ಮತ್ತು ಶ್ರೀನಿವಾಸ ಎಂದೂ ಕರೆಯಲ್ಪಡುವ, ತಿರುಮಲದ ಪವಿತ್ರ ಏಳು ಬೆಟ್ಟಗಳ ಮೇಲೆ ನೆಲೆಸಿದ್ದಾನೆ. ಅವರು ಹಿಂದೂ ಧರ್ಮದಲ್ಲಿ ಅತ್ಯಂತ ಪೂಜ್ಯ ದೈವವಾಗಿದ್ದು, ದೈವಿಕ ಕೃಪೆಯನ್ನು ಅರಸಿ ಪ್ರತಿವರ್ಷ ಲಕ್ಷಾಂತರ ಭಕ್ತರನ್ನು ಆಕರ್ಷಿಸುತ್ತಾರೆ.",
+        card1_title: "ರಕ್ಷಕ",
+        card1_desc: "ಶ್ರೀ ವೆಂಕಟೇಶ್ವರ ಸ್ವಾಮಿಯು ಬ್ರಹ್ಮಾಂಡದ ಪರಮ ರಕ್ಷಕನಾದ ಭಗವಾನ್ ವಿಷ್ಣುವಿನ ಅವತಾರ.",
+        card2_title: "ಅಪಾರ ಕರುಣೆ",
+        card2_desc: "ತಮ್ಮ ದೈವಿಕ ಆಶೀರ್ವಾದವನ್ನು ಬಯಸುವ ಎಲ್ಲಾ ಭಕ್ತರಿಗೆ ಆತನು ಬೇಷರತ್ತಾದ ಪ್ರೀತಿ ಮತ್ತು ಕೃಪೆಯನ್ನು ಕರುಣಿಸುತ್ತಾನೆ.",
+        card3_title: "ಕಲಿಯುಗ ವರದ",
+        card3_desc: "ಕಲಿಯುಗದಲ್ಲಿ ವರಗಳನ್ನು ಕರುಣಿಸುವ ಸ್ವಾಮಿಯು, ಕತ್ತಲೆಯಿಂದ ಬೆಳಕಿನೆಡೆಗೆ ಮಾನವೀಯತೆಯನ್ನು ಮುನ್ನಡೆಸುತ್ತಾನೆ.",
+        card4_title: "ಶಾಶ್ವತ ಧರ್ಮ",
+        card4_desc: "ತಿರುಮಲದಲ್ಲಿ ಆತನ ಉಪಸ್ಥಿತಿಯು ಧಾರ್ಮಿಕತೆ ಮತ್ತು ಭಕ್ತಿಯ ಶಾಶ್ವತ ತತ್ವಗಳನ್ನು ಎತ್ತಿಹಿಡಿಯುತ್ತದೆ."
+      },
+      timeline: {
+        tagline: "✦ ಪವಿತ್ರ ಪಯಣ ✦",
+        title: "ಕಾರ್ಯಕ್ರಮದ ವೇಳಾಪಟ್ಟಿ",
+        date: "ಶನಿವಾರ, 11 ಏಪ್ರಿಲ್ 2026",
+        time1: "ಮಧ್ಯಾಹ್ನ 3:30",
+        title1: "ಶೋಭಾಯಾತ್ರೆ",
+        desc1: "ಕಾಟಪಾಡಿ ಪೇಟೆಗೆ ಶ್ರೀ ಶ್ರೀನಿವಾಸ ದೇವರ ಆಗಮನ, ನಂತರ ಕಲ್ಯಾಣ ಮಂಟಪದವರೆಗೆ ಭವ್ಯ ಶೋಭಾಯಾತ್ರೆ.",
+        time2: "ಸಂಜೆ 5:00",
+        title2: "ದೇವಿಯ ಆಗಮನ",
+        desc2: "ಶ್ರೀ ಪದ್ಮಾವತಿ ದೇವಿಯ ಆಗಮನ ಮತ್ತು ದಿವ್ಯ ಕಲ್ಯಾಣದ ಸಿದ್ಧತೆಗಾಗಿ ಪವಿತ್ರ ಸ್ವರ್ಣಮಣಿ ಬಂಧನ.",
+        time3: "ಸಂಜೆ 6:25",
+        title3: "ಶ್ರೀನಿವಾಸ ಕಲ್ಯಾಣೋತ್ಸವ",
+        desc3: "ಪವಿತ್ರ ಗೋದೂಳಿ ಲಗ್ನದಲ್ಲಿ ಕನ್ಯಾದಾನ ಸೇರಿದಂತೆ ಭವ್ಯ ದಿವ್ಯ ಕಲ್ಯಾಣ ವಿಧಿವಿಧಾನಗಳು.",
+        time4: "ರಾತ್ರಿ 8:00",
+        title4: "ಮಹಾ ಅನ್ನಪ್ರಸಾದಂ",
+        desc4: "ದಿವ್ಯ ಕಲ್ಯಾಣದ ನಂತರ ಎಲ್ಲಾ ಭಕ್ತರಿಗೆ ನೀಡಲಾಗುವ ಪವಿತ್ರ ಮಹಾ ಅನ್ನಪ್ರಸಾದವನ್ನು ಸ್ವೀಕರಿಸಿ.",
+        specialNotesTitle: "✦ ವಿಶೇಷ ಸೂಚನೆಗಳು ✦",
+        note1: "ಶ್ರೀ ಶ್ರೀನಿವಾಸ ಕಲ್ಯಾಣೋತ್ಸವಕ್ಕಾಗಿ ಯಾವುದೇ ರೀತಿಯ ಆರ್ಥಿಕ ಸಹಾಯವನ್ನು (ಹಣ) ಸ್ವೀಕರಿಸಲಾಗುವುದಿಲ್ಲ.",
+        note2: "ಹೂವು ಅಥವಾ ತುಳಸಿ ಹಾರಗಳನ್ನು ಅರ್ಪಿಸಲು ಇಚ್ಛಿಸುವ ಭಕ್ತರು ಮಧ್ಯಾಹ್ನ 3:00 ಗಂಟೆಯೊಳಗೆ ಕಲ್ಯಾಣ ಮಂಟಪದಲ್ಲಿ ನೀಡಬಹುದು.",
+        note3: "ಪಾರ್ಕಿಂಗ್ ಸ್ಥಳದಿಂದ ಕಲ್ಯಾಣ ಮಂಟಪಕ್ಕೆ ಸಂಪರ್ಕ ಕಲ್ಪಿಸುವ ವಾಹನಗಳ ವ್ಯವಸ್ಥೆಯೊಂದಿಗೆ ಸಾಕಷ್ಟು ಪಾರ್ಕಿಂಗ್ ಸೌಲಭ್ಯವನ್ನು ಒದಗಿಸಲಾಗಿದೆ.",
+        note4: "ವಿಕಲಚೇತನರು ಮತ್ತು ಹಿರಿಯ ನಾಗರಿಕರಿಗೆ ವಿಶೇಷ ವ್ಯವಸ್ಥೆ ಮತ್ತು ಸಹಾಯವನ್ನು ಒದಗಿಸಲಾಗುವುದು.",
+        note5: "ನೇರವಾಗಿ ತಿರುಪತಿ ದೇವಸ್ಥಾನಕ್ಕೆ ದೇಣಿಗೆ ನೀಡಲು ಇಚ್ಛಿಸುವವರಿಗಾಗಿ ಹುಂಡಿ ವ್ಯವಸ್ಥೆಯನ್ನು ಮಾಡಲಾಗಿದೆ."
+      },
+      sevas: {
+        tagline: "✦ ನಿತ್ಯ ಪೂಜೆಗಳು ✦",
+        title: "ಸೇವೆಗಳು ಮತ್ತು ವಿಧಿವಿಧಾನಗಳು",
+        name1: "ಸುಪ್ರಭಾತಂ",
+        time1: "ಬೆಳಗಿನ ಜಾವ 3:00",
+        desc1: "ಪವಿತ್ರ ವೇದ ಮಂತ್ರಗಳ ಮೂಲಕ ಭಗವಂತನ ದಿವ್ಯ ಜಾಗೃತಿ.",
+        name2: "ತೋಮಾಲ ಸೇವೆ",
+        time2: "ಬೆಳಗಿನ ಜಾವ 5:00",
+        desc2: "ಪರಿಮಳಯುಕ್ತ ಹೂವಿನ ಹಾರಗಳಿಂದ ದೇವರಿಗೆ ಅಲಂಕಾರ.",
+        name3: "ಅರ್ಚನೆ",
+        time3: "ಬೆಳಿಗ್ಗೆ 6:30",
+        desc3: "108 ದಿವ್ಯ ನಾಮಗಳ ಪಠಣೆಯೊಂದಿಗೆ ಪವಿತ್ರ ಪ್ರಾರ್ಥನೆಗಳು.",
+        name4: "ಸಹಸ್ರ ದೀಪಾಲಂಕಾರ ಸೇವೆ",
+        time4: "ರಾತ್ರಿ 7:00",
+        desc4: "ಸಾವಿರ ದೀಪಗಳಿಂದ ಗರ್ಭಗುಡಿಯ ಬೆಳಗುವಿಕೆ.",
+        name5: "ಕಲ್ಯಾಣೋತ್ಸವ",
+        time5: "ಬೆಳಿಗ್ಗೆ 9:00",
+        desc5: "ದಿವ್ಯ ದಂಪತಿಗಳ ಭವ್ಯ ಕಲ್ಯಾಣೋತ್ಸವ.",
+        name6: "ಏಕಾಂತ ಸೇವೆ",
+        time6: "ರಾತ್ರಿ 10:00",
+        desc6: "ಸ್ವಾಮಿ ವಿಶ್ರಮಿಸುವ ಮುನ್ನ ನಡೆಯುವ ಅಂತಿಮ ಸೇವೆ."
+      },
+      location: {
+        tagline: "✦ ತಲುಪುವ ಬಗೆ ✦",
+        title1: "ಪವಿತ್ರ ಮೈದಾನಕ್ಕೆ ಮಾರ್ಗ",
+        title2: "",
+        venueLabel: "ಕಾರ್ಯಕ್ರಮದ ಸ್ಥಳ",
+        venueDesc: "ಎಸ್. ವಿ. ಎಸ್. ಮೈದಾನ, ಕಾಟಪಾಡಿ ಪೇಟೆ,<br/>ಕಾಟಪಾಡಿ, ಉಡುಪಿ, ಕರ್ನಾಟಕ - 574 105",
+        landmarksLabel: "ಗುರುತು",
+        landmarksDesc: "ಎಸ್. ವಿ. ಎಸ್. ಆಂಗ್ಲ ಮಾಧ್ಯಮ ಪ್ರೌಢಶಾಲೆಯ ಬಳಿ, ಕಾಟಪಾಡಿ",
+        help: "ಮಾರ್ಗದರ್ಶನದ ಅಗತ್ಯವಿದೆಯೇ?",
+        button: "ಗೂಗಲ್ ಮ್ಯಾಪ್ಸ್ ನಲ್ಲಿ ತೆರೆಯಿರಿ"
+      },
+      parking: {
+        header: "ಪಾರ್ಕಿಂಗ್ ವ್ಯವಸ್ಥೆ",
+        tip: "ನಿಗದಿತ ಪಾರ್ಕಿಂಗ್ ಸ್ಥಳಗಳನ್ನು ನೋಡಲು ಸ್ವೈಪ್ ಮಾಡಿ ಅಥವಾ ಬಾಣಗಳನ್ನು ಬಳಸಿ.",
+        locationNav: "ಸ್ಥಳ",
+        available: "ಲಭ್ಯವಿದೆ",
+        full: "ಭರ್ತಿಯಾಗಿದೆ",
+        navigate: "ಮಾರ್ಗಸೂಚಿ",
+        infoTip: "ಲಭ್ಯವಿರುವ ಹತ್ತಿರದ ಪಾರ್ಕಿಂಗ್ ಸ್ಥಳಕ್ಕೆ ನಿಮ್ಮನ್ನು ಮಾರ್ಗದರ್ಶನ ಮಾಡಲು ಎಲ್ಲಾ ಗೇಟ್‌ಗಳಲ್ಲಿ ಸ್ವಯಂಸೇವಕರು ಇರುತ್ತಾರೆ.",
+        title1: "ಪಾರ್ಕಿಂಗ್ ಸ್ಥಳ 1",
+        sub1: "ಎಸ್. ವಿ. ಎಸ್. ಶಾಲಾ ಮೈದಾನ (ಮುಖ್ಯ ದ್ವಾರ)",
+        desc1: "ಎಲ್ಲಾ ಭಕ್ತರು ಮತ್ತು ಅತಿಥಿಗಳಿಗಾಗಿ ಮುಖ್ಯ ಪಾರ್ಕಿಂಗ್ ಪ್ರದೇಶ. ದಯವಿಟ್ಟು ಮುಖ್ಯ ಕಮಾನು ಮೂಲಕ ಪ್ರವೇಶಿಸಿ.",
+        title2: "ಪಾರ್ಕಿಂಗ್ ಸ್ಥಳ 2",
+        sub2: "ಎಸ್. ವಿ. ಎಸ್. ಶಾಲಾ ಮೈದಾನ (ಹೆಚ್ಚುವರಿ)",
+        desc2: "ಸ್ವಯಂಸೇವಕರ ಸಹಾಯದೊಂದಿಗೆ ನಿಯೋಜಿತ ಹೆಚ್ಚುವರಿ ಪಾರ್ಕಿಂಗ್ ಪ್ರದೇಶ.",
+        title3: "ಪಾರ್ಕಿಂಗ್ ಸ್ಥಳ 3",
+        sub3: "ಎಸ್. ವಿ. ಎಸ್. ಪದವಿಪೂರ್ವ ಕಾಲೇಜು",
+        desc3: "ಪಿಯು ಕಾಲೇಜು ಮೈದಾನದಲ್ಲಿ ನಿಯೋಜಿತ ಪಾರ್ಕಿಂಗ್ ವಲಯ. ಪಶ್ಚಿಮ ದ್ವಾರದಿಂದ ಬರುವವರಿಗೆ ಸೂಕ್ತವಾಗಿದೆ.",
+        title4: "ಪಾರ್ಕಿಂಗ್ ಸ್ಥಳ 4",
+        sub4: "ವೆಂಕಟರಮಣ ದೇವಸ್ಥಾನ",
+        desc4: "ದಕ್ಷಿಣದಿಂದ ಆಗಮಿಸುವ ಭಕ್ತರಿಗಾಗಿ ವೆಂಕಟರಮಣ ದೇವಸ್ಥಾನದ ಬಳಿ ಸಾಕಷ್ಟು ಪಾರ್ಕಿಂಗ್ ಪ್ರದೇಶ.",
+        title5: "ಪಾರ್ಕಿಂಗ್ ಸ್ಥಳ 5",
+        sub5: "ಶ್ರೀ ವಿಶ್ವನಾಥ ಕ್ಷೇತ್ರ",
+        desc5: "ಮುಖ್ಯ ಕಾಟಪಾಡಿ ಶ್ರೀ ವಿಶ್ವನಾಥ ದೇವಸ್ಥಾನದ ಪ್ರವೇಶ ದ್ವಾರದ ಬಳಿ ನಿಯೋಜಿತ ಪಾರ್ಕಿಂಗ್ ವಲಯ."
+      },
+      divine: {
+        name: "ಶ್ರೀಮತಿ ವಿಜಯಾ ಪೈ ಮತ್ತು ಶ್ರೀ ಪುರುಷೋತ್ತಮ ಪೈ ಹಾಗೂ ಕುಟುಂಬ",
+        resolve: "ದೈವಿಕ ಸಂಕಲ್ಪದೊಂದಿಗೆ",
+        devasthanam: "ತಿರುಮಲ ತಿರುಪತಿ ದೇವಸ್ಥಾನಗಳು, ತಿರುಪತಿ",
+        quote: "“ಲೋಕ ಕಲ್ಯಾಣಾರ್ಥ”"
+      },
+      sponsors: {
+        tagline: "✦ ಪ್ರಾಯೋಜಕತ್ವ ✦",
+        title: "ಕೃಪಾಪೋಷಕರು",
+        sp1: "ಕಾಟಪಾಡಿ ಪೈ ಕುಟುಂಬ",
+        sp2: "ಎಸ್. ವಿ. ಎಸ್. ವಿದ್ಯಾವರ್ಧಕ ಸಂಘ",
+        sp3: "ಅಡ್ಯಾರ್ ಪೆಟ್ರೋಲ್ ಪಂಪ್",
+        sp4: "ಸನ್ ಮ್ಯಾಟ್ರಿಕ್ಸ್ ಆಡಿಯೋ ಲ್ಯಾಬ್",
+        sp5: "ಇನ್ವೆಂಜರ್ ಟೆಕ್ನಾಲಜೀಸ್",
+        sp6: "ಇನ್ವೆಂಜರ್ ಫೌಂಡೇಶನ್",
+        sp7: "ಇನೆಕ್ಸೊ ಇ.ಆರ್.ಪಿ ಮತ್ತು ಸಿ.ಆರ್.ಎಂ ಸಾಫ್ಟ್‌ವೇರ್",
+        sp8: "ಸ್ಕೂಲ್ ಲೀಡರ್ ಸಿನಿಮಾ",
+        sp9: "ವಿಜಯಾ ಇಂಡಸ್ಟ್ರೀಸ್",
+        sp10: "ಇರಥ ಆಟೋ"
+      },
+      lostAndFound: {
+        header: "ಕಳೆದುಕೊಂಡ ಮತ್ತು ಸಿಕ್ಕ ವಸ್ತುಗಳು",
+        subtext: "ಕಳೆದುಕೊಂಡ ವಸ್ತುಗಳನ್ನು ವರದಿ ಮಾಡಿ ಅಥವಾ ಸಿಕ್ಕ ವಸ್ತುಗಳನ್ನು ಪಡೆಯಿರಿ",
+        tabFound: "ಸಿಕ್ಕ ವಸ್ತುಗಳು",
+        tabReport: "ಕಳೆದುಕೊಂಡವನ್ನು ವರದಿ ಮಾಡಿ",
+        claimInst: "ಪಡೆಯುವ ವಿಧಾನ:",
+        claimText: "ನಿಮ್ಮ ಕಳೆದುಹೋದ ವಸ್ತು ಈ ಪಟ್ಟಿಯಲ್ಲಿದ್ದರೆ, ದಯವಿಟ್ಟು ಮುಖ್ಯ ದೇವಸ್ಥಾನದ ಪ್ರವೇಶ ದ್ವಾರದ ಬಳಿ ಇರುವ <strong class=\"text-foreground\">ಮಾಹಿತಿ ಕೇಂದ್ರಕ್ಕೆ</strong> ಭೇಟಿ ನೀಡಿ. ನಿಮ್ಮ ವಸ್ತುವನ್ನು ಪಡೆಯಲು ನೀವು ನಿರ್ದಿಷ್ಟ ವಿವರಗಳನ್ನು ಅಥವಾ ಮಾಲೀಕತ್ವದ ಪುರಾವೆಗಳನ್ನು ಒದಗಿಸಬೇಕಾಗುತ್ತದೆ.",
+        foundAt: "ದೊರೆತ ಸ್ಥಳ:",
+        claimCounter: "ಕೌಂಟರ್‌ನಲ್ಲಿ ಪಡೆಯಿರಿ",
+        empty: "ಪ್ರಸ್ತುತ ಯಾವುದೇ ವಸ್ತುಗಳು ಸಿಕ್ಕಿಲ್ಲ.",
+        nameLabel: "ನಿಮ್ಮ ಹೆಸರು",
+        namePlace: "ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ",
+        phoneLabel: "ದೂರವಾಣಿ ಸಂಖ್ಯೆ",
+        phonePlace: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+        itemLabel: "ವಸ್ತುವಿನ ಹೆಸರು / ಸಂಕ್ಷಿಪ್ತ ವಿವರಣೆ",
+        itemPlace: "ಉದಾ: ಕಪ್ಪು ಬಣ್ಣದ ಪರ್ಸ್, ಚಿನ್ನದ ಉಂಗುರ",
+        descLabel: "ಕೊನೆಯದಾಗಿ ನೋಡಿದ ಸ್ಥಳ / ಹೆಚ್ಚುವರಿ ವಿವರಗಳು",
+        descPlace: "ನೀವು ಅದನ್ನು ಎಲ್ಲಿ ಕಳೆದುಕೊಂಡಿರಬಹುದು? ಯಾವುದೇ ನಿರ್ದಿಷ್ಟ ಗುರುತುಗಳಿವೆಯೇ?",
+        imgLabel: "ಉಲ್ಲೇಖದ ಚಿತ್ರ (ಐಚ್ಛಿಕ)",
+        imgPlace: "ಕಳೆದುಹೋದ ವಸ್ತುವಿನ ಚಿತ್ರವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
+        submit: "ವರದಿ ಸಲ್ಲಿಸಿ"
+      },
+      quotes: {
+        q1: "✦ ಲೋಕ ಕಲ್ಯಾಣಾರ್ಥ ✦",
+        q2: "“ವಿನಾ ವೆಂಕಟೇಶಂ ನ ನಾಥೋ ನ ನಾಥಃ,<br/>ಸದಾ ವೆಂಕಟೇಶಂ ಸ್ಮರಾಮಿ ಸ್ಮರಾಮಿ”",
+        q3: "“ಪರಮಾತ್ಮನ ದಿವ್ಯ ಸನ್ನಿಧಿಯಲ್ಲಿ, ಪ್ರತಿಯೊಂದು ಜೀವವೂ ಧರ್ಮದ ನೆಮ್ಮದಿಯ ಹಾದಿಯನ್ನು ಕಂಡುಕೊಳ್ಳುತ್ತದೆ.”",
+        q4: "“ಶ್ರೀನಿವಾಸ ಮತ್ತು ಪದ್ಮಾವತಿಯವರ ದಿವ್ಯ ಕಲ್ಯಾಣೋತ್ಸವವನ್ನು ಕಣ್ತುಂಬಿಕೊಳ್ಳುವುದು ಅನಂತ ಆಶೀರ್ವಾದ ಮತ್ತು ಸಮೃದ್ಧಿಯನ್ನು ತರುತ್ತದೆ.”",
+        q5: "✦ ಶ್ರೀ ಶ್ರೀನಿವಾಸ ಕಲ್ಯಾಣೋತ್ಸವ ✦"
+      },
+      warmlyWelcomed: {
+        tagline: "✦ ಸಮನ್ವಯತೆ ✦",
+        title: "ಆತ್ಮೀಯ ಸ್ವಾಗತ ಕೋರುವವರು",
+        org1Name: "ಕೆ. ಸತ್ಯೇಂದ್ರ ಪೈ ಮತ್ತು ಕೆ. ಕೃಷ್ಣ ಮೋಹನ್ ಪೈ, ಅಮೆರಿಕಾ",
+        org1Role: "ಮುಖ್ಯ ಪ್ರಾಯೋಜಕರು",
+        org2Name: "ಎಸ್. ವಿ. ಎಸ್. ವಿದ್ಯಾವರ್ಧಕ ಸಂಘ",
+        org2Role: "ಶೈಕ್ಷಣಿಕ ಟ್ರಸ್ಟ್",
+        org3Name: "ಜಿ.ಎಸ್.ಬಿ. ಸಮಾಜ, ಉಡುಪಿ",
+        org3Role: "ಸಮಾಜದ ಸಮನ್ವಯ"
+      },
+      sevasGuidelines: {
+        tagline: "✦ ಭಕ್ತಿ ಸೇವೆಗಳು ✦",
+        title: "ಸೇವೆಗಳು",
+        card1Title: "ತಿರುಪತಿ ಹುಂಡಿ",
+        card1Desc: "ತಿರುಪತಿ ಹುಂಡಿಯ ಮೂಲಕ ದೇಣಿಗೆ ನೀಡಿ. ನಿಮ್ಮ ಕಾಣಿಕೆಗಳು ನೇರವಾಗಿ ಟಿ.ಟಿ.ಡಿಯ(TTD) ಹುಂಡಿಗೆ ಸೇರುತ್ತವೆ.",
+        card2Title: "ದರ್ಶನ ಸಹಾಯ",
+        card2Desc: "ವಿಕಲಚೇತನ ಭಕ್ತರಿಗಾಗಿ ವಿಶೇಷ ದರ್ಶನದ ವ್ಯವಸ್ಥೆ. ನಮ್ಮ ಸಹಾಯವಾಣಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+        card3Title: "ಸ್ವಯಂಸೇವಕರ ಪಾತ್ರಗಳು",
+        card3Desc: "ಈ ದಿವ್ಯ ಸೇವೆಯಲ್ಲಿ ನಮ್ಮೊಂದಿಗೆ ಕೈಜೋಡಿಸಿ. ಕಾರ್ಯಕ್ರಮದ ಯಶಸ್ಸಿಗಾಗಿ ಸ್ವಯಂಸೇವಕರಿಗೆ ಆತ್ಮೀಯ ಸ್ವಾಗತ."
+      },
+      interactive: {
+        emergencyHeader: "ತುರ್ತು ಸಂಪರ್ಕಗಳು",
+        medical: "ವೈದ್ಯಕೀಯ ತುರ್ತು",
+        police: "ಪೊಲೀಸ್ / ಭದ್ರತೆ",
+        helpdesk: "ಸಾಮಾನ್ಯ ಸಹಾಯವಾಣಿ"
+      },
+      footer: {
+        parking: "ಕಾರ್ಯಕ್ರಮದ ಸ್ಥಳದಲ್ಲಿ ಸಾಕಷ್ಟು ಪಾರ್ಕಿಂಗ್ ಲಭ್ಯವಿದೆ",
+        designedBy: "ವಿನ್ಯಾಸ ಮತ್ತು ಅಭಿವೃದ್ಧಿ"
+      }
+    }
+  }
+};
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: "en", // default language
+    fallbackLng: "en",
+    interpolation: {
+      escapeValue: false // not needed for react as it escapes by default
+    }
+  });
+
+export default i18n;

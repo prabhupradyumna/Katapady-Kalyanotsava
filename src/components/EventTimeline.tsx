@@ -1,40 +1,43 @@
 import { motion } from "framer-motion";
 import { Sparkles, Heart, CheckCircle } from "lucide-react";
-
-const eventItems = [
-  {
-    time: "3:30 PM",
-    title: "Procession (Shobha Yatra)",
-    description: "Sri Srinivasa Deva arrives at Katapady Pete followed by a grand celestial procession to the Kalyana Mantapa.",
-    icon: Sparkles
-  },
-  {
-    time: "5:00 PM",
-    title: "Arrival of Devi",
-    description: "Arrival of Sri Padmavati Devi & sacred Swarnamani Bandhana in preparation for the divine union.",
-    icon: Sparkles
-  },
-  {
-    time: "6:25 PM",
-    title: "Srinivasa Kalyanotsava",
-    description: "The grand celestial wedding rituals including Kanya Danam during the auspicious Godhuli Lagna.",
-    icon: Heart
-  },
-  {
-    time: "8:00 PM",
-    title: "Maha Annaprasadam",
-    description: "Partake in the blessed Maha Annaprasadam offered to all devotees after the celestial wedding.",
-    icon: CheckCircle
-  }
-];
+import { useTranslation } from "react-i18next";
 
 const EventTimeline = () => {
+  const { t } = useTranslation();
+
+  const eventItems = [
+    {
+      time: t('timeline.time1'),
+      title: t('timeline.title1'),
+      description: t('timeline.desc1'),
+      icon: Sparkles
+    },
+    {
+      time: t('timeline.time2'),
+      title: t('timeline.title2'),
+      description: t('timeline.desc2'),
+      icon: Sparkles
+    },
+    {
+      time: t('timeline.time3'),
+      title: t('timeline.title3'),
+      description: t('timeline.desc3'),
+      icon: Heart
+    },
+    {
+      time: t('timeline.time4'),
+      title: t('timeline.title4'),
+      description: t('timeline.desc4'),
+      icon: CheckCircle
+    }
+  ];
+
   const specialNotes = [
-    "No financial assistance of any kind will be accepted for the Sri Srinivasa Kalyanotsavam.",
-    "Devotees wishing to offer flowers or Tulsi garlands can do so at the Kalyana Mantapa before 3:00 PM.",
-    "Ample parking provided with shuttle vehicles connected from the parking lot to the venue.",
-    "Special arrangements and assistance will be provided for differently abled and disabled citizens.",
-    "Hundi facility has been provided for those who wish to donate directly to Tirupati Temple."
+    t('timeline.note1'),
+    t('timeline.note2'),
+    t('timeline.note3'),
+    t('timeline.note4'),
+    t('timeline.note5')
   ];
 
   return (
@@ -44,12 +47,12 @@ const EventTimeline = () => {
       <div className="container mx-auto px-4 relative z-20">
         <div className="text-center mb-8 md:mb-12">
           <p className="font-body text-primary text-sm md:text-base uppercase tracking-[0.2em] mb-2 font-semibold">
-            ✦ Sacred Journey ✦
+            {t('timeline.tagline')}
           </p>
           <h2 className="font-heading text-2xl md:text-5xl font-black text-gradient-gold">
-            Event Schedule
+            {t('timeline.title')}
           </h2>
-          <p className="font-body text-foreground/60 text-sm md:text-base mt-2">Saturday, 11th April 2026</p>
+          <p className="font-body text-foreground/60 text-sm md:text-base mt-2">{t('timeline.date')}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-20">
@@ -93,7 +96,7 @@ const EventTimeline = () => {
         >
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
           <h3 className="font-heading text-lg md:text-2xl font-black text-primary uppercase tracking-[0.2em] mb-6 text-center">
-            ✦ Special Notes ✦
+            {t('timeline.specialNotesTitle')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {specialNotes.map((note, idx) => (

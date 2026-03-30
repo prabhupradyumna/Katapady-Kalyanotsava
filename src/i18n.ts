@@ -7,7 +7,7 @@ const resources = {
       nav: {
         home: "Home",
         schedule: "Schedule",
-        sevas: "Sevas",
+        sevas: "Offerings",
         location: "Location",
         parking: "Parking",
         contact: "Contact",
@@ -66,8 +66,8 @@ const resources = {
         note5: "Hundi facility has been provided for those who wish to donate directly to Tirupati Temple."
       },
       sevas: {
-        tagline: "✦ Daily Worship ✦",
-        title: "Sevas & Rituals",
+        tagline: "✦ Celestial Worship ✦",
+        title: "Divine Rituals",
         name1: "Suprabhatam",
         time1: "3:00 AM",
         desc1: "The divine awakening of the Lord with sacred Vedic hymns.",
@@ -182,8 +182,8 @@ const resources = {
         org3Role: "Community Coordination"
       },
       sevasGuidelines: {
-        tagline: "✦ Devotional Services ✦",
-        title: "Sevas & Services",
+        tagline: "✦ Devotional Offerings ✦",
+        title: "Offerings & Support",
         card1Title: "Tirupati Hundi",
         card1Desc: "Contribute through the Tirupati Hundi. Offerings directed to TTD without diversion.",
         card2Title: "Darshan Assistance",
@@ -208,7 +208,7 @@ const resources = {
       nav: {
         home: "ಮುಖಪುಟ",
         schedule: "ವೇಳಾಪಟ್ಟಿ",
-        sevas: "ಸೇವೆಗಳು",
+        sevas: "ಅರ್ಪಣೆಗಳು",
         location: "ಸ್ಥಳ",
         parking: "ಪಾರ್ಕಿಂಗ್",
         contact: "ಸಂಪರ್ಕಿಸಿ",
@@ -267,8 +267,8 @@ const resources = {
         note5: "ನೇರವಾಗಿ ತಿರುಪತಿ ದೇವಸ್ಥಾನಕ್ಕೆ ದೇಣಿಗೆ ನೀಡಲು ಇಚ್ಛಿಸುವವರಿಗಾಗಿ ಹುಂಡಿ ವ್ಯವಸ್ಥೆಯನ್ನು ಮಾಡಲಾಗಿದೆ."
       },
       sevas: {
-        tagline: "✦ ನಿತ್ಯ ಪೂಜೆಗಳು ✦",
-        title: "ಸೇವೆಗಳು ಮತ್ತು ವಿಧಿವಿಧಾನಗಳು",
+        tagline: "✦ ದಿವ್ಯ ಆರಾಧನೆ ✦",
+        title: "ದಿವ್ಯ ಸೇವಾ ವಿಧಿವಿಧಾನಗಳು",
         name1: "ಸುಪ್ರಭಾತಂ",
         time1: "ಬೆಳಗಿನ ಜಾವ 3:00",
         desc1: "ಪವಿತ್ರ ವೇದ ಮಂತ್ರಗಳ ಮೂಲಕ ಭಗವಂತನ ದಿವ್ಯ ಜಾಗೃತಿ.",
@@ -383,8 +383,8 @@ const resources = {
         org3Role: "ಸಮಾಜದ ಸಮನ್ವಯ"
       },
       sevasGuidelines: {
-        tagline: "✦ ಭಕ್ತಿ ಸೇವೆಗಳು ✦",
-        title: "ಸೇವೆಗಳು",
+        tagline: "✦ ಭಕ್ತಿ ಅರ್ಪಣೆಗಳು ✦",
+        title: "ಕಾಣಿಕೆ ಮತ್ತು ಸಹಕಾರ",
         card1Title: "ತಿರುಪತಿ ಹುಂಡಿ",
         card1Desc: "ತಿರುಪತಿ ಹುಂಡಿಯ ಮೂಲಕ ದೇಣಿಗೆ ನೀಡಿ. ನಿಮ್ಮ ಕಾಣಿಕೆಗಳು ನೇರವಾಗಿ ಟಿ.ಟಿ.ಡಿಯ(TTD) ಹುಂಡಿಗೆ ಸೇರುತ್ತವೆ.",
         card2Title: "ದರ್ಶನ ಸಹಾಯ",

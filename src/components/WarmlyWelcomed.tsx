@@ -1,8 +1,18 @@
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useTranslation } from "react-i18next";
 
 const WarmlyWelcomed = () => {
   const { ref, isInView, divineVariant } = useScrollReveal();
+  const { t } = useTranslation();
+
+  const orgList = [
+    { name: t('warmlyWelcomed.org1Name'), role: t('warmlyWelcomed.org1Role') },
+    { name: t('warmlyWelcomed.org2Name'), role: t('warmlyWelcomed.org2Role') },
+    { name: t('warmlyWelcomed.org3Name'), role: t('warmlyWelcomed.org3Role') }
+  ];
+
+  const repeatedOrgs = [...orgList, ...orgList, ...orgList, ...orgList];
 
   return (
     <section className="py-4 md:py-6 bg-temple-deep overflow-hidden optimize-gpu" ref={ref}>
@@ -18,10 +28,10 @@ const WarmlyWelcomed = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             className="inline-block px-3 py-1 rounded-full border border-primary/20 bg-primary/5 mb-3"
           >
-            <span className="font-heading text-primary text-xs md:text-sm uppercase tracking-[0.2em] font-bold">Coordination</span>
+            <span className="font-heading text-primary text-xs md:text-sm uppercase tracking-[0.2em] font-bold">{t('warmlyWelcomed.tagline')}</span>
           </motion.div>
           <h3 className="font-heading text-xl md:text-3xl font-black text-gradient-gold uppercase">
-            Warmly Welcomed By
+            {t('warmlyWelcomed.title')}
           </h3>
         </motion.div>
 
@@ -42,18 +52,7 @@ const WarmlyWelcomed = () => {
                 }}
                 className="flex shrink-0 py-4 md:py-6"
               >
-              {[
-                { name: "K. Sathyendra Pai & K. Krishna Mohan Pai USA", role: "Primary Patrons" },
-                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
-                { name: "GSB Community Udupi", role: "Community Coordination" }
-              ].concat(
-                { name: "K. Sathyendra Pai & K. Krishna Mohan Pai USA", role: "Primary Patrons" },
-                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
-                { name: "GSB Community Udupi", role: "Community Coordination" },
-                { name: "K. Sathyendra Pai & K. Krishna Mohan Pai USA", role: "Primary Patrons" },
-                { name: "SVS Vidyavardhaka Sangha", role: "Educational Trust" },
-                { name: "GSB Community Udupi", role: "Community Coordination" }
-              ).map((org, index) => (
+              {repeatedOrgs.map((org, index) => (
                 <div key={index} className="pr-6 md:pr-8 shrink-0">
                   <motion.div
                     whileHover={{ 

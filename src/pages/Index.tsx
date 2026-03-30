@@ -14,7 +14,7 @@ import ParkingSection from "@/components/ParkingSection";
 import SiteFooter from "@/components/SiteFooter";
 import ParticleEffect from "@/components/ParticleEffect";
 import DivineAura from "@/components/DivineAura";
-import { AudioToggle } from "@/components/InteractiveControls";
+import { AudioToggle, EmergencyContactToggle } from "@/components/InteractiveControls";
 import { Toaster } from "sonner";
 
 /* 
@@ -40,6 +40,7 @@ const Index = () => {
       
       {/* Interactive Floating Controls */}
       <AudioToggle />
+      <EmergencyContactToggle />
       
       <Navbar />
       

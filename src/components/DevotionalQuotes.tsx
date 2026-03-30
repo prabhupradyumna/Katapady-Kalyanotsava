@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const quotes = [
-  "✦ ಲೋಕ ಕಲ್ಯಾಣಾರ್ಥ ✦",
-  "“Vina Venkatesam Na Natho Na Nathah,<br/>Sada Venkatesam Smarami Smarami”",
-  "“In the Divine Presence of the Supreme Lord, every soul finds its peaceful path to Dharma.”",
-  "“Witnessing the Celestial Wedding of Srinivasa and Padmavathi brings endless blessings and prosperity.”",
-  "✦ ಶ್ರೀ ಶ್ರೀನಿವಾಸ ಕಲ್ಯಾಣೋತ್ಸವ ✦"
-];
+import { useTranslation } from "react-i18next";
 
 const DevotionalQuotes = () => {
+  const { t } = useTranslation();
+  
+  const quotes = [
+    t('quotes.q1'),
+    t('quotes.q2'),
+    t('quotes.q3'),
+    t('quotes.q4'),
+    t('quotes.q5')
+  ];
+
   const [index, setIndex] = useState(0);
 
   useEffect(() => {

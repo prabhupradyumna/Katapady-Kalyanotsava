@@ -1,20 +1,22 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-
-const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Schedule", href: "#schedule" },
-  { label: "Sevas", href: "#sevas" },
-  { label: "Location", href: "#location" },
-  { label: "Parking", href: "#parking" },
-  { label: "Contact", href: "#contact" },
-];
+import LostAndFound from "./LostAndFound";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
+  const { t, i18n } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [lostFoundOpen, setLostFoundOpen] = useState(false);
+
+  const navLinks = [
+    { label: t("nav.schedule"), href: "#schedule" },
+    { label: t("nav.sevas"), href: "#sevas" },
+    { label: t("nav.location"), href: "#location" },
+    { label: t("nav.parking"), href: "#parking" },
+  ];
 
   useEffect(() => {
     let ticking = false;
@@ -57,8 +59,9 @@ const Navbar = () => {
   }, []);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
@@ -103,6 +106,27 @@ const Navbar = () => {
               )}
             </a>
           ))}
+          <div className="flex items-center gap-2 ml-4 mr-2">
+            <button 
+              onClick={() => i18n.changeLanguage('en')} 
+              className={`font-heading text-sm font-bold transition-colors ${i18n.language === 'en' ? 'text-primary' : 'text-foreground/50 hover:text-foreground/80'}`}
+            >
+              English
+            </button>
+            <span className="text-foreground/30">|</span>
+            <button 
+              onClick={() => i18n.changeLanguage('kn')} 
+              className={`font-heading text-[15px] font-bold transition-colors ${i18n.language === 'kn' ? 'text-primary' : 'text-foreground/50 hover:text-foreground/80'}`}
+            >
+              ಕನ್ನಡ
+            </button>
+          </div>
+          <button
+            onClick={() => setLostFoundOpen(true)}
+            className="font-heading text-sm uppercase tracking-wider font-bold text-primary border border-primary/30 px-5 py-2 rounded-full hover:bg-primary/10 hover:border-primary/60 hover:shadow-glow transition-all active:scale-95 ml-2"
+          >
+            {t("nav.lostFound")}
+          </button>
         </div>
 
         {/* Mobile toggle */}
@@ -147,11 +171,47 @@ const Navbar = () => {
                   {link.label}
                 </motion.a>
               ))}
+              <div className="flex items-center gap-4 mt-2">
+                <button 
+                  onClick={() => {
+                    i18n.changeLanguage('en');
+                    setMobileOpen(false);
+                  }} 
+                  className={`font-heading text-xl font-bold transition-colors ${i18n.language === 'en' ? 'text-primary' : 'text-foreground/50'}`}
+                >
+                  English
+                </button>
+                <span className="text-foreground/30 text-xl">|</span>
+                <button 
+                  onClick={() => {
+                    i18n.changeLanguage('kn');
+                    setMobileOpen(false);
+                  }} 
+                  className={`font-heading text-[22px] font-bold transition-colors ${i18n.language === 'kn' ? 'text-primary' : 'text-foreground/50'}`}
+                >
+                  ಕನ್ನಡ
+                </button>
+              </div>
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navLinks.length * 0.1 }}
+                onClick={() => {
+                  setMobileOpen(false);
+                  setLostFoundOpen(true);
+                }}
+                className="mt-6 font-heading text-xl md:text-2xl text-primary font-bold border border-primary/30 px-10 py-3 rounded-full hover:bg-primary/10 active:scale-95 transition-all"
+              >
+                {t("nav.lostFound")}
+              </motion.button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.nav>
+
+    <LostAndFound isOpen={lostFoundOpen} onClose={() => setLostFoundOpen(false)} />
+    </>
   );
 };
 

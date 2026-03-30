@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { MapPin, Navigation, MapIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const LocationSection = () => {
+  const { t } = useTranslation();
   const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15538.987791845137!2d74.7431633!3d13.2756181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcbb7ac1112d6d%3A0xdd756834e429ad22!2sSVS%20Ground!5e0!3m2!1sen!2sin!4v1700000000000";
 
   return (
@@ -17,10 +19,10 @@ const LocationSection = () => {
               transition={{ duration: 1 }}
             >
               <p className="font-body text-primary text-lg uppercase tracking-widest mb-1 font-semibold">
-                ✦ Getting Here ✦
+                {t('location.tagline')}
               </p>
               <h2 className="font-heading text-xl md:text-3xl lg:text-4xl font-black text-gradient-gold leading-tight mb-3">
-                Directions to<br/>the Sacred Ground
+                {t('location.title1')}{t('location.title2') && <><br/>{t('location.title2')}</>}
               </h2>
               
               <div className="space-y-2 md:space-y-4">
@@ -28,10 +30,8 @@ const LocationSection = () => {
                   <div className="flex items-start gap-2 md:gap-3">
                     <MapPin className="w-5 h-5 md:w-8 md:h-8 text-primary mt-0.5" />
                     <div>
-                      <p className="font-heading text-sm md:text-lg font-bold text-foreground">Venue Destination</p>
-                      <p className="font-body text-[11px] md:text-base text-foreground/60 leading-snug">
-                        S.V.S. Ground, Katpadi Pete,<br/>Katapady, Udupi, Karnataka - 574 105
-                      </p>
+                      <p className="font-heading text-sm md:text-lg font-bold text-foreground">{t('location.venueLabel')}</p>
+                      <p className="font-body text-[11px] md:text-base text-foreground/60 leading-snug" dangerouslySetInnerHTML={{ __html: t('location.venueDesc') }} />
                     </div>
                   </div>
                 </div>
@@ -40,9 +40,9 @@ const LocationSection = () => {
                   <div className="flex items-start gap-2 md:gap-3">
                     <Navigation className="w-5 h-5 md:w-8 md:h-8 text-primary mt-0.5" />
                     <div>
-                      <p className="font-heading text-sm md:text-lg font-bold text-foreground">Landmarks</p>
+                      <p className="font-heading text-sm md:text-lg font-bold text-foreground">{t('location.landmarksLabel')}</p>
                       <p className="font-body text-[11px] md:text-base text-foreground/60 italic leading-snug">
-                        Near S.V.S English Medium High School, Katapady
+                        {t('location.landmarksDesc')}
                       </p>
                     </div>
                   </div>
@@ -50,7 +50,7 @@ const LocationSection = () => {
 
                 <div className="bg-primary/5 p-2 md:p-4 rounded-xl border border-primary/20 hover:border-primary/40 transition-all duration-300">
                   <div className="flex flex-col gap-1 md:gap-2">
-                    <p className="font-heading text-[10px] md:text-sm font-bold text-primary uppercase tracking-widest">Need help with directions?</p>
+                    <p className="font-heading text-[10px] md:text-sm font-bold text-primary uppercase tracking-widest">{t('location.help')}</p>
                     <div className="flex flex-wrap gap-x-3 gap-y-1 text-foreground/80 font-body font-bold text-[11px] md:text-base">
                       <a href="tel:9845242167" className="hover:text-primary transition-colors">9845242167</a>
                       <a href="tel:9964578732" className="hover:text-primary transition-colors">9964578732</a>
@@ -69,7 +69,7 @@ const LocationSection = () => {
                 className="mt-2 md:mt-4 inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-primary text-primary-foreground font-heading font-bold text-sm md:text-base rounded-xl shadow-glow group"
               >
                 <MapIcon className="w-3 h-3 md:w-5 md:h-5" />
-                Open in Google Maps
+                {t('location.button')}
               </motion.a>
             </motion.div>
           </div>

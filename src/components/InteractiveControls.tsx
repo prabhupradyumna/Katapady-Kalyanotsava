@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { Music, VolumeX } from "lucide-react";
+import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { Music, VolumeX, Phone, HeartPulse, ShieldAlert, PhoneCall } from "lucide-react";
 import govindaMusic from "@/assets/govinda-namavali.mp3";
+import { useTranslation } from "react-i18next";
 
 const AudioToggle = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -107,4 +108,68 @@ const AudioToggle = () => {
   );
 };
 
-export { AudioToggle };
+const EmergencyContactToggle = () => {
+  const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const contacts = [
+    { name: t('interactive.medical'), number: "108", icon: <HeartPulse className="w-4 h-4" /> },
+    { name: t('interactive.police'), number: "112", icon: <ShieldAlert className="w-4 h-4" /> },
+    { name: t('interactive.helpdesk'), number: "+91 98765 43210", icon: <PhoneCall className="w-4 h-4" /> },
+  ];
+
+  return (
+    <div className="fixed bottom-24 right-6 md:bottom-10 md:right-10 z-[100] flex flex-col items-end">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="mb-4 bg-temple-dark/95 backdrop-blur-xl border border-red-500/30 rounded-2xl p-4 shadow-[0_10px_40px_-10px_rgba(220,38,38,0.3)] min-w-[260px] origin-bottom-right"
+          >
+            <h3 className="font-heading text-xs font-bold text-red-400 uppercase tracking-widest mb-3 pb-2 border-b border-red-500/20 text-center">
+              {t('interactive.emergencyHeader')}
+            </h3>
+            <div className="flex flex-col gap-2">
+              {contacts.map((contact, idx) => (
+                <a
+                  key={idx}
+                  href={`tel:${contact.number.replace(/\s+/g, '')}`}
+                  className="flex flex-col gap-1 p-3 rounded-xl bg-black/40 hover:bg-red-500/10 border border-primary/10 hover:border-red-500/30 transition-all active:scale-[0.98] group"
+                >
+                  <div className="flex items-center justify-between text-foreground">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-foreground/80 group-hover:text-red-400 transition-colors flex items-center gap-2">
+                      <span className="p-1.5 bg-red-500/10 rounded-full text-red-500/80 group-hover:text-red-400 group-hover:bg-red-500/20 transition-colors">
+                        {contact.icon}
+                      </span>
+                      {contact.name}
+                    </span>
+                  </div>
+                  <span className="font-heading text-lg font-black text-primary pl-9 group-hover:text-primary transition-colors">
+                    {contact.number}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.button
+        whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(239, 68, 68, 0.4)" }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-2xl z-10 transition-colors border ${
+          isOpen ? "bg-red-500/20 border-red-500 text-red-500" : "bg-temple-dark/80 backdrop-blur-xl border-red-500/30 text-red-400 hover:border-red-500"
+        }`}
+        aria-label="Emergency Contacts"
+      >
+        <Phone className={`w-5 h-5 md:w-7 md:h-7 ${!isOpen && "animate-pulse"}`} />
+      </motion.button>
+    </div>
+  );
+};
+
+export { AudioToggle, EmergencyContactToggle };

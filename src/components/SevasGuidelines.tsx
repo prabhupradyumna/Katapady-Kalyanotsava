@@ -2,27 +2,29 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Coins, HeartHandshake, Users, AlertTriangle, Info, Phone, ClipboardList } from "lucide-react";
 import { useScrollReveal } from "../hooks/useScrollReveal";
+import { useTranslation } from "react-i18next";
 
 const SevasGuidelines = () => {
   const { ref, isInView, divineVariant } = useScrollReveal();
+  const { t } = useTranslation();
 
   const sevas = [
     {
-      title: "Tirupathi Hundi",
+      title: t('sevasGuidelines.card1Title'),
       icon: <Coins className="w-8 h-8 md:w-12 md:h-12 text-[#FF9933]" />,
-      description: "Contribute through the Tirupathi Hundi. Offerings directed to TTD without diversion.",
+      description: t('sevasGuidelines.card1Desc'),
       contact: null
     },
     {
-      title: "Darshan Assistance",
+      title: t('sevasGuidelines.card2Title'),
       icon: <HeartHandshake className="w-8 h-8 md:w-12 md:h-12 text-[#FF9933]" />,
-      description: "Special assistance for physically challenged devotees. Contact our helpline.",
+      description: t('sevasGuidelines.card2Desc'),
       contact: "9845242167"
     },
     {
-      title: "Volunteer Roles",
+      title: t('sevasGuidelines.card3Title'),
       icon: <Users className="w-8 h-8 md:w-12 md:h-12 text-[#FF9933]" />,
-      description: "Join us in this divine service. Volunteers warmly welcomed for event support.",
+      description: t('sevasGuidelines.card3Desc'),
       contact: "9964578732 / 9892012060"
     }
   ];
@@ -41,10 +43,10 @@ const SevasGuidelines = () => {
           <p 
             className="font-body text-[#FF9933] text-sm md:text-lg tracking-[0.3em] uppercase font-bold mb-2 md:mb-3"
           >
-            ✦ Devotional Services ✦
+            {t('sevasGuidelines.tagline')}
           </p>
           <h2 className="font-heading text-2xl md:text-4xl font-black text-gradient-gold uppercase">
-            Sevas & Services
+            {t('sevasGuidelines.title')}
           </h2>
         </motion.div>
       </div>

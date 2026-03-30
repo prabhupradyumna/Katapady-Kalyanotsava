@@ -1,20 +1,22 @@
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-
-const sponsors = [
-  { name: "Katapadi Pai Family", logo: "/sponsors/katpadi-family.jpg" },
-  { name: "SVS Vidyavardhaka Sangha", logo: "/sponsors/svs.jpg" },
-  { name: "Adyar Petrol Pump", logo: "/sponsors/adyar-petrol-pump.jpg" },
-  { name: "Sun Matrix Audio Lab", logo: "/sponsors/sun-matrix.jpg" },
-  { name: "Invenger Technologies", logo: "/sponsors/invenger.png" },
-  { name: "Invenger Foundation", logo: "/sponsors/invenger-foundation.png" },
-  { name: "Inexo ERP & CRM Software", logo: "/sponsors/inexo.png" },
-  { name: "School Leader Cinema", logo: "/sponsors/school-leader.png" },
-  { name: "Vijaya Industries", logo: "/sponsors/vijaya.jpg" },
-  { name: "Iratha Auto", logo: "/sponsors/iratha.png" }
-];
+import { useTranslation } from "react-i18next";
 
 const SponsorCarousel = () => {
+  const { t } = useTranslation();
+  
+  const sponsors = [
+    { name: t('sponsors.sp1'), logo: "/sponsors/katpadi-family.jpg" },
+    { name: t('sponsors.sp2'), logo: "/sponsors/svs.jpg" },
+    { name: t('sponsors.sp3'), logo: "/sponsors/adyar-petrol-pump.jpg" },
+    { name: t('sponsors.sp4'), logo: "/sponsors/sun-matrix.jpg" },
+    { name: t('sponsors.sp5'), logo: "/sponsors/invenger.png" },
+    { name: t('sponsors.sp6'), logo: "/sponsors/invenger-foundation.png" },
+    { name: t('sponsors.sp7'), logo: "/sponsors/inexo.png" },
+    { name: t('sponsors.sp8'), logo: "/sponsors/school-leader.png" },
+    { name: t('sponsors.sp9'), logo: "/sponsors/vijaya.jpg" },
+    { name: t('sponsors.sp10'), logo: "/sponsors/iratha.png" }
+  ];
   const x = useMotionValue(0);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -73,10 +75,10 @@ const SponsorCarousel = () => {
           whileInView={{ opacity: 1 }}
           className="font-body text-sm md:text-base uppercase tracking-widest mb-1 font-semibold"
         >
-          ✦ Patronage ✦
+          {t('sponsors.tagline')}
         </motion.p>
         <h2 className="font-heading text-xl md:text-3xl lg:text-4xl font-black text-gradient-gold leading-tight mb-3">
-          Grace Supported By
+          {t('sponsors.title')}
         </h2>
       </div>
 

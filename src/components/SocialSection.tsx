@@ -11,7 +11,7 @@ import clippingImg from "@/assets/youtube-cover.png";
  */
 const InstagramFeed = ({ reels }: { reels: string[] }) => {
   return (
-    <div className="w-full flex flex-col items-center">
+    <div id="instagram-feed-container" className="w-full flex flex-col items-center">
       <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide px-2 w-full max-w-6xl mx-auto">
         {reels.map((url, idx) => (
           <div 
@@ -159,6 +159,11 @@ const SocialSection = () => {
       const igScript = document.createElement("script");
       igScript.src = "https://www.instagram.com/embed.js";
       igScript.async = true;
+      igScript.onload = () => {
+        if (typeof window !== 'undefined' && (window as any).instgrm) {
+          (window as any).instgrm.Embeds.process();
+        }
+      };
       document.body.appendChild(igScript);
     }
 
@@ -184,9 +189,14 @@ const SocialSection = () => {
     if (activeTab === "instagram") {
       const timer = setTimeout(() => {
         if (typeof window !== 'undefined' && (window as any).instgrm) {
-          (window as any).instgrm.Embeds.process();
+          const container = document.getElementById('instagram-feed-container');
+          if (container) {
+            (window as any).instgrm.Embeds.process(container);
+          } else {
+            (window as any).instgrm.Embeds.process();
+          }
         }
-      }, 500); // Small delay to ensure blockquotes are rendered
+      }, 800); // Increased delay for AnimatePresence stability
       return () => clearTimeout(timer);
     }
     

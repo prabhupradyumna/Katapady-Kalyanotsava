@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import LostAndFound from "./LostAndFound";
@@ -10,6 +10,19 @@ const Navbar = () => {
   const [active, setActive] = useState("home");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [lostFoundOpen, setLostFoundOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Click outside to close mobile menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (mobileOpen && mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+        setMobileOpen(false);
+      }
+    };
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [mobileOpen]);
 
   const navLinks = [
     { label: t("nav.schedule"), href: "#schedule" },
@@ -143,11 +156,12 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            ref={mobileMenuRef}
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 top-0 left-0 w-full h-screen bg-temple-black/95 backdrop-blur-2xl z-[70] md:hidden"
+            className="fixed inset-y-0 right-0 w-[80%] h-full bg-temple-black/95 backdrop-blur-2xl z-[70] md:hidden shadow-divine border-l border-primary/20"
           >
             <div className="flex flex-col items-center justify-center h-full gap-8">
               <button 

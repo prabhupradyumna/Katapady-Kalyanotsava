@@ -111,6 +111,23 @@ const AudioToggle = () => {
 const EmergencyContactToggle = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const contacts = [
     { name: t('interactive.medical'), number: "108", icon: <HeartPulse className="w-4 h-4" /> },
@@ -119,7 +136,7 @@ const EmergencyContactToggle = () => {
   ];
 
   return (
-    <div className="fixed bottom-24 right-6 md:bottom-10 md:right-10 z-[100] flex flex-col items-end">
+    <div ref={containerRef} className="fixed bottom-24 right-6 md:bottom-10 md:right-10 z-[100] flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div

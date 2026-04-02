@@ -144,7 +144,7 @@ const EmergencyContactToggle = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="mb-4 bg-temple-dark/95 backdrop-blur-xl border border-red-500/30 rounded-2xl p-4 shadow-[0_10px_40px_-10px_rgba(220,38,38,0.3)] min-w-[260px] origin-bottom-right"
+            className="absolute right-0 bottom-full mb-4 bg-temple-dark/95 backdrop-blur-xl border border-red-500/30 rounded-2xl p-4 shadow-[0_10px_40px_-10px_rgba(220,38,38,0.3)] min-w-[260px] origin-bottom-right"
           >
             <h3 className="font-heading text-xs font-bold text-red-400 uppercase tracking-widest mb-3 pb-2 border-b border-red-500/20 text-center">
               {t('interactive.emergencyHeader')}

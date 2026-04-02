@@ -79,7 +79,7 @@ const Navbar = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-xl border-b border-primary/20 shadow-divine"
+          ? "bg-black/95 backdrop-blur-xl border-b border-primary/20 shadow-divine"
           : "bg-transparent"
       }`}
     >
@@ -151,78 +151,78 @@ const Navbar = () => {
           {mobileOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
+    </motion.nav>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            ref={mobileMenuRef}
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-y-0 right-0 w-[80%] h-full bg-temple-black/95 backdrop-blur-2xl z-[70] md:hidden shadow-divine border-l border-primary/20"
-          >
-            <div className="flex flex-col items-center justify-center h-full gap-8">
-              <button 
-                onClick={() => setMobileOpen(false)}
-                className="absolute top-8 right-8 text-primary"
-              >
-                <X size={40} />
-              </button>
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`font-heading text-4xl ${
-                    active === link.href.slice(1) ? "text-primary font-bold" : "text-foreground/70"
-                  }`}
-                >
-                  {link.label}
-                </motion.a>
-              ))}
-              <div className="flex items-center gap-4 mt-2">
-                <button 
-                  onClick={() => {
-                    i18n.changeLanguage('en');
-                    setMobileOpen(false);
-                  }} 
-                  className={`font-heading text-xl font-bold transition-colors ${i18n.language === 'en' ? 'text-primary' : 'text-foreground/50'}`}
-                >
-                  English
-                </button>
-                <span className="text-foreground/30 text-xl">|</span>
-                <button 
-                  onClick={() => {
-                    i18n.changeLanguage('kn');
-                    setMobileOpen(false);
-                  }} 
-                  className={`font-heading text-[22px] font-bold transition-colors ${i18n.language === 'kn' ? 'text-primary' : 'text-foreground/50'}`}
-                >
-                  ಕನ್ನಡ
-                </button>
-              </div>
-              <motion.button
+    {/* Mobile menu - MOVED OUTSIDE NAV TO FIX CSS TRANSFORM CONTAINER BUG */}
+    <AnimatePresence>
+      {mobileOpen && (
+        <motion.div
+          ref={mobileMenuRef}
+          initial={{ opacity: 0, x: "100%" }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: "100%" }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed inset-0 w-full h-full bg-black/95 backdrop-blur-2xl z-[70] md:hidden shadow-divine border-l border-primary/20"
+        >
+          <div className="flex flex-col items-center justify-center h-full gap-8">
+            <button 
+              onClick={() => setMobileOpen(false)}
+              className="absolute top-8 right-8 text-primary"
+            >
+              <X size={40} />
+            </button>
+            {navLinks.map((link, i) => (
+              <motion.a
+                key={link.href}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.1 }}
-                onClick={() => {
-                  setMobileOpen(false);
-                  setLostFoundOpen(true);
-                }}
-                className="mt-6 font-heading text-xl md:text-2xl text-primary font-bold border border-primary/30 px-10 py-3 rounded-full hover:bg-primary/10 active:scale-95 transition-all"
+                transition={{ delay: i * 0.1 }}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className={`font-heading text-4xl ${
+                  active === link.href.slice(1) ? "text-primary font-bold" : "text-foreground/70"
+                }`}
               >
-                {t("nav.lostFound")}
-              </motion.button>
+                {link.label}
+              </motion.a>
+            ))}
+            <div className="flex items-center gap-4 mt-2">
+              <button 
+                onClick={() => {
+                  i18n.changeLanguage('en');
+                  setMobileOpen(false);
+                }} 
+                className={`font-heading text-xl font-bold transition-colors ${i18n.language === 'en' ? 'text-primary' : 'text-foreground/50'}`}
+              >
+                English
+              </button>
+              <span className="text-foreground/30 text-xl">|</span>
+              <button 
+                onClick={() => {
+                  i18n.changeLanguage('kn');
+                  setMobileOpen(false);
+                }} 
+                className={`font-heading text-[22px] font-bold transition-colors ${i18n.language === 'kn' ? 'text-primary' : 'text-foreground/50'}`}
+              >
+                ಕನ್ನಡ
+              </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navLinks.length * 0.1 }}
+              onClick={() => {
+                setMobileOpen(false);
+                setLostFoundOpen(true);
+              }}
+              className="mt-6 font-heading text-xl md:text-2xl text-primary font-bold border border-primary/30 px-10 py-3 rounded-full hover:bg-primary/10 active:scale-95 transition-all"
+            >
+              {t("nav.lostFound")}
+            </motion.button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
 
     <LostAndFound isOpen={lostFoundOpen} onClose={() => setLostFoundOpen(false)} />
     </>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, PlusCircle, AlertCircle, Upload, CheckCircle, Image as ImageIcon, RefreshCw } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -14,448 +14,157 @@ interface LostAndFoundProps {
 const LostAndFound = ({ isOpen, onClose }: LostAndFoundProps) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'found' | 'report' | 'found-submit'>('report');
-  const [foundItemsCount, setFoundItemsCount] = useState(0);
+  const [foundItems, setFoundItems] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [isUploading, setIsUploading] = useState(false);
-  
-  // Refs for hidden inputs
-  const lostFileRef = useRef<HTMLInputElement>(null);
-  const foundFileRef = useRef<HTMLInputElement>(null);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    item: "",
-    description: ""
-  });
-  const [lostImage, setLostImage] = useState<File | null>(null);
-
-  const [foundFormData, setFoundFormData] = useState({
-    item: "",
-    location: "",
-    finderName: "",
-    finderPhone: ""
-  });
-  const [foundImage, setFoundImage] = useState<File | null>(null);
-
-  // Calculate found items count from Firestore
+  // Sync found items from Firestore
   useEffect(() => {
-    const q = query(collection(db, "found_items"), where("status", "==", "unclaimed"));
-    const unsub = onSnapshot(q, (snapshot) => {
-      setFoundItemsCount(snapshot.size);
+    const unsub = onSnapshot(collection(db, "found_items"), (snapshot) => {
+      setFoundItems(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
     return () => unsub();
   }, []);
 
-  // Pro Fix: Convert photo to tiny string for free Firestore storage
-  const compressImage = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 400; // Small size for database efficiency
-          let width = img.width;
-          let height = img.height;
-
-          if (width > MAX_WIDTH) {
-            height = (MAX_WIDTH / width) * height;
-            width = MAX_WIDTH;
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx?.drawImage(img, 0, 0, width, height);
-          
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.5); // 50% quality to keep code short
-          resolve(dataUrl);
-        };
-        img.onerror = reject;
-        img.src = event.target?.result as string;
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleFileUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.phone || !formData.item) {
-      alert("Please fill in all required fields.");
-      return;
-    }
-
+    if (!selectedFile) return;
     setIsUploading(true);
     try {
-      let imageUrl = "";
-      if (lostImage) {
-        imageUrl = await compressImage(lostImage);
-      }
-
+      const storageRef = ref(storage, `found-items/${Date.now()}-${selectedFile.name}`);
+      const snapshot = await uploadBytes(storageRef, selectedFile);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+      
       await addDoc(collection(db, "lost_reports"), {
-        ...formData,
-        imageUrl,
-        id: Date.now(),
-        status: "reported",
-        date: new Date().toLocaleString(),
-      });
-
-      setFormData({ name: "", phone: "", item: "", description: "" });
-      setLostImage(null);
-      alert(t('lostAndFound.submitSuccess') || "Report submitted successfully.");
-      onClose();
-    } catch (error) {
-      console.error("Submission failed:", error);
-      alert("Database error.");
-    } finally {
-      setIsUploading(false);
-    }
-  };
-
-  const handleFoundSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!foundFormData.item || !foundFormData.location) {
-      alert("Please fill in essential details.");
-      return;
-    }
-
-    setIsUploading(true);
-    try {
-      let imageUrl = "";
-      if (foundImage) {
-        imageUrl = await compressImage(foundImage);
-      }
-
-      await addDoc(collection(db, "found_items"), {
-        ...foundFormData,
-        imageUrl,
-        id: Date.now(),
-        status: "unclaimed",
-        source: "visitor",
+        item: formData.get('item'),
+        description: formData.get('description'),
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        imageUrl: downloadURL,
         date: new Date().toLocaleDateString(),
+        status: 'pending'
       });
       
-      setFoundFormData({ item: "", location: "", finderName: "", finderPhone: "" });
-      setFoundImage(null);
-      alert(t('lostAndFound.foundSubmitSuccessAlert') || "Honesty report logged.");
-      onClose();
+      setUploadSuccess(true);
+      setTimeout(() => { 
+        setUploadSuccess(false); 
+        onClose(); 
+      }, 3000);
     } catch (error) {
-        console.error("Submission failed:", error);
-        alert("Firestore error.");
+      console.error("Upload error:", error);
     } finally {
       setIsUploading(false);
     }
   };
+
+  const filteredItems = foundItems.filter(item => 
+    item.item?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    item.location?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
-        >
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-temple-black/80 backdrop-blur-xl"
-            onClick={onClose}
-          />
-          
-          {/* Modal Container */}
-          <motion.div 
-            initial={{ scale: 0.95, y: 20, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.95, y: 20, opacity: 0 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-2xl bg-card border border-primary/20 rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col max-h-[90vh]"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-primary/10">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="absolute inset-0 bg-temple-black/80 backdrop-blur-sm" />
+          <motion.div initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }} className="relative w-full max-w-4xl bg-card border border-primary/20 rounded-[40px] overflow-hidden shadow-divine z-10 flex flex-col max-h-[90vh]">
+            <div className="p-8 border-b border-primary/10 flex justify-between items-center bg-primary/5">
               <div>
-                <h2 className="font-heading text-2xl font-black text-gradient-gold">{t('lostAndFound.header')}</h2>
-                <p className="text-sm text-foreground/60 font-body">{t('lostAndFound.subtext')}</p>
+                <h2 className="font-heading text-3xl font-black text-gradient-gold uppercase tracking-tight">{t('nav.lostFound')}</h2>
+                <p className="text-foreground/40 text-xs font-black uppercase tracking-[0.2em] mt-1 italic">{t('lostAndFound.subtitle')}</p>
               </div>
-              <button 
-                onClick={onClose}
-                className="p-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-full transition-colors"
-                aria-label="Close"
-              >
-                <X size={20} />
-              </button>
+              <button onClick={onClose} className="p-3 bg-primary/10 rounded-full text-primary hover:bg-primary/20 transition-all"><X size={24} /></button>
             </div>
 
-            {/* Tabs */}
-            <div className="flex border-b border-primary/10 px-6 pt-4 gap-4 overflow-x-auto custom-scrollbar no-scrollbar scrollbar-hide">
-              <button
-                onClick={() => setActiveTab('report')}
-                className={`pb-3 font-heading text-[10px] sm:text-xs uppercase tracking-wider font-bold transition-all relative shrink-0 ${
-                  activeTab === 'report' ? 'text-primary' : 'text-foreground/50 hover:text-foreground/80'
-                }`}
-              >
-                {t('lostAndFound.tabReport')}
-                {activeTab === 'report' && (
-                  <motion.div layoutId="lf-tab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full shadow-glow" />
-                )}
-              </button>
-              <button
-                onClick={() => setActiveTab('found-submit')}
-                className={`pb-3 font-heading text-[10px] sm:text-xs uppercase tracking-wider font-bold transition-all relative shrink-0 ${
-                  activeTab === 'found-submit' ? 'text-primary' : 'text-foreground/50 hover:text-foreground/80'
-                }`}
-              >
-                {t('lostAndFound.tabFoundSubmit') || "I Found Something"}
-                {activeTab === 'found-submit' && (
-                  <motion.div layoutId="lf-tab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full shadow-glow" />
-                )}
-              </button>
-              <button
-                onClick={() => setActiveTab('found')}
-                className={`pb-3 font-heading text-[10px] sm:text-xs uppercase tracking-wider font-bold transition-all relative shrink-0 ${
-                  activeTab === 'found' ? 'text-primary' : 'text-foreground/50 hover:text-foreground/80'
-                }`}
-              >
-                {t('lostAndFound.tabFoundStatus') || "Security Desk"}
-                {activeTab === 'found' && (
-                  <motion.div layoutId="lf-tab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full shadow-glow" />
-                )}
-              </button>
+            <div className="p-4 border-b border-primary/10 flex gap-2 md:gap-4 justify-center md:justify-start">
+              {['report', 'found', 'found-submit'].map((tab) => (
+                <button 
+                  key={tab} 
+                  onClick={() => setActiveTab(tab as any)} 
+                  className={`px-4 py-2 rounded-xl text-[10px] md:text-sm font-bold uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-primary text-primary-foreground shadow-glow' : 'bg-primary/5 text-primary hover:bg-primary/10'}`}
+                >
+                  {t(`lostAndFound.${tab}`)}
+                </button>
+              ))}
             </div>
 
-            {/* Content Area */}
-            <div className="p-6 overflow-y-auto custom-scrollbar flex-1 relative">
-              <AnimatePresence mode="wait">
-                {activeTab === 'found' ? (
-                  <motion.div
-                    key="found"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    className="space-y-6"
-                  >
-                    <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 flex flex-col items-center text-center gap-4">
-                      <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-glow">
-                        <Search className="w-8 h-8" />
+            <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 custom-scrollbar">
+              {activeTab === 'report' ? (
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                  <div className="relative group">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-primary/40 group-focus-within:text-primary transition-colors" size={20} />
+                    <input type="text" placeholder={t('lostAndFound.searchPlaceholder')} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-black/40 border border-primary/10 rounded-2xl pl-12 pr-6 py-4 text-sm focus:border-primary/50 outline-none transition-all" />
+                  </div>
+                  <div className="grid gap-3 md:gap-4">
+                    {filteredItems.length > 0 ? (
+                      filteredItems.map((item) => (
+                        <div key={item.id} className="bg-card/40 border border-primary/10 rounded-2xl p-4 flex flex-col md:flex-row justify-between md:items-center gap-4 transition-all">
+                          <div>
+                            <h4 className="font-heading font-black text-lg text-primary uppercase">{item.item}</h4>
+                            <p className="text-[10px] text-foreground/40 uppercase tracking-widest">{t('lostAndFound.foundAt')} {item.location} • {item.date}</p>
+                          </div>
+                          <span className="px-4 py-2 bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-widest rounded-lg text-center">{t('lostAndFound.claimCounter')}</span>
+                        </div>
+                      ))
+                    ) : <div className="text-center py-20 text-foreground/20 italic">{t('lostAndFound.empty')}</div>}
+                  </div>
+                </motion.div>
+              ) : activeTab === 'found-submit' ? (
+                <motion.form onSubmit={handleFileUpload} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-xl mx-auto space-y-4">
+                  <div className="p-6 bg-primary/5 border border-primary/10 rounded-3xl space-y-4">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-primary/60 ml-1">What did you lose?</label>
+                      <input name="item" required type="text" placeholder="e.g. Black iPhone, Gold Ring" className="w-full bg-black/40 border border-primary/10 rounded-xl px-4 py-3 text-sm focus:border-primary/50 outline-none" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-primary/60 ml-1">Detail description</label>
+                      <textarea name="description" rows={3} placeholder="Describe any unique markings, color, or condition..." className="w-full bg-black/40 border border-primary/10 rounded-xl px-4 py-3 text-sm focus:border-primary/50 outline-none resize-none" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-primary/60 ml-1">Full Name</label>
+                        <input name="name" required type="text" className="w-full bg-black/40 border border-primary/10 rounded-xl px-4 py-3 text-sm focus:border-primary/50 outline-none" />
                       </div>
-                      <div>
-                        <h3 className="font-heading text-3xl font-black text-primary mb-1">{foundItemsCount}</h3>
-                        <p className="text-[10px] uppercase tracking-widest font-bold text-foreground/60">{t('lostAndFound.custodyText')}</p>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-primary/60 ml-1">Contact Number</label>
+                        <input name="phone" required type="tel" className="w-full bg-black/40 border border-primary/10 rounded-xl px-4 py-3 text-sm focus:border-primary/50 outline-none" />
                       </div>
                     </div>
-
-                    <div className="bg-card/40 border border-primary/10 rounded-xl p-5 space-y-4">
-                      <div className="flex gap-3 items-start">
-                        <AlertCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                        <p className="text-sm text-foreground/80 leading-relaxed italic">
-                           {t('lostAndFound.foundStatement')}
-                        </p>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-primary/60 ml-1">Proof Photo (Optional)</label>
+                      <div className="relative h-40 bg-black/40 border-2 border-dashed border-primary/20 rounded-2xl flex flex-col items-center justify-center transition-all hover:bg-black/60 hover:border-primary/40">
+                        <input type="file" onChange={(e) => setSelectedFile(e.target.files?.[0] || null)} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" />
+                        {selectedFile ? <div className="text-center font-bold text-primary"><ImageIcon className="mx-auto mb-2" />{selectedFile.name}</div> : <div className="text-center text-foreground/40 font-bold uppercase tracking-widest"><Upload className="mx-auto mb-2 text-primary/40" /> {t('lostAndFound.uploadBtn')}</div>}
                       </div>
-                      <div className="pl-8 text-sm text-foreground/60 space-y-2 font-body">
+                    </div>
+                    <button type="submit" disabled={isUploading} className={`w-full py-5 rounded-2xl font-heading font-black text-sm uppercase tracking-widest shadow-glow flex items-center justify-center gap-3 transition-all ${uploadSuccess ? 'bg-green-600 text-white' : 'bg-primary text-primary-foreground hover:brightness-110'}`}>
+                      {isUploading ? <RefreshCw className="animate-spin" /> : uploadSuccess ? <CheckCircle /> : <PlusCircle size={20} />} {uploadSuccess ? "Report Filed Successfully!" : isUploading ? "Broadcasting to Cloud..." : "File Official Report"}
+                    </button>
+                  </div>
+                </motion.form>
+              ) : (
+                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                  <div className="bg-primary/5 border border-primary/10 rounded-[32px] p-6 md:p-10 text-center space-y-6">
+                    <div className="mx-auto w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center text-primary mb-4 shrink-0"><AlertCircle size={32} /></div>
+                    <div className="max-w-xl mx-auto">
+                      <h3 className="font-heading text-2xl font-black text-primary uppercase mb-3">{t('lostAndFound.instructionHeader')}</h3>
+                      <div className="space-y-4 text-sm md:text-base text-foreground/70 leading-relaxed font-body">
                         <p dangerouslySetInnerHTML={{ __html: `1. ${t('lostAndFound.instruction1')}` }} />
                         <p dangerouslySetInnerHTML={{ __html: `2. ${t('lostAndFound.instruction2')}` }} />
                         <p dangerouslySetInnerHTML={{ __html: `3. ${t('lostAndFound.instruction3')}` }} />
                       </div>
                     </div>
-                  </motion.div>
-                ) : activeTab === 'found-submit' ? (
-                  <motion.form
-                    key="found-submit"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="space-y-5"
-                    onSubmit={handleFoundSubmit}
-                  >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                        <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.itemLabelFound') || "Item Name"}</label>
-                        <input 
-                          type="text" 
-                          required
-                          value={foundFormData.item}
-                          onChange={(e) => setFoundFormData({...foundFormData, item: e.target.value})}
-                          placeholder={t('lostAndFound.itemPlaceFound') || "What did you find?"} 
-                          className="w-full bg-black/40 border border-primary/20 rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-primary/50 text-foreground transition-colors placeholder:text-foreground/30"
-                        />
-                      </div>
-                      <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                        <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.locLabelFound') || "Found Location"}</label>
-                        <input 
-                          type="text" 
-                          required
-                          value={foundFormData.location}
-                          onChange={(e) => setFoundFormData({...foundFormData, location: e.target.value})}
-                          placeholder={t('lostAndFound.locPlaceFound') || "Where was it found?"}
-                          className="w-full bg-black/40 border border-primary/20 rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-primary/50 text-foreground transition-colors placeholder:text-foreground/30"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                        <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.founderNameLabel') || "Your Name"}</label>
-                        <input 
-                          type="text" 
-                          value={foundFormData.finderName}
-                          onChange={(e) => setFoundFormData({...foundFormData, finderName: e.target.value})}
-                          placeholder={t('lostAndFound.founderNamePlace') || "Optional"} 
-                          className="w-full bg-black/40 border border-primary/20 rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-primary/50 text-foreground transition-colors placeholder:text-foreground/30"
-                        />
-                      </div>
-                      <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                        <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.founderPhoneLabel') || "Your Phone"}</label>
-                        <input 
-                          type="tel" 
-                          value={foundFormData.finderPhone}
-                          onChange={(e) => setFoundFormData({...foundFormData, finderPhone: e.target.value})}
-                          placeholder={t('lostAndFound.founderPhonePlace') || "Optional"}
-                          className="w-full bg-black/40 border border-primary/20 rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-primary/50 text-foreground transition-colors placeholder:text-foreground/30"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                        <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.imgLabelFound') || "Item Photo"}</label>
-                        <input 
-                          type="file" 
-                          ref={foundFileRef}
-                          className="hidden" 
-                          accept="image/*"
-                          onChange={(e) => setFoundImage(e.target.files?.[0] || null)}
-                        />
-                        <div 
-                          onClick={() => foundFileRef.current?.click()}
-                          className={`w-full bg-black/40 border border-primary/20 border-dashed rounded-lg px-4 py-6 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-primary/5 transition-colors group ${foundImage ? 'border-primary/60 bg-primary/5' : ''}`}
-                        >
-                           <div className={`p-3 rounded-full transition-colors ${foundImage ? 'bg-primary/20' : 'bg-primary/10 group-hover:bg-primary/20'}`}>
-                             {foundImage ? <ImageIcon className="w-5 h-5 text-primary" /> : <Upload className="w-5 h-5 text-primary" />}
-                           </div>
-                           <p className="text-xs text-foreground/50 font-body text-center">
-                             {foundImage ? foundImage.name : (t('lostAndFound.imgPlaceFound') || "Snap a photo of the item")}
-                           </p>
-                        </div>
-                     </div>
-
-                    <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary shrink-0">
-                        <CheckCircle size={16} />
-                      </div>
-                      <p className="text-[11px] text-foreground/60 leading-relaxed font-body italic">
-                        <strong>{t('lostAndFound.thanksTitle') || "Thank you for your honesty!"}</strong> {t('lostAndFound.handoverNote') || "Please submit the physical item to the main counter after logging."}
-                      </p>
-                    </div>
-
-                     <button 
-                       type="submit" 
-                       disabled={isUploading}
-                       className="w-full py-4 bg-primary text-primary-foreground font-heading font-black text-sm uppercase tracking-widest rounded-xl shadow-glow hover:bg-primary/90 flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-                     >
-                       {isUploading ? (
-                         <RefreshCw className="w-5 h-5 animate-spin" />
-                       ) : (
-                         <PlusCircle size={18} />
-                       )}
-                       {isUploading ? "Uploading..." : (t('lostAndFound.submitFound') || "Submit Found Report")}
-                     </button>
-                  </motion.form>
-                ) : (
-                  <motion.form
-                    key="report"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="space-y-5"
-                    onSubmit={handleSubmit}
-                  >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                        <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.nameLabel')}</label>
-                        <input 
-                          type="text" 
-                          required
-                          value={formData.name}
-                          onChange={(e) => setFormData({...formData, name: e.target.value})}
-                          placeholder={t('lostAndFound.namePlace')} 
-                          className="w-full bg-black/40 border border-primary/20 rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-primary/50 text-foreground transition-colors placeholder:text-foreground/30"
-                        />
-                      </div>
-                      <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                        <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.phoneLabel')}</label>
-                        <input 
-                          type="tel" 
-                          required
-                          value={formData.phone}
-                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                          placeholder={t('lostAndFound.phonePlace')}
-                          className="w-full bg-black/40 border border-primary/20 rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-primary/50 text-foreground transition-colors placeholder:text-foreground/30"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                      <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.itemLabel')}</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={formData.item}
-                        onChange={(e) => setFormData({...formData, item: e.target.value})}
-                        placeholder={t('lostAndFound.itemPlace')}
-                        className="w-full bg-black/40 border border-primary/20 rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-primary/50 text-foreground transition-colors placeholder:text-foreground/30"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                      <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.descLabel')}</label>
-                      <textarea 
-                        rows={3}
-                        value={formData.description}
-                        onChange={(e) => setFormData({...formData, description: e.target.value})}
-                        placeholder={t('lostAndFound.descPlace')}
-                        className="w-full bg-black/40 border border-primary/20 rounded-lg px-4 py-3 text-sm font-body focus:outline-none focus:border-primary/50 text-foreground transition-colors placeholder:text-foreground/30 resize-none"
-                      />
-                    </div>
-                    
-                     <div className="space-y-1.5 border border-primary/20 p-1 rounded-xl bg-card border-none">
-                       <label className="text-xs font-bold uppercase tracking-wider text-primary/80 pl-2">{t('lostAndFound.imgLabel')}</label>
-                       <input 
-                         type="file" 
-                         ref={lostFileRef}
-                         className="hidden" 
-                         accept="image/*"
-                         onChange={(e) => setLostImage(e.target.files?.[0] || null)}
-                       />
-                       <div 
-                         onClick={() => lostFileRef.current?.click()}
-                         className={`w-full bg-black/40 border border-primary/20 border-dashed rounded-lg px-4 py-6 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-primary/5 transition-colors group ${lostImage ? 'border-primary/60 bg-primary/5' : ''}`}
-                       >
-                          <div className={`p-3 rounded-full transition-colors ${lostImage ? 'bg-primary/20' : 'bg-primary/10 group-hover:bg-primary/20'}`}>
-                            {lostImage ? <ImageIcon className="w-5 h-5 text-primary" /> : <Upload className="w-5 h-5 text-primary" />}
-                          </div>
-                          <p className="text-xs text-foreground/50 font-body text-center">
-                            {lostImage ? lostImage.name : (t('lostAndFound.imgPlace') || "Upload an image if available")}
-                          </p>
-                       </div>
-                    </div>
-
-                    <button 
-                      type="submit" 
-                      disabled={isUploading}
-                      className="w-full py-4 bg-primary text-primary-foreground font-heading font-black text-sm uppercase tracking-widest rounded-xl shadow-glow hover:bg-primary/90 flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isUploading ? (
-                        <RefreshCw className="w-5 h-5 animate-spin" />
-                      ) : (
-                        <PlusCircle size={18} />
-                      )}
-                      {isUploading ? "Submitting..." : (t('lostAndFound.submit') || "Submit Report")}
-                    </button>
-                  </motion.form>
-                )}
-              </AnimatePresence>
+                  </div>
+                </motion.div>
+              )}
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );

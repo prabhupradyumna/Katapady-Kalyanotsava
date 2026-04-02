@@ -120,7 +120,7 @@ const resources = {
         desc4: "Ample parking area near the Venkataramana Temple for devotees arriving from the South.",
         title5: "Parking Spot 5",
         sub5: "Shri Vishwanatha Kshetra",
-        desc5: "Designated parking zone near the main Katapadi Shri Vishwanatha Temple entrance."
+        desc5: "Designated parking zone near the main Katapady Shri Vishwanatha Temple entrance."
       },
       divine: {
         name: "Mrs. Vijaya Pai & Mr. Purushotham Pai and Family",
@@ -131,7 +131,7 @@ const resources = {
       sponsors: {
         tagline: "✦ Patronage ✦",
         title: "Grace Supported By",
-        sp1: "Katapadi Pai Family",
+        sp1: "Katapady Pai Family",
         sp2: "SVS Vidyavardhaka Sangha",
         sp3: "Adyar Petrol Pump",
         sp4: "Sun Matrix Audio Lab",

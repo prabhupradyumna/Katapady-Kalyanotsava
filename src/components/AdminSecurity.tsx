@@ -82,7 +82,7 @@ const AdminSecurity = () => {
 
     return (
         <div className="min-h-[100dvh] bg-temple-black text-foreground font-body p-3 md:p-8">
-            <div className="max-w-4xl mx-auto space-y-4 md:space-y-8">
+            <div className="max-w-6xl mx-auto space-y-4 md:space-y-8">
                 <header className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-primary/10 pb-4">
                     <div className="text-center md:text-left">
                         <h1 className="text-2xl md:text-3xl font-heading font-black text-primary uppercase">Security Console</h1>
@@ -105,60 +105,77 @@ const AdminSecurity = () => {
                     </button>
                 </div>
 
-                <div className="space-y-3">
-                    {adminTab === 'reports' ? (
-                        lostReports.map(report => (
-                            <motion.div key={report.docId} layout className="bg-card/40 backdrop-blur-3xl border border-primary/10 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-primary/5 rounded-xl border border-primary/10 flex items-center justify-center shrink-0">
-                                        {report.imageUrl ? (
-                                            <button onClick={() => setPreviewImage(report.imageUrl)} className="w-full h-full"><img src={report.imageUrl} className="w-full h-full object-cover rounded-lg" alt="Item" /></button>
-                                        ) : (
-                                            <ImageIcon className="text-primary/20" size={20} />
-                                        )}
-                                    </div>
-                                    <div>
-                                        <div className="flex items-center gap-2">
-                                            <h3 className="font-bold text-sm md:text-base">{report.item}</h3>
-                                            <span className={`text-[8px] px-1.5 py-0.5 rounded-md font-bold uppercase ${report.status === 'resolved' ? 'bg-green-500/10 text-green-500' : 'bg-primary/10 text-primary'}`}>{report.status}</span>
-                                        </div>
-                                        <p className="text-[10px] text-foreground/40 line-clamp-1">{report.description}</p>
-                                        <div className="text-[10px] text-primary/60 font-bold mt-1">{report.name} • {report.phone}</div>
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-end gap-2 border-t md:border-t-0 border-primary/5 pt-3 md:pt-0">
-                                    <button onClick={() => updateDoc(doc(db, "lost_reports", report.docId), { status: 'resolved' })} className="px-3 py-1.5 bg-green-500/10 text-green-500 rounded-lg text-[9px] font-bold uppercase tracking-widest flex items-center gap-1.5 hover:bg-green-500/20"><CheckCircle size={14} /> Resolve</button>
-                                    <button onClick={() => confirm("Delete report?") && deleteDoc(doc(db, "lost_reports", report.docId))} className="p-2 text-red-500/40 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
-                                </div>
-                            </motion.div>
-                        ))
-                    ) : (
-                        foundItems.map(item => (
-                            <motion.div key={item.docId} layout className="bg-card/40 backdrop-blur-3xl border border-primary/10 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-primary/5 rounded-xl border border-primary/10 flex items-center justify-center shrink-0">
-                                        {item.imageUrl ? (
-                                            <button onClick={() => setPreviewImage(item.imageUrl)} className="w-full h-full"><img src={item.imageUrl} className="w-full h-full object-cover rounded-lg" alt="Item" /></button>
-                                        ) : (
-                                            <ImageIcon className="text-primary/20" size={20} />
-                                        )}
-                                    </div>
-                                    <div>
-                                        <div className="flex items-center gap-2">
-                                            <h3 className="font-bold text-sm md:text-base">{item.item}</h3>
-                                            <span className={`text-[8px] px-1.5 py-0.5 rounded-md font-bold uppercase ${item.status === 'claimed' ? 'bg-green-500/10 text-green-500' : 'bg-primary/10 text-primary'}`}>{item.status}</span>
-                                        </div>
-                                        <p className="text-[10px] text-foreground/40 italic">Found at: {item.location}</p>
-                                        <div className="text-[10px] text-primary/60 font-bold mt-1">Logged on: {item.date}</div>
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-end gap-2 border-t md:border-t-0 border-primary/5 pt-3 md:pt-0">
-                                    <button onClick={() => updateDoc(doc(db, "found_items", item.docId), { status: 'claimed' })} className="px-3 py-1.5 bg-green-500/10 text-green-500 rounded-lg text-[9px] font-bold uppercase tracking-widest flex items-center gap-1.5 hover:bg-green-500/20"><CheckCircle size={14} /> Claimed</button>
-                                    <button onClick={() => confirm("Delete entry?") && deleteDoc(doc(db, "found_items", item.docId))} className="p-2 text-red-500/40 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
-                                </div>
-                            </motion.div>
-                        ))
-                    )}
+                <div className="bg-card/20 backdrop-blur-xl border border-primary/10 rounded-2xl overflow-hidden overflow-x-auto shadow-2xl">
+                    <table className="w-full text-left border-collapse min-w-[600px]">
+                        <thead>
+                            <tr className="bg-primary/5 text-primary text-[9px] uppercase tracking-widest font-black border-b border-primary/10">
+                                <th className="px-4 py-4 truncate">Item Details</th>
+                                <th className="px-4 py-4">Evidence</th>
+                                <th className="px-4 py-4">Status</th>
+                                <th className="px-4 py-4">Contact/Finder</th>
+                                <th className="px-4 py-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-primary/5">
+                            {adminTab === 'reports' ? (
+                                lostReports.map(report => (
+                                    <tr key={report.docId} className="hover:bg-primary/5 transition-colors">
+                                        <td className="px-4 py-4">
+                                            <div className="font-bold text-xs md:text-sm">{report.item}</div>
+                                            <div className="text-[10px] text-foreground/40 line-clamp-1 italic">{report.description}</div>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            {report.imageUrl ? (
+                                                <button onClick={() => setPreviewImage(report.imageUrl)} className="w-10 h-10 border border-primary/20 rounded-lg overflow-hidden"><img src={report.imageUrl} className="w-full h-full object-cover" alt="Item" /></button>
+                                            ) : <span className="text-[10px] text-foreground/20 italic">No Photo</span>}
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <span className={`px-2 py-0.5 rounded-md text-[8px] font-bold uppercase ${report.status === 'resolved' ? 'bg-green-500/10 text-green-500' : 'bg-primary/10 text-primary'}`}>{report.status}</span>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <div className="text-[10px] font-bold text-foreground/80">{report.name}</div>
+                                            <div className="text-[9px] text-primary/60">{report.phone}</div>
+                                        </td>
+                                        <td className="px-4 py-4 text-right">
+                                            <div className="flex justify-end gap-1.5 md:gap-3">
+                                                <button onClick={() => updateDoc(doc(db, "lost_reports", report.docId), { status: 'resolved' })} className="p-2 text-green-500/40 hover:text-green-500 transition-colors" title="Resolve"><CheckCircle size={16} /></button>
+                                                <button onClick={() => confirm("Delete report?") && deleteDoc(doc(db, "lost_reports", report.docId))} className="p-2 text-red-500/40 hover:text-red-500 transition-colors" title="Delete"><Trash2 size={16} /></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                foundItems.map(item => (
+                                    <tr key={item.docId} className="hover:bg-primary/5 transition-colors">
+                                        <td className="px-4 py-4 font-bold text-xs md:text-sm">{item.item}</td>
+                                        <td className="px-4 py-4">
+                                            {item.imageUrl ? (
+                                                <button onClick={() => setPreviewImage(item.imageUrl)} className="w-10 h-10 border border-primary/20 rounded-lg overflow-hidden"><img src={item.imageUrl} className="w-full h-full object-cover" alt="Item" /></button>
+                                            ) : <span className="text-[10px] text-foreground/20 italic">No Photo</span>}
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <span className={`px-2 py-0.5 rounded-md text-[8px] font-bold uppercase ${item.status === 'claimed' ? 'bg-green-500/10 text-green-500' : 'bg-primary/10 text-primary'}`}>{item.status}</span>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <div className="text-[9px] font-black uppercase text-primary/60">{item.location}</div>
+                                            <div className="text-[8px] text-foreground/40">{item.date}</div>
+                                        </td>
+                                        <td className="px-4 py-4 text-right">
+                                            <div className="flex justify-end gap-1.5 md:gap-3">
+                                                <button onClick={() => updateDoc(doc(db, "found_items", item.docId), { status: 'claimed' })} className="p-2 text-green-500/40 hover:text-green-500 transition-colors" title="Claimed"><CheckCircle size={16} /></button>
+                                                <button onClick={() => confirm("Delete entry?") && deleteDoc(doc(db, "found_items", item.docId))} className="p-2 text-red-500/40 hover:text-red-500 transition-colors" title="Delete"><Trash2 size={16} /></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className="p-4 bg-primary/5 border border-primary/10 rounded-2xl flex items-center gap-3">
+                    <AlertCircle size={16} className="text-primary shrink-0" />
+                    <p className="text-[10px] md:text-xs text-foreground/60 italic font-body">Data synced in real-time with Cloud HQ. Table auto-scrolls horizontally on small screens.</p>
                 </div>
             </div>
 

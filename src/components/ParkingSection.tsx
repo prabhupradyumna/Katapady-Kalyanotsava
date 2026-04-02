@@ -38,7 +38,7 @@ const ParkingSection = () => {
       subtitle: t('parking.sub1'),
       description: t('parking.desc1'),
       mapUrl: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d970.7511182535065!2d74.74472019355284!3d13.287660913923098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTPCsDE3JzE2LjMiTiA3NMKwNDQnNDIuOSJF!5e0!3m2!1sen!2sin!4v1774603604677!5m2!1sen!2sin",
-      navUrl: "https://www.google.com/maps/search/?api=1&query=13.2876609,74.7447202",
+      navUrl: "https://www.google.com/maps/dir/?api=1&destination=13.2876609,74.7447202",
       status: getStatus("lot1"),
       spaces: getSpaces("lot1")
     },
@@ -48,7 +48,7 @@ const ParkingSection = () => {
       subtitle: t('parking.sub2'),
       description: t('parking.desc2'),
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d968.3081649980795!2d74.74613341041184!3d13.284288326445768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcbb631dafe4a3%3A0xb39c8408ae6b024d!2sSVS%20School%20Ground!5e1!3m2!1sen!2sin!4v1774604632728!5m2!1sen!2sin",
-      navUrl: "https://www.google.com/maps/search/?api=1&query=13.284288,74.746133",
+      navUrl: "https://www.google.com/maps/dir/?api=1&destination=SVS+School+Ground+Katapady",
       status: getStatus("lot2"),
       spaces: getSpaces("lot2")
     },
@@ -58,7 +58,7 @@ const ParkingSection = () => {
       subtitle: t('parking.sub3'),
       description: t('parking.desc3'),
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1151.5261270213093!2d74.74284415034195!3d13.282777696129813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcba8d687a5e95%3A0x33fd5d50a541b930!2sSVS%20Pre%20University%20college!5e1!3m2!1sen!2sin!4v1774605178637!5m2!1sen!2sin",
-      navUrl: "https://www.google.com/maps/search/?api=1&query=13.282777,74.742844",
+      navUrl: "https://www.google.com/maps/dir/?api=1&destination=SVS+Pre+University+college+Katapady",
       status: getStatus("lot3"),
       spaces: getSpaces("lot3")
     },
@@ -68,7 +68,7 @@ const ParkingSection = () => {
       subtitle: t('parking.sub4'),
       description: t('parking.desc4'),
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1369.4303418908291!2d74.74750465280043!3d13.277942164346097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcba9190ea6d7f%3A0xa6c3794dec4bae45!2sVenkataramana%20Devastana!5e1!3m2!1sen!2sin!4v1774605910444!5m2!1sen!2sin",
-      navUrl: "https://www.google.com/maps/search/?api=1&query=13.277942164346097,74.74750465280043",
+      navUrl: "https://www.google.com/maps/dir/?api=1&destination=Sri+Venkataramana+Temple+Katapady",
       status: getStatus("lot4"),
       spaces: getSpaces("lot4")
     },
@@ -77,8 +77,7 @@ const ParkingSection = () => {
       title: t('parking.title5'),
       subtitle: t('parking.sub5'),
       description: t('parking.desc5'),
-      mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2303.10578903109!2d74.74579216640248!3d13.277134806828867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcba91b68a2f97%3A0x2eeb2960f4672594!2sKatapadi%20Shri%20Vishwanatha%20Kshetra!5e1!3m2!1sen!2sin!4v1774605954602!5m2!1sen!2sin",
-      navUrl: "https://www.google.com/maps/search/?api=1&query=13.277134806828867,74.74579216640248",
+      navUrl: "https://www.google.com/maps/dir/?api=1&destination=Katapady+Shri+Vishwanatha+Kshetra",
       status: getStatus("lot5"),
       spaces: getSpaces("lot5")
     }

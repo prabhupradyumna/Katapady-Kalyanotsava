@@ -2,17 +2,29 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, PlusCircle, AlertCircle, Upload } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { api, LostFoundItem } from "../lib/api";
+import { useEffect } from "react";
 
 interface LostAndFoundProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const mockFoundItems: any[] = [];
+// Mock data removed in favor of api.getLostFound()
 
 const LostAndFound = ({ isOpen, onClose }: LostAndFoundProps) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'found' | 'report'>('found');
+  const [foundItems, setFoundItems] = useState<LostFoundItem[]>([]);
+
+  useEffect(() => {
+    const loadItems = () => {
+      setFoundItems(api.getLostFound());
+    };
+    loadItems();
+    window.addEventListener("lostFoundUpdated", loadItems);
+    return () => window.removeEventListener("lostFoundUpdated", loadItems);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -98,8 +110,8 @@ const LostAndFound = ({ isOpen, onClose }: LostAndFoundProps) => {
                     </div>
 
                     <div className="grid gap-3">
-                      {mockFoundItems.length > 0 ? (
-                        mockFoundItems.map(item => (
+                      {foundItems.length > 0 ? (
+                        foundItems.map(item => (
                           <div key={item.id} className="bg-card/40 border border-primary/10 rounded-xl p-4 flex flex-col md:flex-row gap-4 justify-between md:items-center group hover:border-primary/30 transition-colors">
                             <div>
                               <h4 className="font-heading font-bold text-lg text-foreground mb-1">{item.name}</h4>

@@ -51,11 +51,13 @@ const SponsorCarousel = () => {
 
     // Move x
     const currentX = x.get();
-    let nextX = currentX - speed * (delta / 16); // Normalize by ~60fps
+    let nextX = currentX - speed * (delta / 16); 
     
-    // Seamless wrapping
+    // Seamless wrapping in both directions
     if (nextX <= -oneSetWidth) {
       nextX += oneSetWidth;
+    } else if (nextX > 0) {
+      nextX -= oneSetWidth;
     }
     
     x.set(nextX);
@@ -87,13 +89,16 @@ const SponsorCarousel = () => {
           <motion.div
             style={{ x }}
             drag="x"
-            dragConstraints={{ left: -5000, right: 5000 }}
+            dragConstraints={{ left: -oneSetWidth * 2, right: oneSetWidth }}
             onDragStart={() => setIsDragging(true)}
             onDragEnd={() => {
               setIsDragging(false);
               const currentX = x.get();
               if (oneSetWidth > 0) {
-                x.set(currentX % oneSetWidth);
+                // Ensure position is always within [-oneSetWidth, 0]
+                let finalX = currentX % oneSetWidth;
+                if (finalX > 0) finalX -= oneSetWidth;
+                x.set(finalX);
               }
             }}
             className="flex whitespace-nowrap gap-3 md:gap-8 text-center items-center cursor-grab active:cursor-grabbing will-change-transform"

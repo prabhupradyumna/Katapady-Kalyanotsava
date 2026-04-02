@@ -1,31 +1,30 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Save, RefreshCw, Car, CheckCircle, AlertCircle, MapPin } from "lucide-react";
+import { 
+  Save, RefreshCw, Car, CheckCircle, AlertCircle, 
+  MapPin, Plus, Trash2, PackageSearch, History 
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
-
-// Initial mock data that matches ParkingSection
-const INITIAL_PARKING_DATA = [
-  { id: 1, name: "Parking Spot 1", status: "available", spaces: 50 },
-  { id: 2, name: "Parking Spot 2", status: "available", spaces: 30 },
-  { id: 3, name: "Parking Spot 3", status: "available", spaces: 20 },
-  { id: 4, name: "Parking Spot 4", status: "available", spaces: 15 },
-  { id: 5, name: "Parking Spot 5", status: "available", spaces: 10 },
-];
+import { api, ParkingSpot, LostFoundItem } from "../lib/api";
 
 const AdminDashboard = () => {
   const { t } = useTranslation();
-  const [parkingData, setParkingData] = useState(INITIAL_PARKING_DATA);
+  
+  // Parking State
+  const [parkingData, setParkingData] = useState<ParkingSpot[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  // Load from localStorage on mount
+  // Lost & Found State
+  const [lfItems, setLfItems] = useState<LostFoundItem[]>([]);
+  const [newItem, setNewItem] = useState({ name: "", location: "", date: "", description: "" });
+
   useEffect(() => {
-    const savedData = localStorage.getItem("parking_status_data");
-    if (savedData) {
-      setParkingData(JSON.parse(savedData));
-    }
+    setParkingData(api.getParking());
+    setLfItems(api.getLostFound());
   }, []);
 
+  // --- Parking Logic ---
   const handleStatusToggle = (id: number) => {
     setParkingData(prev => prev.map(item => {
       if (item.id === id) {
@@ -53,143 +52,218 @@ const AdminDashboard = () => {
     }));
   };
 
-  const handleSave = () => {
+  const handleSaveParking = () => {
     setIsSaving(true);
-    // Simulate API delay
     setTimeout(() => {
-      localStorage.setItem("parking_status_data", JSON.stringify(parkingData));
-      // Dispatch a custom event so other components know to update
-      window.dispatchEvent(new CustomEvent("parkingStatusUpdated", { detail: parkingData }));
-      
+      api.saveParking(parkingData);
       setIsSaving(false);
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
     }, 800);
   };
 
-  const handleReset = () => {
-    if (confirm("Reset all parking lots to default available status?")) {
-      setParkingData(INITIAL_PARKING_DATA);
+  // --- Lost & Found Logic ---
+  const handleAddLfItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newItem.name || !newItem.location) return;
+    const added = api.addFoundItem(newItem);
+    setLfItems([added, ...lfItems]);
+    setNewItem({ name: "", location: "", date: "", description: "" });
+  };
+
+  const handleRemoveLfItem = (id: string) => {
+    if (confirm("Delete this entry?")) {
+      api.removeFoundItem(id);
+      setLfItems(prev => prev.filter(item => item.id !== id));
     }
   };
 
   return (
-    <div className="min-h-screen bg-temple-black text-foreground font-body p-2 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-4 md:space-y-8">
+    <div className="min-h-screen bg-temple-black text-foreground font-body p-4 md:p-8 space-y-12 pb-20">
+      <div className="max-w-6xl mx-auto space-y-12">
+        
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-primary/20 pb-4 md:pb-6">
+        <div className="border-b border-primary/20 pb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="font-heading text-xl md:text-4xl font-black text-gradient-gold uppercase tracking-tight">Admin Dashboard</h1>
-            <p className="text-foreground/60 text-[10px] md:text-sm mt-0.5 md:mt-1 italic md:not-italic">Manage real-time parking availability</p>
+            <h1 className="font-heading text-3xl md:text-5xl font-black text-gradient-gold uppercase tracking-tight">Admin Dashboard</h1>
+            <p className="text-foreground/60 text-sm mt-2 italic italic">Manage real-time parking and lost items</p>
           </div>
           <div className="flex gap-2">
             <button
-              onClick={handleReset}
-              className="px-3 md:px-4 py-1.5 md:py-2 bg-card/40 border border-primary/20 rounded-lg md:rounded-xl hover:bg-card/60 transition-colors flex items-center gap-1.5 text-[10px] md:text-sm font-bold uppercase tracking-wider"
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-card/40 border border-primary/20 rounded-xl hover:bg-card/60 transition-colors flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
             >
-              <RefreshCw className="w-3.5 h-3.5" /> Reset
+              <RefreshCw className="w-4 h-4" /> Refresh Data
             </button>
+          </div>
+        </div>
+
+        {/* --- Parking Section --- */}
+        <div className="space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <h2 className="font-heading text-2xl font-bold text-primary uppercase tracking-widest flex items-center gap-2">
+              <Car className="w-6 h-6" /> Parking Management
+            </h2>
             <button
-              onClick={handleSave}
+              onClick={handleSaveParking}
               disabled={isSaving}
-              className={`px-4 md:px-6 py-1.5 md:py-2 rounded-lg md:rounded-xl font-bold uppercase tracking-wider text-[10px] md:text-sm flex items-center gap-1.5 shadow-glow transition-all active:scale-95 ${
+              className={`px-8 py-3 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center gap-2 shadow-glow transition-all active:scale-95 ${
                 saveSuccess 
                   ? "bg-green-600 text-white" 
                   : "bg-primary text-primary-foreground hover:bg-primary/90"
               }`}
             >
-              {isSaving ? (
-                <div className="w-3.5 h-3.5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-              ) : saveSuccess ? (
-                <CheckCircle className="w-3.5 h-3.5" />
-              ) : (
-                <Save className="w-3.5 h-3.5" />
-              )}
-              {saveSuccess ? "Published!" : "Publish Changes"}
+              {isSaving ? <RefreshCw className="w-4 h-4 animate-spin" /> : saveSuccess ? <CheckCircle className="w-4 h-4" /> : <Save className="w-4 h-4" />}
+              {saveSuccess ? "Published!" : "Sync Live Status"}
             </button>
           </div>
-        </div>
 
-        {/* Status Grid */}
-        <div className="grid gap-2 md:gap-4 md:grid-cols-2">
-          {parkingData.map((item) => (
-            <motion.div
-              key={item.id}
-              layout
-              className={`p-2.5 md:p-6 rounded-xl md:rounded-2xl border transition-all duration-300 bg-card/20 backdrop-blur-xl shadow-lg flex flex-col gap-2 md:gap-4 ${
-                item.status === 'available' ? 'border-green-500/30' : 'border-red-500/30'
-              }`}
-            >
-              <div className="flex justify-between items-center gap-2 min-w-0">
-                <div className="flex items-center gap-1.5 md:gap-3 min-w-0">
-                  <div className={`p-1.5 md:p-3 rounded-lg md:rounded-xl shrink-0 ${item.status === 'available' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
-                    <Car className="w-4 h-4 md:w-6 md:h-6" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-heading font-black text-xs md:text-lg text-primary uppercase leading-none truncate">{item.name}</h3>
-                    <div className="hidden md:flex items-center gap-1 text-[9px] md:text-xs font-bold uppercase tracking-wider mt-0.5">
-                      <MapPin className="w-2.5 h-2.5 text-primary/60" />
-                      <span className="text-foreground/60">Katapady Ground</span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Status Toggle - Shrink-0 ensures it's always visible */}
-                <button
-                  onClick={() => handleStatusToggle(item.id)}
-                  className={`shrink-0 px-2 md:px-3 py-1 md:py-1.5 rounded-lg font-bold text-[8px] md:text-[10px] uppercase tracking-widest border transition-all ${
-                    item.status === 'available'
-                      ? 'bg-green-500/20 border-green-500/50 text-green-500 hover:bg-green-500/30'
-                      : 'bg-red-500/20 border-red-500/50 text-red-500 hover:bg-red-500/30'
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+             {parkingData.map((item) => (
+                <div 
+                  key={item.id}
+                  className={`p-6 rounded-3xl border bg-card/20 backdrop-blur-xl transition-all ${
+                    item.status === 'available' ? 'border-green-500/30' : 'border-red-500/30'
                   }`}
                 >
-                  {item.status === 'available' ? 'Available' : 'Full'}
-                </button>
-              </div>
+                  <div className="flex justify-between items-start mb-6">
+                    <div className={`p-3 rounded-2xl ${item.status === 'available' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
+                      <Car size={24} />
+                    </div>
+                    <button
+                      onClick={() => handleStatusToggle(item.id)}
+                      className={`px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] border transition-all ${
+                        item.status === 'available'
+                          ? 'bg-green-500/20 border-green-500/50 text-green-500 hover:bg-green-500/30'
+                          : 'bg-red-500/20 border-red-500/50 text-red-500 hover:bg-red-500/30'
+                      }`}
+                    >
+                      {item.status === 'available' ? 'Available' : 'Full'}
+                    </button>
+                  </div>
 
-              {/* Spaces Input - More compact */}
-              <div className={`p-2 md:p-4 rounded-lg md:rounded-xl border border-primary/10 bg-black/20 flex flex-col md:gap-2 ${item.status === 'full' && 'opacity-40 grayscale pointer-events-none'}`}>
-                <label className="hidden md:block text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-foreground/50">Current Available Lots</label>
-                <div className="flex items-center gap-2 md:gap-4 overflow-hidden">
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={item.spaces}
-                    onChange={(e) => handleSpacesChange(item.id, e.target.value)}
-                    className="flex-grow min-w-0 accent-primary h-1 bg-primary/10 rounded-full cursor-pointer"
-                  />
-                  <div className="flex items-center gap-1 shrink-0">
+                  <h3 className="font-heading font-black text-xl text-primary uppercase mb-2">{item.name}</h3>
+                  <div className="space-y-4">
+                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-foreground/40">
+                      <span>Live Occupancy</span>
+                      <span className="text-primary">{item.spaces}% Free</span>
+                    </div>
                     <input
-                      type="number"
+                      type="range"
+                      min="0"
+                      max="100"
                       value={item.spaces}
                       onChange={(e) => handleSpacesChange(item.id, e.target.value)}
-                      className="w-10 md:w-16 bg-black/40 border border-primary/20 rounded-lg px-1 py-1 text-center font-heading font-bold text-primary text-[10px] md:text-base focus:outline-none focus:border-primary/50"
+                      className="w-full accent-primary h-1.5 bg-primary/10 rounded-full cursor-pointer appearance-none"
                     />
-                    <span className="md:hidden text-[7px] font-bold text-primary opacity-50 uppercase">Lots</span>
                   </div>
                 </div>
-              </div>
-
-              {item.status === 'full' && (
-                <div className="px-2 py-1 bg-red-500/5 border border-red-500/20 rounded-lg flex items-center gap-2">
-                  <AlertCircle className="w-2.5 h-2.5 text-red-400" />
-                  <p className="text-[7px] md:text-[10px] font-bold uppercase tracking-widest text-red-400/80">Visitors will see red indicator</p>
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </div>
-        
-        {/* Footer info */}
-        <div className="p-3 md:p-4 bg-primary/5 border border-primary/10 rounded-xl md:rounded-2xl flex items-start gap-3 md:gap-4">
-          <div className="p-1.5 md:p-2 bg-primary/10 rounded-lg shrink-0">
-            <AlertCircle className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+             ))}
           </div>
-          <p className="text-[10px] md:text-sm text-foreground/60 leading-relaxed font-body italic">
-            <strong>Note:</strong> Changes will be reflected once you click "Publish Changes". The visitors' mobile page will automatically refresh with the new counts.
-          </p>
         </div>
+
+        <div className="h-px bg-primary/10 w-full" />
+
+        {/* --- Lost & Found Section --- */}
+        <div className="space-y-6">
+          <h2 className="font-heading text-2xl font-bold text-primary uppercase tracking-widest flex items-center gap-2">
+            <PackageSearch className="w-6 h-6" /> Lost & Found Database
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Add Item Form */}
+            <div className="lg:col-span-4 space-y-6">
+              <div className="bg-card/40 backdrop-blur-xl p-8 rounded-[40px] border border-primary/20 shadow-divine">
+                <h3 className="font-heading text-xl font-bold text-primary uppercase tracking-widest mb-6 flex items-center gap-2">
+                  <Plus className="w-5 h-5" /> New Found Entry
+                </h3>
+                <form onSubmit={handleAddLfItem} className="space-y-5">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-primary/60 ml-1">Item name</label>
+                    <input 
+                      type="text" 
+                      value={newItem.name}
+                      onChange={e => setNewItem({...newItem, name: e.target.value})}
+                      className="w-full bg-black/40 border border-primary/10 rounded-xl px-4 py-3 text-sm focus:border-primary/50 outline-none transition-all placeholder:text-foreground/20"
+                      placeholder="e.g. Gold Bracelet"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-primary/60 ml-1">Location Found</label>
+                    <input 
+                      type="text" 
+                      value={newItem.location}
+                      onChange={e => setNewItem({...newItem, location: e.target.value})}
+                      className="w-full bg-black/40 border border-primary/10 rounded-xl px-4 py-3 text-sm focus:border-primary/50 outline-none transition-all placeholder:text-foreground/20"
+                      placeholder="e.g. Near Seva Counter 2"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-primary/60 ml-1">Date/Time</label>
+                    <input 
+                      type="text" 
+                      value={newItem.date}
+                      onChange={e => setNewItem({...newItem, date: e.target.value})}
+                      className="w-full bg-black/40 border border-primary/10 rounded-xl px-4 py-3 text-sm focus:border-primary/50 outline-none transition-all placeholder:text-foreground/20"
+                      placeholder="e.g. Today, 11 AM"
+                    />
+                  </div>
+                  <button 
+                    type="submit"
+                    className="w-full py-4 bg-primary text-primary-foreground font-heading font-black text-sm uppercase tracking-widest rounded-xl hover:shadow-glow transition-all"
+                  >
+                    Post Found Item
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            {/* Items List */}
+            <div className="lg:col-span-8 space-y-6">
+              <div className="bg-card/20 border border-primary/10 rounded-[40px] p-8 min-h-[500px]">
+                 <div className="flex justify-between items-center mb-8">
+                   <h3 className="font-heading text-xl font-bold text-gradient-gold uppercase tracking-widest">Active Records</h3>
+                   <span className="text-[10px] font-bold uppercase tracking-widest bg-primary/10 text-primary px-3 py-1 rounded-full">{lfItems.length} found</span>
+                 </div>
+
+                 <div className="grid gap-4">
+                   {lfItems.length === 0 ? (
+                     <div className="py-20 flex flex-col items-center justify-center text-foreground/20 italic">
+                       <p>No found items reported yet.</p>
+                     </div>
+                   ) : (
+                     lfItems.map(item => (
+                       <div 
+                        key={item.id} 
+                        className="bg-black/40 border border-primary/10 p-5 rounded-2xl flex items-center justify-between group hover:border-primary/30 transition-all"
+                       >
+                          <div className="flex gap-4 items-center">
+                            <div className="w-12 h-12 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center text-primary">
+                              <PackageSearch size={24} />
+                            </div>
+                            <div>
+                              <h4 className="font-heading font-bold text-lg text-primary uppercase tracking-tight">{item.name}</h4>
+                              <div className="flex items-center gap-3 text-[10px] font-bold text-foreground/40 uppercase tracking-widest">
+                                <span className="flex items-center gap-1"><MapPin size={10} /> {item.location}</span>
+                                <span>{item.date}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <button 
+                            onClick={() => handleRemoveLfItem(item.id)}
+                            className="p-3 text-red-500/40 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
+                          >
+                            <Trash2 size={20} />
+                          </button>
+                       </div>
+                     ))
+                   )}
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

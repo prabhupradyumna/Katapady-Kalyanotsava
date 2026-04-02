@@ -62,8 +62,8 @@ const AudioToggle = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 md:bottom-10 md:left-10 z-[100]">
-      <div className="relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
+    <div className="fixed bottom-6 right-6 md:bottom-10 md:left-10 z-[100] w-12 md:w-16 flex flex-col items-center">
+      <div className="relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
         {/* Divine Progress Ring */}
         <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none">
           <circle
@@ -132,11 +132,11 @@ const EmergencyContactToggle = () => {
   const contacts = [
     { name: t('interactive.medical'), number: "108", icon: <HeartPulse className="w-4 h-4" /> },
     { name: t('interactive.police'), number: "112", icon: <ShieldAlert className="w-4 h-4" /> },
-    { name: t('interactive.helpdesk'), number: "+91 98765 43210", icon: <PhoneCall className="w-4 h-4" /> },
+    { name: t('interactive.helpdesk'), number: "98452 42167", icon: <PhoneCall className="w-4 h-4" /> },
   ];
 
   return (
-    <div ref={containerRef} className="fixed bottom-24 right-6 md:bottom-10 md:right-10 z-[100] flex flex-col items-end">
+    <div ref={containerRef} className="fixed bottom-24 right-6 md:bottom-10 md:right-10 z-[100] w-12 md:w-16 flex flex-col items-center">
       <AnimatePresence>
         {isOpen && (
           <motion.div

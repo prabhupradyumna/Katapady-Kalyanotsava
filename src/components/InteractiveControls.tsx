@@ -136,7 +136,7 @@ const EmergencyContactToggle = () => {
   ];
 
   return (
-    <div ref={containerRef} className="fixed bottom-24 right-6 md:bottom-10 md:right-10 z-[100] w-12 md:w-16 flex flex-col items-center">
+    <div ref={containerRef} className="fixed bottom-24 right-6 md:bottom-10 md:right-10 z-[100] flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div

@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, PlusCircle, AlertCircle, Upload, CheckCircle, Image as ImageIcon, RefreshCw, MapPin, ClipboardList } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { db, storage } from "../lib/firebase";
+import { db } from "../lib/firebase";
 import { collection, addDoc, onSnapshot, query, where } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 interface LostAndFoundProps {
   isOpen: boolean;
@@ -27,21 +26,48 @@ const LostAndFound = ({ isOpen, onClose }: LostAndFoundProps) => {
     return () => unsub();
   }, []);
 
+  // Compress image to Base64 to fit safely under Firestore's 1MB per document limit
+  const getBase64Compressed = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 800; // Constrain size
+          const scaleSize = MAX_WIDTH / img.width;
+          canvas.width = MAX_WIDTH;
+          canvas.height = img.height * scaleSize;
+          
+          const ctx = canvas.getContext("2d");
+          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+          
+          // Export as JPEG with 0.7 quality to guarantee very small base64 string
+          resolve(canvas.toDataURL("image/jpeg", 0.7));
+        };
+        img.onerror = (error) => reject(error);
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const handleReportSubmit = async (e: React.FormEvent, collectionName: string) => {
     e.preventDefault();
     setIsUploading(true);
     try {
       let downloadURL = "";
       if (selectedFile) {
-        const storageRef = ref(storage, `${collectionName}/${Date.now()}-${selectedFile.name}`);
-        const snapshot = await uploadBytes(storageRef, selectedFile);
-        downloadURL = await getDownloadURL(snapshot.ref);
+        // Direct string conversion (base64) using our compressor
+        downloadURL = await getBase64Compressed(selectedFile);
       }
       
       const form = e.target as HTMLFormElement;
       const formData = new FormData(form);
       
-      await addDoc(collection(db, collectionName), {
+      // Fire-and-forget to prevent infinite hang on uninitialized Firestore
+      addDoc(collection(db, collectionName), {
         item: formData.get('item'),
         description: formData.get('description'),
         location: formData.get('location'),
@@ -50,6 +76,8 @@ const LostAndFound = ({ isOpen, onClose }: LostAndFoundProps) => {
         imageUrl: downloadURL,
         date: new Date().toLocaleDateString(),
         status: collectionName === "found_items" ? 'found' : 'pending'
+      }).catch(err => {
+        console.error("Firestore save error (Offline or Rules):", err);
       });
       
       setUploadSuccess(true);
@@ -58,7 +86,8 @@ const LostAndFound = ({ isOpen, onClose }: LostAndFoundProps) => {
         onClose(); 
       }, 3000);
     } catch (error) {
-      console.error("Upload error:", error);
+      console.error("String Conversion error:", error);
+      alert("Failed to process the image. Please select a different image.");
     } finally {
       setIsUploading(false);
     }

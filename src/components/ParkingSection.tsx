@@ -2,95 +2,85 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Car, Info, MapPin, ChevronLeft, ChevronRight, Navigation } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { db } from "../lib/firebase";
+import { collection, onSnapshot } from "firebase/firestore";
 
 const ParkingSection = () => {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [parkingData, setParkingData] = useState<any[]>([]);
 
-  // Sync with Admin Data
+  // Sync with Firestore Data (Cloud)
   useEffect(() => {
-    const loadData = () => {
-      const saved = localStorage.getItem("parking_status_data");
-      if (saved) {
-        setParkingData(JSON.parse(saved));
-      } else {
-        // Fallback defaults
-        setParkingData([
-          { id: 1, status: "available", spaces: 50 },
-          { id: 2, status: "available", spaces: 30 },
-          { id: 3, status: "available", spaces: 20 },
-          { id: 4, status: "available", spaces: 15 },
-          { id: 5, status: "available", spaces: 10 },
-        ]);
+    const unsub = onSnapshot(collection(db, "parking"), (snapshot) => {
+      if (!snapshot.empty) {
+        setParkingData(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
       }
-    };
+    });
 
-    loadData();
-    window.addEventListener("parkingStatusUpdated", loadData);
-    return () => window.removeEventListener("parkingStatusUpdated", loadData);
+    return () => unsub();
   }, []);
 
-  const getStatus = (id: number) => {
-    const item = parkingData.find(d => d.id === id);
+  const getStatus = (id: string | number) => {
+    const item = parkingData.find(d => d.id === (typeof id === 'number' ? `lot${id}` : id));
     return item ? item.status : "available";
   };
 
-  const getSpaces = (id: number) => {
-    const item = parkingData.find(d => d.id === id);
+  const getSpaces = (id: string | number) => {
+    const item = parkingData.find(d => d.id === (typeof id === 'number' ? `lot${id}` : id));
     return item ? item.spaces : 0;
   };
 
   const parkingLocations = [
     {
-      id: 1,
+      id: "lot1",
       title: t('parking.title1'),
       subtitle: t('parking.sub1'),
       description: t('parking.desc1'),
       mapUrl: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d970.7511182535065!2d74.74472019355284!3d13.287660913923098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTPCsDE3JzE2LjMiTiA3NMKwNDQnNDIuOSJF!5e0!3m2!1sen!2sin!4v1774603604677!5m2!1sen!2sin",
       navUrl: "https://www.google.com/maps/search/?api=1&query=13.2876609,74.7447202",
-      status: getStatus(1),
-      spaces: getSpaces(1)
+      status: getStatus("lot1"),
+      spaces: getSpaces("lot1")
     },
     {
-      id: 2,
+      id: "lot2",
       title: t('parking.title2'),
       subtitle: t('parking.sub2'),
       description: t('parking.desc2'),
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d968.3081649980795!2d74.74613341041184!3d13.284288326445768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcbb631dafe4a3%3A0xb39c8408ae6b024d!2sSVS%20School%20Ground!5e1!3m2!1sen!2sin!4v1774604632728!5m2!1sen!2sin",
       navUrl: "https://www.google.com/maps/search/?api=1&query=13.284288,74.746133",
-      status: getStatus(2),
-      spaces: getSpaces(2)
+      status: getStatus("lot2"),
+      spaces: getSpaces("lot2")
     },
     {
-      id: 3,
+      id: "lot3",
       title: t('parking.title3'),
       subtitle: t('parking.sub3'),
       description: t('parking.desc3'),
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1151.5261270213093!2d74.74284415034195!3d13.282777696129813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcba8d687a5e95%3A0x33fd5d50a541b930!2sSVS%20Pre%20University%20college!5e1!3m2!1sen!2sin!4v1774605178637!5m2!1sen!2sin",
       navUrl: "https://www.google.com/maps/search/?api=1&query=13.282777,74.742844",
-      status: getStatus(3),
-      spaces: getSpaces(3)
+      status: getStatus("lot3"),
+      spaces: getSpaces("lot3")
     },
     {
-      id: 4,
+      id: "lot4",
       title: t('parking.title4'),
       subtitle: t('parking.sub4'),
       description: t('parking.desc4'),
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1369.4303418908291!2d74.74750465280043!3d13.277942164346097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcba9190ea6d7f%3A0xa6c3794dec4bae45!2sVenkataramana%20Devastana!5e1!3m2!1sen!2sin!4v1774605910444!5m2!1sen!2sin",
       navUrl: "https://www.google.com/maps/search/?api=1&query=13.277942164346097,74.74750465280043",
-      status: getStatus(4),
-      spaces: getSpaces(4)
+      status: getStatus("lot4"),
+      spaces: getSpaces("lot4")
     },
     {
-      id: 5,
+      id: "lot5",
       title: t('parking.title5'),
       subtitle: t('parking.sub5'),
       description: t('parking.desc5'),
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2303.10578903109!2d74.74579216640248!3d13.277134806828867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbcba91b68a2f97%3A0x2eeb2960f4672594!2sKatapadi%20Shri%20Vishwanatha%20Kshetra!5e1!3m2!1sen!2sin!4v1774605954602!5m2!1sen!2sin",
       navUrl: "https://www.google.com/maps/search/?api=1&query=13.277134806828867,74.74579216640248",
-      status: getStatus(5),
-      spaces: getSpaces(5)
+      status: getStatus("lot5"),
+      spaces: getSpaces("lot5")
     }
   ];
 

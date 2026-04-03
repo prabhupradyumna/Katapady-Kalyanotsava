@@ -37,7 +37,7 @@ const ParkingSection = () => {
       title: t('parking.title1'),
       subtitle: t('parking.sub1'),
       description: t('parking.desc1'),
-      mapUrl: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d970.7511182535065!2d74.74472019355284!3d13.287660913923098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTPCsDE3JzE2LjMiTiA3NMKwNDQnNDIuOSJF!5e0!3m2!1sen!2sin!4v1774603604677!5m2!1sen!2sin",
+      mapUrl: "https://maps.google.com/maps?q=13.2876609,74.7447202&t=k&z=18&ie=UTF8&iwloc=B&output=embed",
       navUrl: "https://www.google.com/maps/dir/?api=1&destination=13.2876609,74.7447202",
       status: getStatus("lot1"),
       spaces: getSpaces("lot1")
@@ -77,6 +77,7 @@ const ParkingSection = () => {
       title: t('parking.title5'),
       subtitle: t('parking.sub5'),
       description: t('parking.desc5'),
+      mapUrl: "https://maps.google.com/maps?q=Katapady%20Shri%20Vishwanatha%20Kshetra&t=k&z=18&ie=UTF8&iwloc=B&output=embed",
       navUrl: "https://www.google.com/maps/dir/?api=1&destination=Katapady+Shri+Vishwanatha+Kshetra",
       status: getStatus("lot5"),
       spaces: getSpaces("lot5")

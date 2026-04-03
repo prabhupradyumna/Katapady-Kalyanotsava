@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, PlusCircle, Trash2, CheckCircle, Lock, LogOut, Camera, Image as ImageIcon, X, AlertCircle } from "lucide-react";
+import { Search, PlusCircle, Trash2, CheckCircle, Lock, LogOut, Camera, Image as ImageIcon, X, AlertCircle, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { db } from "../lib/firebase";
 import { collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, query, orderBy } from "firebase/firestore";
@@ -16,6 +16,7 @@ const AdminSecurity = () => {
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [isLogModalOpen, setIsLogModalOpen] = useState(false);
     const [newFoundItem, setNewFoundItem] = useState({ item: '', location: '' });
+    const [viewerCount, setViewerCount] = useState(0);
 
     useEffect(() => {
         if (!isLoggedIn) return;
@@ -27,7 +28,12 @@ const AdminSecurity = () => {
         const unsubFound = onSnapshot(qFound, (snapshot) => {
             setFoundItems(snapshot.docs.map(doc => ({ docId: doc.id, ...doc.data() })));
         });
-        return () => { unsubLost(); unsubFound(); };
+        const unsubViews = onSnapshot(doc(db, "stats", "visitors"), (snapshot) => {
+            if (snapshot.exists()) {
+                setViewerCount(snapshot.data().count || 0);
+            }
+        });
+        return () => { unsubLost(); unsubFound(); unsubViews(); };
     }, [isLoggedIn]);
 
     const handleLogin = (e: React.FormEvent) => {
@@ -83,12 +89,21 @@ const AdminSecurity = () => {
     return (
         <div className="min-h-[100dvh] bg-temple-black text-foreground font-body p-3 md:p-8">
             <div className="max-w-6xl mx-auto space-y-4 md:space-y-8">
-                <header className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-primary/10 pb-4">
-                    <div className="text-center md:text-left">
+                <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-3 border-b border-primary/10 pb-4">
+                    <div className="text-center md:text-left flex-1">
                         <h1 className="text-2xl md:text-3xl font-heading font-black text-primary uppercase">Security Console</h1>
                         <p className="text-[10px] md:text-xs uppercase tracking-widest text-foreground/40 mt-1 italic">Event Loss Prevention</p>
                     </div>
-                    <div className="flex items-center justify-between md:justify-end gap-3">
+
+                    <div className="flex flex-col items-center md:items-end justify-center px-6 py-3 bg-black/40 border border-primary/20 rounded-2xl shadow-[0_0_15px_rgba(255,215,0,0.05)] mx-auto md:mx-4 w-full md:w-auto">
+                        <span className="text-[9px] font-bold text-foreground/40 uppercase tracking-[0.2em] mb-1">Total Views</span>
+                        <div className="flex items-center gap-3 text-primary">
+                            <Users size={18} className="drop-shadow-glow" />
+                            <span className="font-heading text-3xl font-black text-gradient-gold leading-none drop-shadow-glow">{viewerCount}</span>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto">
                         <button onClick={() => setIsLogModalOpen(true)} className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-xl text-primary text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-primary/20 transition-all">
                             <PlusCircle size={14} /> Log Found
                         </button>

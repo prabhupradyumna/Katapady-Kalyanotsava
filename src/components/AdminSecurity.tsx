@@ -4,10 +4,15 @@ import { Search, PlusCircle, Trash2, CheckCircle, Lock, LogOut, Camera, Image as
 import { useTranslation } from "react-i18next";
 import { db } from "../lib/firebase";
 import { collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, query, orderBy } from "firebase/firestore";
+import { getCookie, setCookie } from "../lib/utils";
 
 const AdminSecurity = () => {
     const { t } = useTranslation();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        const cookie = getCookie('security_admin_session');
+        const session = sessionStorage.getItem('security_admin_session');
+        return cookie === 'true' || session === 'true';
+    });
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [lostReports, setLostReports] = useState<any[]>([]);
@@ -38,8 +43,11 @@ const AdminSecurity = () => {
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        if (username === "admin" && password === "kalyana2026") setIsLoggedIn(true);
-        else alert("Invalid credentials.");
+        if (username === "admin" && password === "12345") {
+            setIsLoggedIn(true);
+            setCookie('security_admin_session', 'true', 7);
+            sessionStorage.setItem('security_admin_session', 'true');
+        } else alert("Invalid credentials.");
     };
 
     const handleLogFound = async (e: React.FormEvent) => {
@@ -107,7 +115,11 @@ const AdminSecurity = () => {
                         <button onClick={() => setIsLogModalOpen(true)} className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-xl text-primary text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-primary/20 transition-all">
                             <PlusCircle size={14} /> Log Found
                         </button>
-                        <button onClick={() => setIsLoggedIn(false)} className="text-foreground/40 hover:text-red-500 transition-colors p-2"><LogOut size={22} /></button>
+                        <button onClick={() => {
+                            setIsLoggedIn(false);
+                            setCookie('security_admin_session', '', -1);
+                            sessionStorage.removeItem('security_admin_session');
+                        }} className="text-foreground/40 hover:text-red-500 transition-colors p-2"><LogOut size={22} /></button>
                     </div>
                 </header>
 

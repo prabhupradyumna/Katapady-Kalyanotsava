@@ -56,7 +56,7 @@ const SiteFooter = () => {
             <img 
               src="/invenger-logo.png" 
               alt="Invenger Technologies" 
-              className="h-8 md:h-10 w-auto object-contain" 
+              className="h-8 md:h-10 w-auto object-contain bg-white/90 p-2 rounded-md shadow-sm" 
             />
           </a>
         </div>

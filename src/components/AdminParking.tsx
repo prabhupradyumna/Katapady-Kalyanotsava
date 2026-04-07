@@ -4,6 +4,7 @@ import { Save, RefreshCw, Car, CheckCircle, AlertCircle, MapPin, Lock, LogOut } 
 import { useTranslation } from "react-i18next";
 import { db } from "../lib/firebase";
 import { collection, onSnapshot, doc, updateDoc, setDoc } from "firebase/firestore";
+import { getCookie, setCookie } from "../lib/utils";
 
 const INITIAL_PARKING_DATA = [
   { id: "lot1", name: "Parking Spot 1", status: "available", spaces: 50, location: "Main Entry" },
@@ -15,7 +16,11 @@ const INITIAL_PARKING_DATA = [
 
 const AdminParking = () => {
     const { t } = useTranslation();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        const cookie = getCookie('parking_admin_session');
+        const session = sessionStorage.getItem('parking_admin_session');
+        return cookie === 'true' || session === 'true';
+    });
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [parkingData, setParkingData] = useState<any[]>([]);
@@ -38,8 +43,11 @@ const AdminParking = () => {
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        if (username === "admin" && password === "katapady2026") setIsLoggedIn(true);
-        else alert("Invalid credentials.");
+        if (username === "admin" && password === "123") {
+            setIsLoggedIn(true);
+            setCookie('parking_admin_session', 'true', 7);
+            sessionStorage.setItem('parking_admin_session', 'true');
+        } else alert("Invalid credentials.");
     };
 
     const handleStatusToggle = (id: string) => {
@@ -108,7 +116,11 @@ const AdminParking = () => {
                             {isSaving ? <RefreshCw className="animate-spin" size={12} /> : saveSuccess ? <CheckCircle size={12} /> : <Save size={12} />}
                             {saveSuccess ? "Saved!" : "Update"}
                         </button>
-                        <button onClick={() => setIsLoggedIn(false)} className="ml-2 p-2 text-foreground/40 hover:text-red-500 transition-colors"><LogOut size={20} /></button>
+                        <button onClick={() => {
+                            setIsLoggedIn(false);
+                            setCookie('parking_admin_session', '', -1);
+                            sessionStorage.removeItem('parking_admin_session');
+                        }} className="ml-2 p-2 text-foreground/40 hover:text-red-500 transition-colors"><LogOut size={20} /></button>
                     </div>
                 </header>
 

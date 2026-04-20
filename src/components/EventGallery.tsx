@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Camera, Maximize2 } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Camera, Maximize2, Download } from "lucide-react";
 
 // Import all 27 images from the gallery folder
 // Note: Vite will handle the .JPG (uppercase) extension
@@ -55,6 +55,21 @@ const EventGallery = () => {
     if (selected !== null) {
       setSelected((selected - 1 + galleryImages.length) % galleryImages.length);
     }
+  };
+
+  const handleDownload = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selected === null) return;
+    
+    const src = galleryImages[selected].src;
+    const filename = src.split('/').pop()?.split('?')[0] || `divine-memory-${selected + 1}.jpg`;
+
+    const link = document.createElement("a");
+    link.href = src;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   useEffect(() => {
@@ -196,6 +211,18 @@ const EventGallery = () => {
               onClick={() => setSelected(null)}
             >
               <X className="w-6 h-6" />
+            </motion.button>
+
+            <motion.button
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ delay: 0.25 }}
+              className="absolute top-4 right-20 md:top-8 md:right-[5.5rem] z-[110] w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-primary/20 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all"
+              onClick={handleDownload}
+              title="Download Memory"
+            >
+              <Download className="w-5 h-5" />
             </motion.button>
 
             <motion.button

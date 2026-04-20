@@ -27,7 +27,10 @@ const resources = {
         lagnam: "✦ 6:25 PM Godhuli Lagnam ✦",
         city: "Katapady, Udupi",
         venue: "S.V.S. Ground",
-        sacredVenue: "✦ Sacred Venue ✦"
+        sacredVenue: "✦ Sacred Venue ✦",
+        post_title1: "Divine Memories of",
+        post_subtitle: "The sacred union has concluded with the abundance of divine grace. Relive the soulful journey through the eyes of the devotees.",
+        viewMemories: "Relive the Memories"
       },
       about: {
         tagline: "✦ The Divine Lord ✦",
@@ -246,7 +249,10 @@ const resources = {
         lagnam: "✦ ಸಂಜೆ 6:25 ಗೋದೂಳಿ ಲಗ್ನ ✦",
         city: "ಕಾಟಪಾಡಿ, ಉಡುಪಿ",
         venue: "ಎಸ್. ವಿ. ಎಸ್. ಮೈದಾನ",
-        sacredVenue: "✦ ಪವಿತ್ರ ಸ್ಥಳ ✦"
+        sacredVenue: "✦ ಪವಿತ್ರ ಸ್ಥಳ ✦",
+        post_title1: "ದಿವ್ಯ ಸ್ಮರಣೆಗಳು",
+        post_subtitle: "ದೈವಿಕ ಕೃಪೆಯೊಂದಿಗೆ ದಿವ್ಯ ಕಲ್ಯಾಣವು ಸಂಪನ್ನಗೊಂಡಿದೆ. ಭಕ್ತರ ಕಣ್ಣುಗಳ ಮೂಲಕ ಈ ಆತ್ಮೀಯ ಪಯಣವನ್ನು ಮರುಕಳಿಸಿ.",
+        viewMemories: "ಸವಿನೆನಪುಗಳನ್ನು ಮರುಕಳಿಸಿ"
       },
       about: {
         tagline: "✦ ದಿವ್ಯ ಪ್ರಭು ✦",

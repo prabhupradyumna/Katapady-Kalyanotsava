@@ -169,13 +169,13 @@ const KalyanotsavaHero = () => {
             </h2>
           </motion.div>
           
-          <h1 className="font-heading text-3xl md:text-5xl lg:text-7xl font-black text-gradient-gold leading-[1.3] md:leading-[1.4] py-2 md:py-4 text-shadow-premium drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-4">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-8xl font-black text-gradient-gold leading-[1.2] md:leading-[1.1] py-2 md:py-4 text-shadow-premium drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-4 uppercase tracking-tighter">
             {t('hero.title1')}<br className="hidden md:block"/> {t('hero.title2')}
           </h1>
           
-          <div className="relative inline-block py-1 px-4">
-            <p className="font-body text-sm md:text-lg text-foreground/80 max-w-4xl mx-auto italic tracking-wide text-shadow-premium">
-              {t('hero.subtitle')}
+          <div className="relative inline-block py-1 px-4 mb-4 md:mb-8">
+            <p className="font-body text-sm md:text-xl text-foreground/80 max-w-4xl mx-auto italic tracking-wide text-shadow-premium leading-relaxed">
+              {t('hero.post_subtitle')}
             </p>
             <motion.div 
               initial={{ scaleX: 0 }}
@@ -185,23 +185,44 @@ const KalyanotsavaHero = () => {
             />
           </div>
 
-          <div className="flex flex-col md:flex-row items-start justify-center gap-4 md:gap-0 pt-4 md:pt-8">
-            {/* Date Selection */}
-            <div className="w-full md:w-auto md:pr-10 md:border-r border-primary/20 text-center md:text-right">
-              <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">{t('hero.day')}</p>
-              <h3 className="text-2xl md:text-4xl text-foreground drop-shadow-2xl tracking-tight">
-                <span className="font-body font-black">{t('hero.month')} </span>
-                <span className="font-body font-black tabular-nums">{t('hero.date')}</span>
-              </h3>
-              <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">{t('hero.lagnam')}</p>
-            </div>
+          <div className="flex flex-col items-center justify-center gap-8 pt-6">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                className="text-center"
+            >
+                <h2 className="font-heading text-2xl md:text-4xl text-gradient-gold font-bold mb-2 uppercase tracking-[0.2em] drop-shadow-glow">
+                    {t('hero.post_title1')}
+                </h2>
+                <div className="h-[2px] w-24 md:w-40 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
+            </motion.div>
+
+            <motion.a
+                href="#gallery"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(212, 175, 55, 0.5)" }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative px-12 py-5 md:px-16 md:py-6 bg-sacred-gold rounded-full overflow-hidden shadow-2xl transition-all duration-300"
+            >
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-foreground/20 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <span className="relative z-10 font-heading text-xl md:text-2xl font-black text-temple-black uppercase tracking-[0.3em] flex items-center gap-4">
+                    {t('hero.viewMemories')}
+                    <motion.span
+                        animate={{ y: [0, 8, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                        ↓
+                    </motion.span>
+                </span>
+            </motion.a>
             
-            {/* Location Selection */}
-            <div className="w-full md:w-auto md:pl-10 text-center md:text-left mt-2 md:mt-0">
-              <p className="font-heading text-sm md:text-base text-foreground tracking-[0.3em] uppercase mb-1 font-bold opacity-90 drop-shadow-lg">{t('hero.city')}</p>
-              <h3 className="font-body text-2xl md:text-4xl text-foreground font-black tracking-tight drop-shadow-2xl">{t('hero.venue')}</h3>
-              <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mt-1">{t('hero.sacredVenue')}</p>
-            </div>
+            <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.4 }}
+                transition={{ delay: 2 }}
+                className="font-body text-[10px] md:text-xs text-primary uppercase tracking-[0.5em] font-bold"
+            >
+                Scroll to enter the Divine Album
+            </motion.p>
           </div>
         </motion.div>
       </motion.div>

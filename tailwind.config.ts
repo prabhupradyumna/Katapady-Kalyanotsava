@@ -58,6 +58,8 @@ export default {
         "sacred-gold-dark": "hsl(var(--sacred-gold-dark))",
         "temple-black": "hsl(var(--temple-black))",
         "temple-dark": "hsl(var(--temple-dark))",
+        "temple-deep": "hsl(var(--temple-deep))",
+        "sacred-gold": "hsl(var(--primary))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

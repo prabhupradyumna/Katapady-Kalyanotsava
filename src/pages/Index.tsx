@@ -1,7 +1,7 @@
 import TickerBanner from "@/components/TickerBanner";
 import Navbar from "@/components/Navbar";
 import KalyanotsavaHero from "@/components/KalyanotsavaHero";
-import CountdownTimer from "@/components/CountdownTimer";
+import EventGallery from "@/components/EventGallery";
 import SevasGuidelines from "@/components/SevasGuidelines";
 import EventTimeline from "@/components/EventTimeline";
 import WarmlyWelcomed from "@/components/WarmlyWelcomed";
@@ -49,15 +49,15 @@ const Index = () => {
         
         <div className="section-blend-top" />
         
-        <CountdownTimer />
+        <EventGallery />
         <DevotionalQuotes />
         <EventTimeline />
         <WarmlyWelcomed />
         {/* <AboutSection /> */}
-        <DevotionalGallery />
         <SevasGuidelines />
-        <SponsorCarousel />
         <SocialSection />
+        <SponsorCarousel />
+        <DevotionalGallery />
         <LocationSection />
         <ParkingSection />
       </main>

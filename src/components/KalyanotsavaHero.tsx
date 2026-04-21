@@ -144,7 +144,7 @@ const KalyanotsavaHero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 2, ease: "circOut" }}
-          className="space-y-4 md:space-y-6"
+          className="space-y-4 md:space-y-6 mt-20 md:mt-28"
         >
           <motion.p 
             initial={{ opacity: 0, scale: 0.8 }}
@@ -169,7 +169,7 @@ const KalyanotsavaHero = () => {
             </h2>
           </motion.div>
           
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-8xl font-black text-gradient-gold leading-[1.2] md:leading-[1.1] py-2 md:py-4 text-shadow-premium drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-4 uppercase tracking-tighter">
+          <h1 className="font-heading text-3xl md:text-4xl lg:text-7xl font-black text-gradient-gold leading-[1.2] md:leading-[1.1] py-2 md:py-4 text-shadow-premium drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-4 uppercase tracking-tighter">
             {t('hero.title1')}<br className="hidden md:block"/> {t('hero.title2')}
           </h1>
           
@@ -201,10 +201,10 @@ const KalyanotsavaHero = () => {
                 href="#gallery"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(212, 175, 55, 0.5)" }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative px-12 py-5 md:px-16 md:py-6 bg-sacred-gold rounded-full overflow-hidden shadow-2xl transition-all duration-300"
+                className="group relative inline-block px-8 py-4 md:px-12 md:py-5 bg-sacred-gold rounded-full overflow-hidden shadow-2xl transition-all duration-300"
             >
                 <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-foreground/20 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <span className="relative z-10 font-heading text-xl md:text-2xl font-black text-temple-black uppercase tracking-[0.3em] flex items-center gap-4">
+                <span className="relative z-10 font-heading text-lg md:text-xl font-black text-temple-black uppercase tracking-[0.3em] flex items-center justify-center gap-4">
                     {t('hero.viewMemories')}
                     <motion.span
                         animate={{ y: [0, 8, 0] }}

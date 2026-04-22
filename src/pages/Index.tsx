@@ -27,6 +27,8 @@ import { Toaster } from "sonner";
   import DonationSection from "@/components/DonationSection";
 */
 import AboutSection from "@/components/AboutSection";
+import SoulfulJourneyVideo from "@/components/SoulfulJourneyVideo";
+
 
 const Index = () => {
   return (
@@ -46,6 +48,8 @@ const Index = () => {
       
       <main className="relative z-10 bg-temple-deep overflow-hidden">
         <KalyanotsavaHero />
+        
+        <SoulfulJourneyVideo />
         
         <div className="section-blend-top" />
         

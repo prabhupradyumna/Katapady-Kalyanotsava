@@ -198,7 +198,7 @@ const KalyanotsavaHero = () => {
             </motion.div>
 
             <motion.a
-                href="#gallery"
+                href="#soulful-journey"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(212, 175, 55, 0.5)" }}
                 whileTap={{ scale: 0.95 }}
                 className="group relative inline-block px-8 py-4 md:px-12 md:py-5 bg-sacred-gold rounded-full overflow-hidden shadow-2xl transition-all duration-300"
